@@ -1,0 +1,4883 @@
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass book
+\begin_preamble
+% DO NOT ALTER THIS PREAMBLE!!!
+%
+%This preamble is designed to ensure that the document prints
+% out as advertised. If you mess with this preamble,
+% parts of the document may not print out as expected.  If you
+% have problems LaTeXing this file, please contact 
+% the documentation team
+% email: lyx-docs@lists.lyx.org
+
+\usepackage{ifpdf} % part of the hyperref bundle
+\ifpdf % if pdflatex is used
+
+ % set fonts for nicer pdf view
+ \IfFileExists{lmodern.sty}{\usepackage{lmodern}}{}
+
+\fi % end if pdflatex is used
+
+% the pages of the TOC is numbered roman
+% and a pdf-bookmark for the TOC is added
+\let\myTOC\tableofcontents
+\renewcommand\tableofcontents{%
+  \frontmatter
+  \pdfbookmark[1]{\contentsname}{}
+  \myTOC
+  \mainmatter }
+
+% redefine the \LyX macro for PDF bookmarks
+\def\LyX{\texorpdfstring{%
+  L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
+  {LyX}}
+\end_preamble
+\use_default_options false
+\language french
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_title "Despair Driven"
+\pdf_author "Clerc Mathias"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle false
+\pdf_quoted_options "linkcolor=black, citecolor=black, urlcolor=blue, filecolor=blue,pdfpagelayout=OneColumn, pdfnewwindow=true,pdfstartview=XYZ, plainpages=false, pdfpagelabels"
+\papersize default
+\use_geometry false
+\use_amsmath 0
+\use_esint 0
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 2
+\paragraph_separation indent
+\defskip medskip
+\quotes_language french
+\papercolumns 1
+\papersides 2
+\paperpagestyle headings
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Despair Driven
+\end_layout
+
+\begin_layout Author
+Clerc Mathias
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+Histoire section A
+\end_layout
+
+\begin_layout Chapter
+Introduction
+\end_layout
+
+\begin_layout Standard
+Sur les marches de l'escalier massif d'un immeuble administratif du quartier
+ des affaires, un homme assis aux vêtements déchirés ne prête pas attention
+ aux hommes d'affaires se hâtant autour de lui.
+ Toute son attention est dirigée vers un gigantesque écran affichant le
+ logo de la chaîne télévisée sur lequel on peut lire :
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+--------- FLASH SPÉCIAL ---------
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Nous interrompons notre programme
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+habituel pour un flash d'informations
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+spécial.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Merci de votre compréhension.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+--- TV34-7
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Mwana
+\emph default
+ : Échec et mat, le roi est vaincu.
+\end_layout
+
+\begin_layout Standard
+Dit-il a lui-même.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Mwana 
+\emph default
+: Les poins perdent tous espoir et se rendent.
+ Tel est le destin de l'humanité a présent.
+\end_layout
+
+\begin_layout Standard
+Il se met a hurler, un homme s'arrête le regarder.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Homme
+\emph default
+ : Vous allez bien ? Vous voulez que j'appelle un médecin ?
+\end_layout
+
+\begin_layout Standard
+D'un geste de sa main ensanglantée, il fait signe a l'homme de se rapprocher.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Mwana
+\emph default
+ : Je suis le seul a connaître toute l'histoire et avec moi, elle disparaîtra.
+\end_layout
+
+\begin_layout Standard
+Il prit une grande inspiration.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Mwana
+\emph default
+ : Nous n'avons pas perdu espoir durant ces dernières décennies.
+ J'étais la quand cette théorie est devenue publique et j'étais la lorsque
+ le programme spatial commença.
+ J'étais présent lorsque tout débuta.
+ J'ai grandit durant la période la plus importante et maintenant j'assiste
+ a la fin alors que la vie me quitte.
+\end_layout
+
+\begin_layout Chapter
+Mission 
+\begin_inset Formula $ARES^{2}$
+\end_inset
+
+ (hAzardous technologies Research & Engineering Space Station)
+\end_layout
+
+\begin_layout Standard
+Dans le vide entre la Terre et Mars, loin de toute forme de vie, les 2 vaisseaux
+ du programme 
+\begin_inset Formula ${ARES}^{2}$
+\end_inset
+
+ se préparent a l'activation de la source énergétique primaire du module
+ expérimental Bérénice.
+ Eunice est une station spatiale massive abritant de nombreux super ordinateurs,
+ les lieux de vie pour les astronautes qui y séjournent, une biosphère pour
+ la nourriture fraîche et de larges baies de stockage le tout recouvert
+ de panneaux solaires renforces pour limiter les dégâts en cas de météores
+ au prix d'un rendement plus faible.
+ Au bout de 3 bras articules se trouve fixe le cylindre contenant le module
+ expérimental Bérénice dans lequel les astronautes travaillent aux préparatifs
+ de la première activation hors orbite du réacteur nucléaire servant a assouvir
+ les titanesques besoins en énergie des expériences prévues pour une date
+ non fixée pour le moment.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lefèbvre
+\emph default
+ : Les contrôleurs de pression sont actifs ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Novotny
+\emph default
+ : Da ! Tout est au vert.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lefèbvre
+\emph default
+ : Je lance le chauffage dans 3...
+ 2...
+ 1...
+\end_layout
+
+\begin_layout Standard
+L'éclairage diminue légèrement.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : On tire trop sur le secondaire, on en est ou du démarrage ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lefèbvre
+\emph default
+ : Il ne reste que les vérifications des sécurités.
+ Ça va tenir ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : On tire énormément, environ 20% restant.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lefèbvre
+\emph default
+ : OK, on n'en aura plus besoin dans quelques minutes, pas de problèmes.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : ...si jamais ça marche.
+ Je suis prêt a activer les tests de sécurité.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lefèbvre
+\emph default
+ : Ou est Hendriks ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Je suis juste au niveau des fusibles, prêt a remettre de la lumière dans
+ la cuisine en cas de problème.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lefèbvre
+\emph default
+ : OK, pas de problèmes.
+ Ce truc a plus été teste que votre recycleur d'air.
+ Pas d'inquiétudes a avoir.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : C'est la première fois qu'on le démarre dans ces conditions.
+ Tout peut arriver.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lefèbvre
+\emph default
+ : Active la procédure de vérification au lieu d'être pessimiste.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Début dans 3...
+ 2...
+ 1...
+\end_layout
+
+\begin_layout Standard
+Les lumières s'éteignent dans le vaisseau.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Scheisse ! Je vous l'avais dit !
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Non, c'est juste le secondaire qui s'est coupe, les lumières et les pressuris
+eurs sont sur off.
+ Ordinateurs en mode d'économie.
+ Tout le reste marche.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Novotny
+\emph default
+ : J'ai bien crut qu'on allait y passer.
+ Tout va bien.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Vérifications terminées, tout est OK.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lefèbvre
+\emph default
+ : Lynch, remet les lumières.
+ Il ne reste qu'a appuyer sur 
+\begin_inset Quotes fld
+\end_inset
+
+on
+\begin_inset Quotes frd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : On peut le laisser comme ça, je remettrais tout en place lorsque ça aura
+ démarré.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Novotny
+\emph default
+ : Je dois aller sur le pont de D-5 pour le démarrage.
+ Un peu de lumière serait utile.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : OK...
+ OK.
+\end_layout
+
+\begin_layout Standard
+Les lumières sont de nouveau allumées.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Novotny
+\emph default
+ : Merci.
+\end_layout
+
+\begin_layout Standard
+Lefèbvre : Tout le monde est prêt pour le lancement ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Novotny
+\emph default
+ : Pas encore.
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Dépêche toi, je commence a m'ennuyer.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Novotny
+\emph default
+ : OK, prêt.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lefèbvre
+\emph default
+ : Démarrage du réacteur nucléaire dans 3...
+ 2...
+ 1...
+\end_layout
+
+\begin_layout Standard
+L'intérieur du vaisseau s'éclaire comme un sapin de Noël.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Wouhou !
+\end_layout
+
+\begin_layout Standard
+Les lumières s'éteignent alors que le vaisseau se met a grincer avant de
+ produire une forte secousse projetant les astronautes au sol.
+ 
+\end_layout
+
+\begin_layout Chapter
+Shooting star
+\end_layout
+
+\begin_layout Standard
+Un politicien Japonais véreux sort de sa voiture et se dirige vers le tribunal
+ montant les marches lourdement sous les insultes d'un publique énervé et
+ mouillé par la pluie battante de cet après-midi d'automne.
+ Kitamura Takashi, militaire et garde du corps de ce genre de personnalités
+ ne perd pas son calme, elle guide l'homme a travers la foule, repousse
+ les quelques manifestants qui traversent le cordon de police.
+ Peu lui importe ce qu'a fait la personne, qui elle est et pourquoi elle
+ la guide vers un tribunal.
+ Tout ce qu'elle sait c'est que sa mission est de l'amener sain et sauf
+ a son jugement.
+\end_layout
+
+\begin_layout Standard
+Elle ne pense qu'a la mission et ne laisse pas ses sentiments la contrôler.
+ Elle a elle aussi une petite fille, ce scandale devrait la toucher si ce
+ n'était pour la mission elle le frapperait.
+ Mais elle doit le protéger jusqu'au tribunal, attendre la fin de la séance,
+ l'escorter a nouveau a sa voiture, l'accompagner chez lui et l'y laisser
+ entre les mains de ses gardes du corps.
+\end_layout
+
+\begin_layout Standard
+Plus que quelques marches et elle introduit l'homme dans le hall.
+ Son protégé semble heureux, sa joie n'est pas un critère important pour
+ sa mission, mais elle se permet tout de même de remarquer que cet homme
+ accusé est heureux d'être insulte par la foule.
+\end_layout
+
+\begin_layout Standard
+Elle guide son mouton le long de l'allée de policiers a l'intérieur du bâtiment
+ et arrive a la porte de la salle du tribunal.
+ Ouvrant la porte elle jette un dernier regard sur son colis avant de le
+ baby-sitter a nouveau a la fin de la session remarquant que son visage
+ heureux a prit une expression triste.
+ Quelqu'un de faux, arborant une fausse image sculptée par des années de
+ mensonges et de vice...
+ Elle déteste les gens faux.
+\end_layout
+
+\begin_layout Standard
+Après avoir attendu patiemment que la session se termine qui aurait dut
+ être courte, mais des perturbations dans la salle ont allongé le temps
+ nécessaire pour finir les interrogatoires.
+ Le groupe retraverse le hall pour rejoindre la porte menant vers l'extérieur,
+ avant de l'ouvrir, tout le monde s'imprègne du brouhaha a l'extérieur,
+ les avocats préparent leurs 
+\begin_inset Quotes fld
+\end_inset
+
+sans commentaire
+\begin_inset Quotes frd
+\end_inset
+
+ habituels et, lorsqu'elle se sentit prêt, la garde du corps ouvrit la porte.
+ Elle était prête pour tout, mais pas pour ça.
+ Elle referma la porte violemment, attrapa l'homme politique par le bras
+ et le pressa vers les sous-sols alors que l'homme se débâtait pour tenter
+ de se libérer, que les avocats sont estomaques et qu'un autre garde du
+ corps ouvre la porte, la scène figeant les spectateurs.
+\end_layout
+
+\begin_layout Standard
+La foule crie, certes, mais pas après cet homme politique désormais oublie
+ de tous, mais ils crient de frayeur, courant aux abris.
+ A travers une percée dans les nuages d'orage en direction de l'ouest, le
+ ciel du couchant tente de faire une apparition.
+ 
+\begin_inset Quotes fld
+\end_inset
+
+Est-ce bien le soleil ou le ciel est-il en feu ?
+\begin_inset Quotes frd
+\end_inset
+
+ Cette question peut-sembler rhétorique pour beaucoup de gens, mais lorsque
+ des boules de feu géantes tombent du ciel, elle est entièrement justifiée.
+ Takashi prend son téléphone pour informer le commandement du changement
+ de plan et de la situation actuelle.
+ Normalement dans les moments de panique, les téléphones cessent de fonctionner
+ sous la charge des appels, mais les lignes militaires restent en fonctionnement.
+ Quelque chose d'étrange se passe.
+ Le politicien reprend un peu de ses esprits et demande :
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Politicien
+\emph default
+ : Les lignes sont coupées ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Takashi
+\emph default
+ : Oui.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Politicien
+\emph default
+ : Que va-t-on faire ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Takashi
+\emph default
+ : Aller au garage, il y a un véhicule blindé avec une radio a ondes courtes.
+\end_layout
+
+\begin_layout Standard
+Sous escorte il traversa rapidement le hall, laissant les autres dans la
+ panique et se dirigeant vers le sous-sol via un escalier de service.
+ La mission est toujours en cours.
+ Le garage est désert, la quasi totalité des voitures sont toujours la.
+ Les membres du jury, les juges et autres membres du tribunal sont toujours
+ dans le bâtiment.
+ Ils s'approchent du blinde numéro 34 dont Takashi ouvre la porte via un
+ code qui lui a été donne lors du de-briefing.
+ Elle se glisse sur le siège du conducteur alors que son protégé escalade
+ le cote passager et attrape la radio.
+\end_layout
+
+\begin_layout Standard
+Elle change de longueur d'onde pour se mettre sur la base militaire et appel.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Takashi
+\emph default
+ : Central, ici charly echo lima 87.
+ A vous.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Dispatch
+\emph default
+ : Charly echo lima 87, ici central, on vous reçoit 2/5.
+ A vous.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Takashi
+\emph default
+ : Je suis coincée avec mon colis dans le garage du tribunal de grandes
+ instances.
+ Les rues sont dans le chaos due a la pluie de météores et impossible de
+ joindre mon officier supérieur.
+ A vous.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Dispatch
+\emph default
+ : Aucun contact possible, toutes les lignes sont coupées.
+ Nous vous mettons sur liste d'attente, votre officier supérieur reprendra
+ contact avec vous sur cette fréquence ASAP.
+\end_layout
+
+\begin_layout Chapter
+Oh! SNAP! (Systems Nuclear Auxiliary Power Program)
+\end_layout
+
+\begin_layout Standard
+Hendriks entend un bourdonnement sourd dans le lointain, sa tête est lourde
+ et son corps douloureux.
+ Malgré ses efforts ses yeux restent clos.
+ Quelques secondes passent, le bourdonnement est en fait quelqu'un qui appel
+ son nom.
+ Il ouvre les yeux et reconnais les traits de van Leeuwen, un hollandais
+ blond a large carrure d'épaule penche sur lui.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Qu'est ce qui s'est passe ?
+\end_layout
+
+\begin_layout Standard
+Il posa cette question par réflexe se redressant péniblement.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Aucune idée, j'ai coupe le réacteur et Lynch a repasse le système sur
+ le SNAP.
+ Il marmonnait quelque chose a propos de l'énergie que l'on a utilise.
+ La bonne nouvelle c'est que le réacteur n'a pas explose.
+ La mauvaise c'est qu'on n'a aucune idée de ce qui a bien put se passer.
+\end_layout
+
+\begin_layout Standard
+Van Leeuwen suait, de grosses gouttes roulaient sur sa figure.
+ Maintenant qu'Hendriks y pensait, c'était vrai, il faisait très chaud.
+ Le circuit de refroidissement serait-il coupe ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Comment vont Novotny et Lefèbvre ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Impossible de les contacter.
+ Je suis venu ici comme tu étais le plus proche et on va aller voir comment
+ vont les autres.
+ Lynch a commence a réparer le générateur...
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Quoi !? Il veut relancer le réacteur tout de suite ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Non, il est sur le secondaire, le SNAP.
+ Il dit que quelque chose ne va pas et que c'est la raison pour laquelle
+ les lumières sont faibles.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Et moi qui pensait que c'était mes yeux...
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Plus j'y pense, plus j'ai l'impression que quelque chose a change ici.
+ J'arrive pas a mettre le doigt dessus.
+ Et je ne parle pas de la clim qui est en panne et des lumières qui se coupent
+ quand Lynch « répare » le générateur.
+\end_layout
+
+\begin_layout Standard
+Il regarde son coéquipier toujours assis sur le sol.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Ça va ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Ouais...
+ je pense.
+ Ma tète est lourde et il fait chaud.
+ Mais je vais bien.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : OK, je vais aller au centre de contrôle pour trouver Lefèbvre, tu peux
+ aller voir Novotny ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Je pense...
+ Ouais.
+ Ou est-il ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Il était en D-5 quand c'est arrive.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : OK, c'est partit.
+\end_layout
+
+\begin_layout Standard
+Hendriks se releva péniblement, aide par Van Leeuwen, il se firent un signe
+ de la main et les deux hommes se séparèrent, l'un se glissant dans la bouche
+ béante d'une échelle a ses pieds, l'autre suivant une coursive sombre.
+ Après quelques pas dans le calme tout en reprenant ses esprits, la lumière
+ s'éteignit lentement.
+ Hendriks réactive sa radio pour entendre van Leeuwen parler a Lynch.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Qu'est ce que tu fais encore ? Ces échelles glissantes sont assez dangereuses
+ comme ça !
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Pardon, le SNAP pète un câble ! Et moi aussi !
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : C'est quoi un SNAP au fait ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch 
+\emph default
+:
+\emph on
+ 
+\emph default
+C'est un RITEG.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Je suis suppose de savoir ce qu'est un RIMEG ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : RITEG, comme dans radio-isotope thermoelectric generator.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Ce qui est un...
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Une canette de bière avec un produit radioactif dedans.
+ Ça fait de la chaleur et cette chaleur est transformée en électricité.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Donc c'est comme un réacteur nucléaire ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Tu as suivit l'entraînement ou quoi ? On a le SNAP, la canette de bière.
+ Il produit peut d'énergie mais pendant tre~~es longtemps.
+ Normalement ils sont utilises dans les satellites et marchent pendant environ
+ 80 ans.
+ C'est super stable, ça ne s'emballe pas, rien de dangereux ne peut arriver
+ avec eux.
+ Mais ils ne sont pas puissant du tout.
+ Pour alimenter cette petite portion de la station...
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Stop ! J'ai entendu quelque chose.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Quoi ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Lefèbvre ? C'est toi ?
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Pardon, j'avais crut entendre quelque chose.
+ Je suis pas mal stresse.
+ Continue.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : On en était ou ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Tu parlais d'utiliser des canettes des bière pour alimenter la station.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Ha ! Ouais.
+ Enfin seulement Bérénice, pas Eunice.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Donc juste le vaisseau expérimental.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : C'est bien ça.
+ Donc, pour alimenter Bérénice nous avons plusieurs centaines de ces canettes.
+ Et c'est tout juste suffisent pour faire marcher les systèmes de survie,
+ les lumières et les sécurités du réacteur.
+ Pour les expériences, qui utilisent beaucoup de puissance, il y a un petit
+ réacteur nucléaire conventionnel.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Mais ça ne marche pas.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Le réacteur ? Ouais, va falloir trouver ce qui a foire...
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Non, les canettes, tu bosses sur le SNAP en ce moment, non ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Ha~ Ouais.
+ Ils marchaient bien jusqu'à ce que l'on démarre le réacteur.
+ Maintenant ils produisent peut de chaleur, comme si ils étaient vides.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : On a trop tire dessus ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Pas vraiment, la chaleur produite est constante, l'énergie produite est
+ donc constante.
+ On a une batterie pour garder l'énergie produite et que l'on a vidée durant
+ la procédure, mais l'énergie produite devrait être la même, donc les batteries
+ devraient se recharger.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Problèmes de batterie ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Peut-être, ou de convertisseur chaleur-énergie, ou de régulateur.
+\end_layout
+
+\begin_layout Standard
+Durant la conversation, Hendriks a traverse plusieurs coursives et a désormais
+ atteint la section D.
+ Il passe la lourde porte du sas de cloisonnement et se prépare a traverser
+ les sections 2 a 4 de la section D.
+ Les indications sur les murs indiquent que cette section est faite pour
+ la gestion du réacteur qui se situe a une extrémité du cylindre nomme 
+\begin_inset Quotes fld
+\end_inset
+
+Bérénice
+\begin_inset Quotes frd
+\end_inset
+
+.
+ La section A, a l'oppose est la portion utilisée pour les expériences.
+ Ce design a été crée de telle sorte qu'une expérience malheureuse ne puisse
+ endommager le réacteur sans avoir détruit tout l'engin.
+ Pour limiter tous les risques, chaque sous-section de D est fermée par
+ de lourds sas et aucune coursive ne relie directement le réacteur a l'extrémité
+ de la section.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Pourquoi est-ce qu'ils ont fabrique un vaisseau pareil ? Ce serait pas
+ mieux si on avait un couloir large, droit qui va d'un bout a l'autre du
+ vaisseau ? Je me sens comme un rat dans une expérience.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Ils n'y a pas de couloir droit pour de nombreuses raisons.
+ Comment as-tu fait pour arriver ici sans rien savoir a tout ça ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Je n'ai pas été envoyé ici comme technicien, mais comme scientifique.
+ Je suis la pour faire la première expérience du PLET a bord de Bérénice.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Bon, pour répondre a la question, les couloirs, ainsi que les salles
+ sont petits pour limiter le volume d'air a l'intérieur l'air coûte chère
+ ici.
+ Les couloirs ressemblent a un labyrinthe complexe car si jamais il y a
+ une brèche dans un secteur, la décompression d'un long couloir rectiligne
+ ouvrirait le vaisseau comme une banane.
+ Et ils ont prévu que votre expérience puisse tenter de simuler le bigbang,
+ donc le surplus de murs zigzaguant ajoutent en renforts.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Ils auraient put faire des murs plus épais et mettre plus de sas le long
+ du chemin.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Ça n'a pas été construit pour être un hôtel 5 étoiles c'est vrai.
+ Mais il faut savoir que ça coûte chère de mettre en orbite tout ça, ils
+ limitent les frais en donnant plus de fonctionnalités aux éléments et en
+ réduisant le confort.
+ Y a pas trop a se plaindre, on a au moins de la gravite artificielle.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Ce serait mieux sans gravite !
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Tu te sentirais comme un poisson rouge au lieu d'un rat.
+ C'est la même chose pour moi.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Lynch, si tu connais si bien ce vaisseau.
+ Tu peux me dire pourquoi il y a de l'eau partout ? C'est pas mal glissant
+ et avec ces combinaisons...
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : De l'eau ??? De quoi tu parles ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Il y a de l'eau sur les murs, le plafond, le sol, les échelles, partout
+ !
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Oula.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Qu'est ce que c'est censé vouloir dire ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Le seul endroit ou il y a plus d'eau que ce que peut contenir une bouteille
+ c'est le circuit de refroidissement du réacteur.
+ Si cette eau est dans l'air alors ça peut vouloir dire 2 choses.
+ Premièrement c'est que le circuit de refroidissement est perce, c'est pas
+ si grave comme le liquide n'est pas en contact avec des produits radioactifs.
+ Par contre une partie du système contient de l'azote qui peut être dangereux.
+ La seconde possibilité est que si cette eau s'est évaporée, alors le réacteur
+ a surchauffe ou le combustible nucléaire a percé la cuve et est tombe dans
+ le système de refroidissement...
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Scheisse, scheisse, scheisse !
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Qu'indique ta combinaison ? L'indicateur de qualité d'environnement ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Il indique....
+ Scheisse ! Il indique rien, il est pété.
+ Hendriks tu nous reçoit ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : 5 sur 5 !
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Hey Hendriks ! Content que tu sois en vie, je pensais être tout seul
+ avec cet incompétent du pays bas.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : La ferme Lynch ! Hendriks, qu'indique ta combinaison au niveau de la
+ qualité de l'air ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Tout est OK et je suis le plus proche du réacteur, il ne devrait y avoir
+ aucun problème.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Ça peut toujours vouloir dire que le réacteur est actif et qu'il fond
+ le vaisseau ! Hendriks ! Fonce couper le réacteur depuis la console de
+ D-5 !
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : C'est partit !
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Attends ! ...
+ Tu vois de l'eau autour de toi ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Ouais, on dirait une voiture en hiver avec 8 personnes dedans.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : On pourrais avoir produit toute cette eau ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Non, nous ne sommes que 5 dans tout le vaisseau et il n'y a pas de condensati
+on dans la pièce ou je suis.
+\end_layout
+
+\begin_layout Standard
+Hendriks reprit son chemin de plus belle, slalomant au milieu des tuyaux
+ et des câbles en direction de la section D-5.
+ Il devrait y trouver Novotny près du bouton stop.
+ Après avoir marche pendant quelques minutes dans les couloirs sombres et
+ humide, il remarque au bord de la ventilation la présence d'une mousse
+ fine et verte.
+ Il prend la radio.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Hey ! Il y a de la moisissure qui sort de la ventilation.
+ Qu'est ce quelle fout la ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : De la moisissure ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Ouais ! Je savais bien qu'un truc clochait et que j'arrivais pas a trouver
+ ce que c'était !
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Ça pourrais expliquer pourquoi la clim ne marche plus.
+ Il y en a beaucoup ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Juste une fine pellicule ici en D-2.
+ Mais d'où est-ce qu'elle viens ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Je n'en vois pas vers le SNAP.
+ C'est peut-être lie a l'eau que vous voyez...
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : On est en environnement contrôle et on a respiré de l'air filtre et recycle
+ depuis avant notre départ de la Terre.
+ Il ne devrait pas y avoir de moisissure qui provient de ça.
+ On a amené quelques spécimens pour faire des expériences.
+ Je ne sais pas si les containers sont sur Bérénice ou Eunice avec le fiasco
+ du départ.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Un container endommage pourrais contaminer autant ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : La composition de l'air est différente, je ne sais pas comment les moisissure
+s devrait y réagir.
+ Mais il faut chaud, humide, il y a une circulation de l'air continuelle.
+ Je pense que oui, elles peuvent pousser assez vite.
+ De la a conquérir tout le module j'en doute.
+ Ça pourrais être un produit réfrigérant qui ressemblerait a de la mousse
+ ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : La majorité du circuit de refroidissement passe dans le secteur D pour
+ refroidir le réacteur mais je n'arrive pas a penser a un produit qui pourrais
+ ressembler a de la moisissure.
+ Mais avec cette composition de l'air, c'est possible.
+\end_layout
+
+\begin_layout Standard
+Hendriks arrive vers les commandes de démarrage du réacteur nucléaire dans
+ le secteur D-5.
+ Il est asse heureux d'être arrive, quelque chose d'étrange flotte dans
+ l'air et il n'arrive pas a mettre le doigt dessus.
+ Comme si quelque chose avait change depuis le lancement du réacteur.
+ Il y a bien les coupures de courant, l'eau omniprésente et la mousse, mais
+ quelque chose a change et est soit cache, soit trop visible pour s'en rendre
+ compte.
+ Il regarde autour des commandes pour voir s'il trouve ou entend Novotny,
+ il appel plusieurs fois.
+ Rien, Novotny s'est envole.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Ici Hendriks, je suis arrive.
+ Novotny n'est pas ici.
+ Je vais le chercher quand j'aurais vérifie l'état du réacteur.
+ Mais c'est un sacré bordel ici ! Tout le matériel est tombé.
+ Beaucoup de casse.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : OK, la vérification ne devrait pas prendre beaucoup de temps.
+ Pour Novotny, il s'est peut-être perdu dans le vaisseau et sa radio est
+ peut-être cassée.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : On en est ou avec le SNAP ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Si j'ose dire, tout semble parfaitement bien fonctionner.
+ Il semblerait juste que depuis la coupure les matériaux radioactifs se
+ désagrègent plus rapidement qu'ils ne le devrait.
+\end_layout
+
+\begin_layout Standard
+Hendriks se tourne vers l'écran de la console du réacteur et presse le bouton
+ 
+\begin_inset Quotes fld
+\end_inset
+
+self-check
+\begin_inset Quotes frd
+\end_inset
+
+, l'écran affiche un test ajoutant des lignes progressivement et se terminant
+ par 
+\begin_inset Quotes fld
+\end_inset
+
+Warning, emergency reactor lock down due to overheating or power surge.
+ Warning, coolant tubes rupture, water level low.
+ Warning, high water level in air intake.
+\begin_inset Quotes frd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Le test viens de se finir, le réacteur s'est coupe pour cause de surchauffe
+ ou de surcharge.
+ Les tubes de refroidisseurs fuient et il y a trop d'eau dans l'entrée d'air.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Donc le problème se serait passe ainsi, le réacteur se lance, bouffe
+ une grosse quantité d'énergie depuis le SNAP pour commencer la réaction
+ déréglant leurs régulateurs, la réaction en chaîne commence et produit
+ beaucoup de chaleur ce qui fait péter un joint et on a une perte de liquide
+ de refroidissement.
+ Avec moins de liquide et de pression, la température interne grimpe fait
+ bouillir le liquide de refroidissement, le système remarque qu'il y a un
+ problème et coupe tout.
+ On se retrouve avec un réacteur coupe, une grande quantité de vapeur d'eau
+ dans l'air qui se condense sur les murs, des SNAPs qui ont soufferts et
+ des tuyaux pétés.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : On fait quoi ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Heu~
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Je coupe tout ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : On peut pas couper mieux que la coupure d'alerte, autant le laisser ainsi.
+ Le réacteur est verrouillé, mais on a pas de raison d'y aller.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Il faudrait chercher ou se trouve la fuite, la colmater, renforcer un
+ peu plus, collecter l'eau et relancer avant que les SNAPs ne lâchent.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Ça semble en effet ce qu'il faudrait faire mais ça semble pas mal complexe,
+ on s'y prend comment pour trouver cette fuite ? Il y a de l'eau partout
+ et le circuit de refroidissement fait presque toute la longueur du vaisseau.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : On met un radio-isotope dans le circuit de refroidissement et on regarde
+ ou on retrouve sa trace.
+ Il y en dans la soute a matériel expérimental en secteur A.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Et pour collecter l'eau ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : On n'a pas vraiment besoin de collecter l'eau s'il y en a encore assez
+ en réserve, non ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Ouais, mais le réacteur ne va pas démarrer avec autant d'eau dans l'air.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Facile, on coupe la ventilation du secteur D, on ouvre une porte sur
+ l'extérieur jusqu'à décompression et on remplit a nouveau D avec de l'air
+ neuf.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : On ne peut pas décompresser la zone du réacteur, ça ne tiendra jamais.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Laissez moi réfléchir, je vais trouver quelque chose rapidement.
+ Réparer la fuite semble plus important.
+ Je vous laisse, je dois me glisser dans un conduit pour atteindre la salle
+ de contrôle, les portes déconnent pas mal par ici.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Hendriks.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Oui ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Partageons le sale boulot si tu le veux bien.
+ Je laisse les SNAPs tranquilles comme je ne peut rien leur faire et je
+ vais en D-5 pour chercher Novotny, j'irai dans la salle du réacteur pour
+ y mettre l'isotope, on fera tous les 2, sinon plus, la recherche de cette
+ fuite que je colmaterais.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Pour le moment ça me plaît, mais je fais quoi dans cette histoire ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Tu fonces en secteur A chercher l'isotope et les détecteurs, tu m'aides
+ a chercher la fuite et ensuite tu aides von Leeuwen avec son futur plan
+ pour retirer l'eau de l'air.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Ça marche, je serais pas fâché de quitter le secteur D.
+\end_layout
+
+\begin_layout Standard
+Hendriks repart dans les couloirs tortueux du vaisseau pour retourner vers
+ D-1 puis traverser jusqu'au entrepôts de A.
+ Durant son chemin, il prête attention au moindre bruit pour tenter de trouver
+ Novotny qui a peut-être prit la même route.
+ Durant son périple, il vit une forme bouger rapidement.
+ Impossible de savoir de qui il s'agit, mais c'était humain mais sans combinaiso
+n.
+ Peut-être Novotny ? Il appela, rien.
+ Il suivit la même direction, courant après cette silhouette qui se déplace
+ rapidement, se glissant comme un chat.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Ici Hendriks, je pense avoir trouve Novotny.
+ Il court dans le secteur D.
+ Il est super rapide et il ne répond pas.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Tu penses qu'il a sabote le réacteur ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Je ne sais pas, je ne sais même pas si c'est lui.
+ Lynch, ou es-tu ?...
+ Lynch ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Ho....
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Il faut que je le rattrape.
+\end_layout
+
+\begin_layout Standard
+Courir avec une combinaison dans un environnement chaud, avec une humidité
+ saturée en gravite artificielle est un sport très difficile même pour des
+ hommes surentraînés comme l'est Hendriks.
+ La silhouette s'arrête et tente d'ouvrir une porte qui ne cède pas sous
+ ses essais permettant au cosmonaute de la rattraper et de reconnaître Lynch.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Lynch !? Qu'est-ce que tu fais habille comme ça ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : J'ai pas put trouver une porte qui fonctionne sur la route, j'ai dut
+ laisser ma combinaison pour me glisser dans un petit conduit.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Et tu as oublie ta radio ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Heu...
+ non, elle est la, juste...
+ voila elle est branchée.
+ Elle a dut se débrancher durant mon passage dans un conduit.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Pour les portes, ça viens des SNAPs ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Normalement il devrait y avoir assez de puissance pour ça, un verrou
+ ça n'utilise pas beaucoup.
+ Et dans tous les cas le mode manuel devrait marcher.
+ Ça viens peut-être de l'eau qui court-circuite un peu tout.
+ Je sais pas.
+\end_layout
+
+\begin_layout Standard
+Hendriks coupe sa radio.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Je me demandai...
+ lorsque le réacteur s'est coupe il y a eut un choc qui m'a fait tomber
+ et m'assommer.
+ Normalement une coupure d'urgence devrait juste couper le courant et ne
+ pas secouer tout Bérénice.
+\end_layout
+
+\begin_layout Standard
+Lynch pointe sa radio l'air interrogatif.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Je ne veux pas inquiéter van Leeuwen, il est assez préoccupé je pense.
+ 
+\end_layout
+
+\begin_layout Standard
+Lynch coupe a son tour sa radio.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Je me suis pose la même question.
+ Et j'en suis arrive a plusieurs conclusions.
+ Je n'ai rien dit pour ne pas sembler sombrer dans la panique.
+ La première c'est que la fuite est énorme et a cause une petite explosion,
+ si ça se trouve la forme tubulaire du vaisseau peut-être voilée.
+ Dans ce cas, la mission est un échec, on retourne dans Eunice et on préviens
+ la Terre que le module expriment al a foire...
+ La seconde c'est qu'on a été percuté par quelque chose qui a endommagé
+ une partie du module, un météore qui aurait percé les radiateurs et fait
+ surchauffer le réacteur par exemple.
+ Ça peut-être facile a réparer mais aussi un échec.
+ C'est moins grave car ça ne remet pas en cause le design du module, juste
+ un manque de chance grandiose.
+ La dernière c'est que durant le peut de temps que le réacteur a marche,
+ de l'électricité a été produite et qu'elle a été relâchée dans les circuits
+ d'un seul coup lorsque la sécurité s'est mise en place.
+ Le surplus d'énergie aurait affole la gravite artificielle et nous aurait
+ jeté au plafond puis contre le sol.
+\end_layout
+
+\begin_layout Standard
+Le visage d'Hendriks se détend un petit sourire parcourt ses lèvres.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : C'est pas si mal en fait.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Pas si mal ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Depuis l'incident j'ai une espèce de pressentiment, comme si quelque
+ chose d'évident m'échappait.
+ Comme si quelque chose avait change, que mon cerveau réagirait a ce changement
+ mais ne me donnait pas de réponse quand a ce que ça peut être.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Bah~ On est tous nerveux, c'est normal.
+ Pas de quoi s'affoler.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Ouais je dois me faire des idées.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Reprenons la mission.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : N'oublies pas ta radio.
+\end_layout
+
+\begin_layout Standard
+Les deux hommes sourient.
+ Et réactivent leurs radios.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : ...vous ! Scheisse ! Diese radio ...
+ 
+\end_layout
+
+\begin_layout Standard
+Van Leeuwen, énervé se bat avec sa radio.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : On te reçois.
+\end_layout
+
+\begin_layout Standard
+Dit calmement Lynch surprenant van Leeuwen qui reste silencieux quelques
+ secondes.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : ...
+ heu...
+ ouais, je disais.
+ Hendriks a un problème, j'arrive pas le joindre !
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Hendriks est a cote de moi, tout va bien.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Ho ! Vous avez retrouve Novotny ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Non, on s'est croise avec Hendriks et on s'est fait peur.
+ Rien de grave.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Ce vaisseau me tape sur les nerfs ! Il y a de l'eau partout, les portes
+ déconnent, entre la mousse et les toiles d'araignées les conduits sont
+ impraticables.
+ Sans compter ce mur orange et chaud.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Des toiles d'araignées ? Un mur orange ? Je pense que tu devrais prendre
+ quelques minutes de repos.
+\end_layout
+
+\begin_layout Standard
+Hendriks fait un signe a Lynch et reprend sa route vers le secteur A.
+\end_layout
+
+\begin_layout Chapter
+Sous la pluie d'étoiles
+\end_layout
+
+\begin_layout Standard
+Attendant patiemment dans le véhicule blindé, Takashi n'écoute pas ce que
+ dit le politicien a ses cotes.
+ Elle sait le véhicule sur, elle sait qu'elle peut maîtriser cet homme avec
+ un seul bras.
+ Elle doit attendre de nouvelles instructions.
+ Les membres du tribunal ainsi que du publique ont déjà quitte le bâtiment
+ il y a plusieurs minutes, dans la précipitation causant plusieurs accidents.
+ En haut du pan incline menant du parking sous terrain a la route, la porte
+ restée ouverte montre le chaos dans la rue.
+ Le ciel n'est pas visible depuis le sous-sol.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Dispatch
+\emph default
+ : Central pour charly echo lima 87, central pour charly echo lima 87, central
+ pour charly echo lima 87.
+ Vous nous recevez ? A vous..
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Takashi
+\emph default
+ : Central, ici charly echo lima 87.
+ A vous.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Dispatch
+\emph default
+ : Nous vous connectons a votre officier supérieur.
+\end_layout
+
+\begin_layout Standard
+Quelques secondes passent, le politicien est de nouveau silencieux, il attend
+ de savoir ce qui va lui arriver.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Major
+\emph default
+ : Takashi, vous me recevez ? A vous.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Takashi
+\emph default
+ : Major, je vous reçois 5 sur 5.
+ A vous.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Major
+\emph default
+ : Quelle est votre situation ? A vous.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Takashi
+\emph default
+ : Je suis dans le garage du tribunal avec le colis.
+ Nous sommes dans le véhicule blindé 34.
+ En attente de nouvelles instructions.
+ A vous.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Major
+\emph default
+ : Parfait, vous allez devoir rejoindre l'hôpital général ASAP.
+ Nous préparons une extraction a partir de ce point.
+ A vous.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Takashi
+\emph default
+ : Quel itinéraire pour rejoindre l'hôpital ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Major
+\emph default
+ : Évitez les grands axes, nos équipes conseillent les ruelles et de passer
+ via les halls d'entrées de immeubles.
+ A vous.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Takashi
+\emph default
+ : Le blinde ne passera jamais.
+ A vous.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Major
+\emph default
+ : Vous allez devoir aller a pied, les rues sont dans le chaos, les véhicules
+ motorisés sont trop dangereux a utiliser.
+ A vous.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Takashi
+\emph default
+ : Quel moyen de communication est encore en état ? A vous.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Major
+\emph default
+ : La radio est vraiment le seul restant.
+ Des portions du réseau téléphonique filaire fonctionne encore.
+ Entre le tribunal et l'hôpital, vous êtes seuls.
+ D'autres questions ? A vous.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Takashi
+\emph default
+ : Une seule, Qu'est ce qui se passe dehors ? Météores ? A vous.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Major
+\emph default
+ : Négatif pour les météores, les débris en feu proviennent de nos satellites.
+ Donc plus de GPS ou de cellulaires.
+ A vous.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Takashi
+\emph default
+ : Corée du nord ? A vous.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Major
+\emph default
+ : Inconnu pour le moment mais fort peu probable.
+ Termine.
+\end_layout
+
+\begin_layout Standard
+Takashi et son colis quittent l'abri du véhicule blindé et partent sous
+ la pluie de satellites.
+ Le politicien voulait faire fit des ordres et foncer avec le blinde, mais
+ Takashi s'est être très persuasive.
+ Ils doivent rejoindre l'hôpital a pied dans le chaos.
+\end_layout
+
+\begin_layout Standard
+Le parking donne dans une petite rue tournant autour du bâtiment, en traversant
+ cette rue et le reste du bloc, on rejoint une artère principale ou on peut
+ voir les gens courir.
+ Sur la gauche se trouve une voiture vide accidentée.
+ Takashi se souviens l'avoir vue sortir du parking a vive allure.
+ Elle déplie la carte de la ville et la replie pour ne montrer que la portion
+ entre l'hôpital et le tribunal.
+ Elle sort un stylo et entoure les 2 points, elle trace un itinéraire entre
+ les 2, passant par les plus petites routes et ruelles possibles.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Politicien
+\emph default
+ : Les militaires n'ont pas de meilleur équipement que ça ?
+\end_layout
+
+\begin_layout Standard
+Elle se retourne, regarde fixement cet homme corpulent et prend la ruelle
+ sur la droite.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Takashi :
+\emph default
+ Allons-y.
+\end_layout
+
+\begin_layout Standard
+Le chemin n'est pas difficile, personne ne pense a prendre les ruelles dans
+ de telles conditions.
+ Seules les personnes blessées par la foule viennent s'y allonger priant
+ pour de l'aide.
+ Pour Takashi cette vision lui rappel les nombreuses manifestations ou elle
+ a prêté main forte, pour le politicien il a lus l'impression d'être tombé
+ de son trône dans un caniveau boueux.
+ Cet homme n'étant pas intéressé par le sport en dehors de la publicité
+ que ça lui rapporte aux élections doit être aidé par cette militaire pour
+ franchir certains obstacles le blessant dans sa masculinité.
+ Il est bien vite impressionne par cette femme qui ne perd pas son sang
+ froid et que rien ne semble arrêter.
+\end_layout
+
+\begin_layout Standard
+Fatigue par la marche, le politicien demande a faire des poses, faites le
+ plus souvent dans des halls d'immeubles.
+ Plusieurs fois Takashi doit modifier l'itinéraire pour assurer la sécurité
+ de son colis.
+\end_layout
+
+\begin_layout Standard
+Alors qu'ils arrivent a proximité de l'hôpital, du haut d'une colline offrant
+ une vue sur la ville, le politicien tombe a genoux.
+ Takashi pense qu'il est heureux de voir enfin l'hôpital ou que la vision
+ du chemin restant a parcourir en est trop pour lui.
+ Mais son visage exprime la terreur.
+ Le politiciens pointa son doigt tremblant vers le ciel.
+ Takashi regarda dans cette direction et vit une boule rouge dans le ciel.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Takashi
+\emph default
+ : Le soleil couchant ?...
+ Non, c'est impossible il est bien trop tard.
+ Comment se fait-il qu'il fasse toujours jour ? Il devrait faire nuit !
+\end_layout
+
+\begin_layout Standard
+Regardant tout autour, elle remarque d'autres points rouges, devenant de
+ plus en plus gros.
+ Ils ressemblent a des gros boutons qui pousseraient sur le ciel.
+ Un ciel bosselé et en feu.
+\end_layout
+
+\begin_layout Standard
+Elle attrapa l'homme politique par le bras et l'entraîna en courant vers
+ le bas de la colline, vers l'hôpital, vers la sécurité.
+ Les pustules rouges et lumineuses deviennent de plus en plus grosses et
+ un bourdonnement sourd s'empare des oreilles de Takashi.
+ Fatigue ? Stress ? Véritable bourdonnement ? Pas le temps de réfléchir,
+ elle coure, entraînant l'homme avec elle.
+ Arrive presque au bas de la colline, un météore viens s'écraser contre
+ l'hôpital arrachant une partie du bâtiment.
+ Takashi et l'homme tentent de s'arrêter, ils tombent et roulent sur le
+ bitume.
+ Arrêtant sa course sur le dos, dans le caniveau, Takashi vois ces 
+\begin_inset Quotes fld
+\end_inset
+
+météores
+\begin_inset Quotes frd
+\end_inset
+
+ sortir des pustules et s'écraser sur la ville.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Takashi
+\emph default
+ : Qu'est ce que c'est que ça ?
+\end_layout
+
+\begin_layout Standard
+Elle ne voit pas le politicien, mais elle l'entend réciter des prières lorsqu'un
+e des pustule creva laissant sortir objet volant sombre de faible taille
+ par rapport a la pustule d'où il en sort, mais de taille gigantesque par
+ rapport a tout ce qui n'a jamais traverse le ciel.
+ Une personne sort d'une maison et s'arrête dans son jardin et se met a
+ hurler.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Homme
+\emph default
+ : Ils arrivent !
+\end_layout
+
+\begin_layout Chapter
+Le mur orange - TODO
+\end_layout
+
+\begin_layout Standard
+Hendriks continue sa route vers le secteur A.
+ Les mouvements sont de plus en plus complexes avant de redevenir presque
+ simples.
+ Il y a moins de mousse et d'eau, les portes fonctionnent assez bien et
+ les toiles d'araignées ont disparues.
+ Il n'avait rien dit au sujet de ces toiles, ou au sujet des bruits de pas
+ précipités et des coups qu'il entend par moment pour ne pas passer pour
+ plus dingue que Van Leeuwen mais une fois arrive en face d'un mur orange
+ qui coupe une salle en 2 nettement, un écran d'une console ayant comme
+ glisse dans le mur s'en est trop.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Heu...
+ je pense qu'on a un problème.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Lequel ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Le fameux mur orange, il est en face de moi.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Quoi ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Je ne suis pas fou ! Il y a bien un mur orange par ici.
+ J'ai test plusieurs chemins possibles, a chaque fois j'ai atteint ce mur
+ orange.
+ Il coupe les couloirs, les pièces, les conduits de ventilation.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Il n'y a pas de mur orange sur ce vaisseau !
+\end_layout
+
+\begin_layout Standard
+Hendriks place son oreille contre le mur orange pour tenter de percevoir
+ un son.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Et en plus ce mur est chaud ! Qu'est ce qu'il fait la ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Ce n'est pas possible.
+ Vous me faites une blague !
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Sur Eunice il y a des murs oranges.
+ vous pensez qu'après l'incident on se soit crashé dans Eunice ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Impossible, il n'y a pas de moteurs sur ce module.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Et si une surcharge avant que le réacteur ne se coupe avait fait bouger
+ Eunice au lieu de nous ? Dans tout ça j'avais totalement oublie Eunice.
+ Maintenant que l'on sait que le réacteur ne risque pas d'exploser on peut
+ retourner se reposer dans la station et réfléchir a tout ça calmement.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Tu oublies Novotny et Lefèbvre dans tout ça...
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Pour avoir une meilleure idée, allez au sas le plus proche et sortez
+ faire une promenade dans l'espace regarder la coque.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Je ne peut pas, ma combinaison est endommagée.
+ Scheisse !
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Je vais y aller, je suis passe près d'un sas sur mon chemin, je vais
+ y retourner et espérer qu'il fonctionne encore.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : OK.
+ Branche ta caméra, je vais la mettre sur tous les moniteurs qu'on voit
+ tout ça.
+\end_layout
+
+\begin_layout Standard
+Hendriks active sa caméra et rebrousse chemin pour atteindre le sas.
+ Il verrouille son casque, ouvre la première porte, entre, attache son harnais
+ au câble de sécurité, presse le bouton qui active la séquence de décompression
+ et ferme le filtre UV de son casque le plongeant dans le noir.
+ Le sas extérieur s'ouvre, il doit être du cote ombre car il ne voit rien
+ avec le filtre, il rouvrit le filtre alors que son corps passe lentement
+ hors du sas.
+ Il se retrouve face aux étoiles, protégé du soleil par le module, il se
+ tourne vers la droite, direction du mur orange.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Non de ...
+\end_layout
+
+\begin_layout Standard
+Un gigantesque engin orange est encastre dans le module.
+ La face exposée est plane et d'un longueur considérable.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Bordel de culs de babouins ! Qu'est-ce que c'est que ce truc ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Un morceau d'Eunice ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Non, ou quelqu'un a jouté ça durant la nuit sans me prévenir.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Ce sont les russes ! Novotny a sabote le réacteur nucléaire et ses 
+\begin_inset Quotes fld
+\end_inset
+
+camarades
+\begin_inset Quotes frd
+\end_inset
+
+viennent nous chercher !
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : C'est n'importe quoi ! Les russes n'ont pas de vaisseau de cette taille
+ !
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Parce que tu crois qu'ils nous disent tout ?
+\end_layout
+
+\begin_layout Standard
+Hendriks tire sur le câble de sécurité et retourne dans le sas.
+ Il relance la procédure de rentrée, la porte se refermant derrière lui.
+ Il sort du sas, retire son casque et s'assied.
+ Dans son oreillette Lynch et Van Leeuwen se battent toujours.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Cette théorie PLET, elle n'est pas censée rendre le voyage plus rapide
+ que la lumière possible ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : En fait non, c'est plus accélérer localement la vitesse de la lumière
+ et envoyer un message a la vitesse de la lumière....
+ Pourquoi ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Le choc après l'activation du réacteur, celui qui nous a fait perdre
+ l'équilibre et m'a assommé.
+ Je pense que c'est quand on a rencontre ce truc.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Qu'est-ce que tu veux dire ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Vous pensez qu'il est que quelqu'un a laisse l'expérience PLET sur 
+\begin_inset Quotes fld
+\end_inset
+
+ON
+\begin_inset Quotes frd
+\end_inset
+
+ sans y penser et que quand on a active le réacteur, l'expérience s'est
+ faite toute seule ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : C'est possible, mais il n'y a rien dans la chambre, donc même si c'était
+ le cas, rien n'a put se produire.
+ J'ai du mal a te suivre.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Imaginez que l'expérience a eut lieu, nous n'avons aucune idée de ce
+ qu'elle fait.
+ Tout ce que je sais c'est qu'elle a déjà détruit un centre de recherche
+ sur Terre et qu'ils ont construit ce module et cette station pour pouvoir
+ la tester sans faire trop de dégâts.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Et...?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Et je me demandais si ce centre de recherche ainsi que nous n'a pas,
+ sans le faire exprès atteint la vitesse lumière...
+\end_layout
+
+\begin_layout Standard
+Tout le monde reste silencieux.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Tu veux dire qu'on aurait voyage a super grande vitesse et que l'on s'est
+ écrasé dans ce...
+ truc ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Et si on avait pas voyagé comme ça, après tout, c'est vrai, on ne sait
+ pas ce que fait cette machine.
+ On pourrait avoir rapetissé et on verrai un morceau d'Eunice d'une taille
+ gigantesque.
+ On peut aussi être passé dans un univers parallèle.
+ On pourrait avoir voyage dans le temps et dans le futur il y a un gigantesque
+ container orange et chaud volant dans l'espace.
+ Si ça se trouve c'est un monument érigé à notre disparition.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Exactement.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : J'ai du mal a voir comment cette idée est plus crédible qu'une attaque
+ des russes.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Je plaisantais, c'est impossible.
+ Hendriks a pété un câble.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Elle sont toutes meilleures car elles expliquent le mur orange.
+ La théorie du complot russe non.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Qu'est ce que tu veux dire ?
+\end_layout
+
+\begin_layout Standard
+Hendriks se relève, prend son casque a la main et retourne en direction
+ du mur orange.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : C'est simple.
+ Très simple.
+ Si je prend un couteau, même bien aiguisé et que je coupe une orange bien
+ mure, un peu de jus va gicler, non ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Oui...
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Si je prends un petit ballon de baudruche, gonflé et que je le coupe,
+ que ce soit d'un coup sec avec un hachoir ou méthodiquement, de l'air va
+ fuir et le ballon va se dégonfler quelque soit la précision de ma coupe.
+ None ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Et si tu en arrivais au point ?
+\end_layout
+
+\begin_layout Standard
+Hendriks arrive dans la salle la plus proche avec le mur orange.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Le point est juste ici, si vous regardez ma caméra.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : OK, je vois un mur orange.
+ Je ne vois pas ce que ça vient faire avec ton histoire de ballon.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Si on considère le mur orange comme un couteau qui aurait coupé le module,
+ alors le verre du moniteur ici devrait être endommagé, mais la coupe est
+ parfaite.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : On peut couper du verre très proprement.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Il y a aussi le fait que lors de la coupe, cette section du module n'a
+ pas dépressurisé.
+ Elle aurait dut faire comme le ballon de baudruche, non ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Ouais ! Donc on n'a pas été coupé, mais on a fusionné avec le mur orange
+ si j'ai bien suivit.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Exactement.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : OK, pas mal.
+ Mais tu oublies un point.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Lequel ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Le mur est chaud.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Ha ! J'étais trop occupé a chercher dans le mystère que je n'y ai pas
+ pensé !
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : De quoi vous parlez ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Si le mur est chaud maintenant, il l'était encre plus avant, peut-être
+ assez pour faire fondre le module et se souder a lui fermant les fuites
+ d'air.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch 
+\emph default
+: Pour en savoir plus, il faudrait faire le tour du module par l'extérieur.
+ Regarde dans quel état est Eunice et ce qui nous entoure.
+ Si on a de la chance il fait jour sur la face de la Terre que l'on voit
+ et confirmer...
+ Merde !
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks 
+\emph default
+: Lynch ? Lynch ? Tu me reçois ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Lynch ? ...
+ Scheisse !
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Il doit avoir un problème avec sa radio.
+ Comme on ne peut pas passer le mur orange pour atteindre Lefèbvre, tu devrais
+ aller rejoindre Lynch et l'aider a chercher Novotny.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : C'est un technicien, s'il a un problème de radio, il va réparer ça vite
+ fait.
+ Pourquoi tu ne vas pas l'aider ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Je vais aller faire un tour dehors comme a conseillé Lynch.
+ C'est donc a toi d'aller l'aider.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : OK, OK.
+ J'y vais.
+\end_layout
+
+\begin_layout Standard
+Hendriks remet son casque et retourne au sas.
+ Il se raccroche au câble de sécurité et lance la procédure du sas.
+ Il se retrouve a nouveau dehors, sur sa droite le mur orange lui bloque
+ la vue.
+ Il passe son harnais du câble de sécurité a la main courante et commence
+ son voyage le long de la surface du module, passant dans un passage fait
+ dans les massifs panneaux de refroidissement.
+ Les étoiles circulent au-dessus de lui, il peut les voir en levant les
+ yeux, entre ces panneaux impressionnants.
+ Sur sa droite se trouve toujours le mur orange.
+ Après avoir fait quasiment 1/4 de tour du module, il remarque que le mur
+ orange ne coupe pas entièrement le vaisseau, juste un espace minuscule
+ du module garde la connexion entre avec les secteurs 
+\begin_inset Quotes fld
+\end_inset
+
+avant
+\begin_inset Quotes frd
+\end_inset
+
+ du module.
+ Continuant sa route le long de la coursive, il arrive sur l'autre coté
+ du module, il commence par prêter attention au mur orange.
+ De ce coté, on peut y voir des balises clignotantes sur les extrémités
+ de la carlingue et ce qui semble être 2 gros réacteurs placés un sur le
+ flan et un sur le 
+\begin_inset Quotes fld
+\end_inset
+
+dessus
+\begin_inset Quotes frd
+\end_inset
+
+ du mur orange laissant suggérer la présence d'un 3eme moteur sur l'autre
+ flan pour une forme en Y.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Vous...
+ vous voyez ce que je vois ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Non, attends, je cherche un moniteur...
+ OK ! Qu!!!! Qu'est ce que c'est que ce truc ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Maintenant on est sûr que ce n'est pas Eunice...
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Les russes auraient ça ?!? Où est Eunice ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Heu...
+\end_layout
+
+\begin_layout Standard
+Hendriks tourne sa tête alentours et ne voit pas la station.
+ Il fait quelques pas pour passer sous un des panneaux.
+ Toujours pas d'Eunice, mais un tube lumineux semble flotter dans l'espace,
+ partiellement caché par le radiateur, Hendriks décide de franchir le panneau
+ suivant pour avoir une meilleure vue de ce tube sous ses yeux se trouve
+ deux gigantesques lignes lumineuses traversant l'espace et des pulsations
+ lumineuses les parcourant dans des directions opposées.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Qu'est ce que c'est que ...
+ ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Je ne pense pas que les russes aient quoi que ce soit comme ça.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Hu ?
+\end_layout
+
+\begin_layout Standard
+Il a remarqué que quelque chose bougeait sur le coin de son oeil.
+ Tournant la tête, il vit un homme marcher sur le mur orange dans une combinaiso
+n elle aussi orange.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Scheisse !
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Aille !
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Quoi ? Qu'est ce qu'il se passe.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Quelque chose m'a piqué.
+\end_layout
+
+\begin_layout Standard
+Combinaison d'Hendriks : Danger imminent, décompression au niveau de la
+ jambe gauche.
+ Tentative de réparation.
+\end_layout
+
+\begin_layout Standard
+Hendriks regarde sa jambe et il voit un petit filet d'air en sortir.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : Scheisse ! Scheisse !
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Je rentre ! Je continue de tourner, je suis presque au niveau du prochain
+ sas.
+\end_layout
+
+\begin_layout Standard
+Il se met a marcher, mais sa jambe est douloureuse, il boite en direction
+ du sas, lance la séquence de décompression pour pouvoir y entrer.
+ Il se retourne et voit plusieurs homme en orange courir sur le mur orange
+ et aller dans sa direction.
+ Ils ont aussi ce qui ressemble a des fusils.
+ Ils lui tireraient dessus ? Il regarde autour de lui et vois des fuites
+ d'azote provenant du radiateur au-dessus de lui.
+ Le sas a terminé, il sent la porte s'ouvrir sous sa main.
+ Il se glisse dans le sas et presse le bouton pour refermer cette porte
+ et lancer le cycle de compression.
+ Il tente de s'éloigner de la porte mais il est toujours accroché à la main
+ courante.
+ Il se libère, le câble saute hors du sas comme un élastique sous tension
+ et la porte se referme devant lui.
+ Il ne peut pas voir le mur orange ou ses hommes à travers le minuscule
+ hublot, mais il peut voir la couche de verre la plus extérieure se faire
+ étoiler par ce qu'il a envie d'appeler un balle.
+ La surprise le fait reculer, il se prend les pieds dans la marche du bas
+ de porte le faisant tomber sur le dos.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : C'était quoi ça ? Qui sont-ils ? Que nous veulent-ils ? Pourquoi est-ce
+ qu'ils nous tirent dessus ? Scheisse ! Scheisse ! Scheisse !!
+\end_layout
+
+\begin_layout Standard
+Hendriks regarde sa jambe et remarque que la mousse utilisée pour refermer
+ le trou est mélangée a son sang.
+ A cette vision Van Leeuwen se tut.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Hey ! On est pas tous seuls ! Et ils sont pas amicaux !
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Van Leeuwen
+\emph default
+ : On sait, Hendriks viens de se faire blesser.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : Hendriks.
+ Ça va ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Je boite mais ça devrait aller.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : C'est pas passé loin pour moi non plus.
+ Vous avez fait un tour dehors ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hendriks
+\emph default
+ : Ouais, je sais pas ce que c'est, mais ce n'est définitivement pas russe.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Lynch
+\emph default
+ : On fait quoi maintenant ?
+\end_layout
+
+\begin_layout Standard
+...TO DO...
+\end_layout
+
+\begin_layout Chapter
+La fin de la connaissance - TODO
+\end_layout
+
+\begin_layout Standard
+Takashi marche vers l'hôpital, la ville s'écroule autour d'elle, les flammes
+ luisent dans la nuit alors que les pustules du ciel ont toutes crevées
+ libérant leur feu destructeur.
+ Le politicien la rattrape, haletant.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Politicien
+\emph default
+ : Vous devez me protéger ! Me mener dans un bunker ou quelque chose !
+\end_layout
+
+\begin_layout Standard
+Elle ne prête pas attention à lui, elle marche jusqu'aux débris du bâtiment
+ éventré et grimpe dans une ambulance d'où elle décroche la radio.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Takashi
+\emph default
+ : Central, ici charly echo lima 87.
+ A vous.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Dispatch
+\emph default
+ : Charly echo lima 87, ici central, on vous reçoit 2/5.
+ Toutes les missions courantes sont à abandonner, code prioritaire.
+ Veuillez vous préparer pour nouvelle affectation effective immédiatement.
+ A vous.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Takashi
+\emph default
+ : Charly echo lima 87 en attente de nouvelles instructions.
+ Termine.
+\end_layout
+
+\begin_layout Standard
+Elle se retourne vers le politicien.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Takashi
+\emph default
+ : C'est la fin du voyage, vous êtes libre a présent.
+ N'oubliez pas de rester dans cette préfecture et de contacter votre officier
+ de probation toutes les 24 heures.
+\end_layout
+
+\begin_layout Standard
+Il s'effondre, assis sur le sol et se met à pleurer.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Major
+\emph default
+ : [brouillé] Takashi ? [brouillé]
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Takashi
+\emph default
+ : Charly echo lima 87, je vous reçois 1 sur 5 major.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Major
+\emph default
+ : L'humanité a capitulé mais les humains non.
+ Des poches de résistance se forment et s'organisent à travers tous les
+ pays.
+ Je quitte le commandement ici et m'en vais rejoindre une cellule.
+ Je comprends si vous ne voulez pas nous rejoindre, ce fut un plaisir de
+ travailler avec vous.
+ A vous.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Takashi
+\emph default
+ : Je suis prête à tout pour la liberté.
+ Quels sont vos ordres.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Major
+\emph default
+ : Il y a une université au nord de votre position, allez dans le laboratoire
+ Oono et récupérez les documents sur le déphaseur quantique.
+ Une fois en votre possession, détruisez les locaux ainsi que les autres
+ laboratoires.
+ Le point de rendez-vous est encore non défini.
+ Vous aurez plus d'informations dans le sanctuaire Inari tout proche dans
+ 4 heures.
+ A vous.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Takashi
+\emph default
+ : Bien compris.
+ Laboratoire Oono, sécuriser documents sur 
+\begin_inset Quotes fld
+\end_inset
+
+déphaseur quantique
+\begin_inset Quotes frd
+\end_inset
+
+, destruction des laboratoires puis rendez-vous sanctuaire Inari dans 4
+ heures.
+ Terminé.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Major
+\emph default
+ : Bonne chance.
+ Terminé.
+\end_layout
+
+\begin_layout Standard
+Elle écrit sur le bord de la carte les informations, dessine un cercle autour
+ de l'université et du sanctuaire et reprend son chemin dans la nuit.
+ Après quelques mètres, le politicien l'appelle.
+ Elle se retourne et continue son chemin laissant là son colis.
+\end_layout
+
+\begin_layout Standard
+...TO DO...
+\end_layout
+
+\begin_layout Chapter
+Retour à la maison - TODO
+\end_layout
+
+\begin_layout Standard
+Hendriks, Lynch et Van Leeuwen décident de relancer le réacteur.
+ S'ils ont subit un événement de type alpha<>bêta alors juste réactiver
+ la machine devrait les ramener sur Terre.
+ Si ce n'est pas le cas, alors la réactivation va les emmener plus loin
+ dans le temps ou l'espace et avec un peu de chance il n'y aura personne
+ tentant de les tuer la-bas.
+ Si le réacteur n'avait aucune importance dans ce qui leur est arrivé, ils
+ auront au moins essayé.
+ Ils vont devoir faire beaucoup de choses pour relancer la machine.
+\end_layout
+
+\begin_layout Enumerate
+Passer de l'autre coté du mur orange par l'extérieur du module.
+\end_layout
+
+\begin_layout Enumerate
+Atteindre le secteur A pour trouver les radio-isotopes.
+\end_layout
+
+\begin_layout Enumerate
+Trouver la fuite et la boucher.
+\end_layout
+
+\begin_layout Enumerate
+Utiliser le petit espace de vaisseau non coupé par le mur orange pour relier
+ les systèmes importants des 2 cotes du module ensembles.
+\end_layout
+
+\begin_layout Enumerate
+Remettre a zéro le test de la théorie PLET pour qu'il se refasse.
+\end_layout
+
+\begin_layout Enumerate
+Trouver un moyen de retirer l'eau de l'air (Van Leeuwen va avoir comme idée
+ d'augmenter la gravité du secteur pour faire comme une centrifugeuse)
+\end_layout
+
+\begin_layout Standard
+Durant les préparatifs, Novotny sera retrouve.
+ Il aura été blessé lors du choc tombant de la passerelle au niveau en-dessous
+ une large quantité de matériel lui tombant dessus et obstruant le passage
+ lorsqu'Hendriks est passé dans la pièce, il a vu le tas de machine tombées
+ mais pas l'échelle en dessous.
+ Avec sa combinaison inutilisable et un bras casse, il va se glisser dans
+ les le conduit d'aération qui est la seule voie en dehors du cul de sac
+ où il s'est retrouvé emprisonné.
+ Il va endommager sa combinaison dans un conduit ce qui va libérer de la
+ mousse dans l'air et produire l'espèce de moisissure qui a été vue dans
+ le vaisseau.
+ Il aura erre dans les conduits un moment avant de perdre espoir de trouver
+ une sortie et de s'arrêter.
+ Il sera retrouvé par Hendriks lors de la recherche de la conduite percée.
+ Il confirmera que la langue parlée par les envahisseurs n'est pas du russe.
+ Lefèbvre, lui, sera compté comme perdu comme il se situe a l'intérieur
+ du mur orange.
+\end_layout
+
+\begin_layout Standard
+Après avoir relancé l'expérience, le vaisseau va revenir sur 
+\begin_inset Quotes fld
+\end_inset
+
+alpha
+\begin_inset Quotes frd
+\end_inset
+
+, là où se trouve la Terre quelques minutes après leur départ.
+ Leur arrivée sera confirmée par les messages radios du contrôle spatial
+ et de la station spatiale qui parlent d'une explosion et d'une perte de
+ contact durant quelques minutes.
+ La présence du mur orange leur confirmera que tout n'est pas termine, ils
+ sont revenus avec lui et donc sûrement les 
+\begin_inset Quotes fld
+\end_inset
+
+hommes en oranges
+\begin_inset Quotes frd
+\end_inset
+
+ sont toujours dans le coin aussi.
+ Les 4 survivants vont couper les sécurités du réacteur et se diriger vers
+ la capsule de connexion avec Eunice.
+ Leur but est de faire exploser le réacteur qui détruira le module et le
+ mur orange avec lui.
+ Ils seront surpris lorsque le module, au lieu de s'éjecter dans l'espace
+ va s'écraser d'un coup sec et se mettre à rouler.
+\end_layout
+
+\begin_layout Chapter
+Exile - TODO
+\end_layout
+
+\begin_layout Standard
+Takashi va visiter les sous-sols aménagés par la résistance.
+ Ils se sont installes temporairement dans le système anti-tsunami, qui
+ est une gigantesque caverne reliant les principaux fleuves, ainsi que la
+ baie à proximité.
+ Ils prévoient des convois qui vont aller dans des lieux tenus secrets.
+ Les différents convois se séparent et se dirigent vers les puits d'accès
+ pour véhicules, à la surface, l'attaque fait toujours rage et des portions
+ du plafond s'effondrent rendant dangereuse l'aventure.
+ Une fois sortie, le convois de Takashi va longer un fleuve avant de se
+ mettre a suivre une voix ferrée.
+ Le convois file a toute allure pour tenter de franchir les ponts pendant
+ que l'on est sûr qu'ils soient toujours en état.
+ Quittant la ville et se glissant dans les montagnes le convoi se fait attaquer
+ par de petites soucoupes volantes d'1m de diamètre.
+ Il est supposée que ce sont des sondes, des espèces d'éclaireurs qui sont
+ la pour indiquer où se trouve le boulot restant aux troupes d'attaque.
+ La mauvaise réception dans les vallées empêchent le convois de contacter
+ les autres pour connaître leur statut.
+ Au détour d'un virage le véhicule de tête va exploser, les autres véhicules
+ se jettent dans la foret ou tentent de passer en force.
+ Le véhicule de Takashi fait partie de ceux qui foncent pour la foret, roulant
+ a vive allure sur le chemin endommagé, le camion finira sa course contre
+ un arbre projetant tout le monde.
+ Takashi se réveille, allongée dans les feuilles du sous-bois, une rivière
+ coulant a ses pieds, les véhicules en feu en face d'elle.
+ Elle cesse de bouger, des hommes parlant une langue étrange font le tour
+ des corps et finissent les blessés.
+ Elle s'efforce de ne pas bouger et ferme les yeux, calme sa respiration
+ et sous la fatigue s'endort.
+ Elle se réveille, toujours allongée dans les feuilles au bord de la rivière.
+ Des véhicules monte une fumée noire et épaisse.
+ Rien ne bouge, elle se redresse et marche vers les véhicules, ils ont étés
+ brûlés partiellement, les cadavres ont eux aussi été brûlés.
+ Elle fouille les décombres et retrouve son sac, projeté par l'accident
+ en dehors du camion.
+ Elle l'ouvre, trouve les documents pris dans le laboratoire Oono et un
+ petit paquet cadeau provenant du major.
+ Elle regarde la carte les mains tremblantes et les yeux pleins de larme
+ sur laquelle est écrit 
+\begin_inset Quotes fld
+\end_inset
+
+En temps difficiles il est important de savoir garder le contact.
+\begin_inset Quotes frd
+\end_inset
+
+.
+ Dans le paquet se trouve un talky-walky d'une taille impressionnante.
+ Elle le met en marche, parcourt les fréquences, lancent quelques appels
+ mais ne reçoit rien.
+ Elle regarde autour d'elle, elle est toujours dans la vallée, elle doit
+ atteindre un sommet.
+ Elle se met à suivre la rivière dans le sens oppose du courant.
+ Son chemin sera perturbe par des barrage et des vols de sonde qu'il lui
+ faudra éviter au maximum.
+\end_layout
+
+\begin_layout Standard
+Arrive a un point en altitude, elle regarde autour d'elle.
+ De larges colonnes de fumée s'élèvent des villes et des villages.
+ Elle active sa radio et tente à nouveau d'appeler.
+ Elle capte la central de la résistance qui s'inquiétait de ne pas avoir
+ de réponse du convois où elle apprend que l'attaque s'est arrêtée brutalement
+ et qu'un couvre feu est instauré.
+\end_layout
+
+\begin_layout Chapter
+Pas le temps - TODO
+\end_layout
+
+\begin_layout Standard
+Les cosmonautes remarquent que le module est dans une des soutes d'Eunice.
+ Bérénice est revenu là d'où il venait, mais un peu à coté fusionnant avec
+ le vaisseau mère.
+ Ils voulaient prendre refuge dans ce vaisseau de l'explosion nucléaire
+ qu'ils ont provoqué, mais en fait elle se fera a l'intérieur de leur refuge.
+ Ils abandonnent la capsule et courent dans Eunice, une station spatiale
+ massive, pour atteindre le module Soyouz là pour les ramener sur Terre
+ en cas de problèmes.
+ Et ils ont un gros problème.
+\end_layout
+
+\begin_layout Standard
+Ils sautent dans le module et s'éjectent en direction de la Terre.
+ À mesure qu'ils s'éloignent, ils peuvent contempler Eunice, avec Bérénice
+ dépassant sur un cote, le tout transpercé par le mur orange comme une épée
+ dans un dragon.
+ Arrivant à l'extrémité, ils remarquent que le mur orange est coupée, l'événemen
+t ne doit prendre qu'une sphère autour de son point d'origine, laissant
+ derrière elle des portions du mur orange.
+\end_layout
+
+\begin_layout Standard
+Bérénice explose, dans l'espace il n'y a rien pour bloquer les particules
+ projetées par l'explosion de voler dans toutes les directions et rien pour
+ les ralentir.
+ L'onde de choc se repent le long de la carlingue et gagne Eunice dans lequel
+ un cratère se forme là où se trouvait Bérénice.
+ Le mur orange, lui, reste impassible.
+ D'un seul coup Bérénice s'ouvre comme une banane alors que l'onde de choc
+ n'arrive plus a contenir la pression de l'air qu'elle a comprime sur son
+ voyage.
+ Cette seconde explosion passée, le mur orange, a l'aspect toujours intact
+ se courbe lentement.
+ Alors qu'il atteint une forme de banane très prononcée, il disparaît avec
+ tous les débris alentours.
+\end_layout
+
+\begin_layout Standard
+Fondu sur l'atterrissage de Soyouz dans les steppes du Kazakhstan, passage
+ sur des séances d'interrogatoires sur les évènements.
+ Hendriks, sur son lit d'hôpital tourne la tête vers la télévision.
+ Les informations montrent un homme politique Japonais se faire guider par
+ sa garde du corps sur les marches d'un tribunal sous les insultes du publique
+ et les flashs des journalistes, un 
+\begin_inset Quotes fld
+\end_inset
+
+live
+\begin_inset Quotes frd
+\end_inset
+
+ dans le coin supérieur droit de l'écran.
+ Il ferme les yeux quelques secondes, écoutant sa respiration et la faisant
+ diminuer a un rythme normal.
+ Il rouvre les yeux et tourne la tête vers le ciel pour le voir traverse
+ par des des météores.
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\series bold
+\shape italic
+\color green
+FIN de la partie Hendriks - Lynch - Van Leeuwen, reconnexion avec la période
+ de Takashi.
+\end_layout
+
+\begin_layout Chapter
+Le second souffle de l'humanité - TODO
+\end_layout
+
+\begin_layout Standard
+Takashi est assise parmi une assemblée éclectique dans un sous-sol pleins
+ d'équipements.
+ Le sous-titre affiche 
+\begin_inset Quotes fld
+\end_inset
+
+quelques semaines plus tard
+\begin_inset Quotes frd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Le lieu ressemble au sous-sol d'un bidouilleur en électronique, mais d'une
+ taille gigantesque.
+ Un groupe est rassemblé pour préparer les plans pour le futur.
+ Ils vont parler des technologies qu'ils vont développer, entre autres le
+ déphaseur quantique et l'expérience PLET.
+ Il a aussi été demandé d'organiser des raids pour voler du matériel extra-terre
+stre.
+ Les dialogues vont aussi rapidement debriefer sur ce qui a été découvert
+ sur les technologies extra-terrestres.
+\end_layout
+
+\begin_layout Standard
+La première cible des scientifiques sont les drones.
+ Takashi et toute une équipe seront envoyés pour déployer tout un ensemble
+ de capteurs pour analyser les émissions des drones volant alentours.
+ Les capteurs ne recevront rien temps qu'aucun membre n'a été repéré, des
+ qu'un membre du groupe est vu, les capteurs se mettent à enregistrer les
+ émissions.
+ Ils remarquent qu'un cage de Faraday sera suffisante pour bloquer les messages
+ des drones.
+ Ils vont attirer un unique drone dans un camion qui viens tout juste d'être
+ préparé.
+ Tout le monde se réjouit de cette capture qui se fait disséquer en toute
+ sécurité.
+ D'autres technologies seront volées ainsi, des points de contrôles seront
+ attaqués pour ramener des extra-terrestres pour étude ainsi que leurs armes.
+\end_layout
+
+\begin_layout Standard
+La recherche va progresser très vite.
+ Nous allons suivre ces missions via 2 personnages Takashi et Mwana.
+ Mwana est un jeune homme Kenyan tout sortit de l'adolescence il y a peu.
+ Il est motivé car ses parents sont morts pour la résistance, il veut réaliser
+ leur rêve de ramener la liberté aux hommes.
+ Il continue leurs combats.
+ Takashi et Mwana ne se rencontre jamais et ne travaillent pas sur les mêmes
+ missions.
+\end_layout
+
+\begin_layout Standard
+Les technologies font de gigantesques progrès, de nouvelles armes permettant
+ de détruire les équipements extra terrestres sont fabriquées mais un problème
+ bloque les chercheurs.
+ La technologie permettant de faire de petits ovnis a déjà été comprise
+ et des versions fabriquées par la résistance existent.
+ Mais il leur est impossible de faire voler quoi que ce soit de taille plus
+ grande.
+ Ils se mettent à parler de faire voler un avion de chasse pour que les
+ extra terrestres sortent un chasseur et abattre ce chasseur, mais de la
+ courte bataille face aux extra terrestres, il est connu que les vaisseaux
+ de grande taille possèdent aussi un bouclier protecteur que les scientifiques
+ aimeraient mettre la main dessus.
+ Passant du plus simple au plus fou les plans se rassemblent autour d'une
+ idée complètement suicidaire : Forcer un 
+\begin_inset Quotes fld
+\end_inset
+
+porte OVNI
+\begin_inset Quotes frd
+\end_inset
+
+ à s'écraser sur la planète, en démanteler un maximum et partir avec les
+ pièces dans les sous-sols en espérant arriver à embarquer les pièces utiles.
+\end_layout
+
+\begin_layout Chapter
+Le porte OVNI - TODO
+\end_layout
+
+\begin_layout Standard
+Takashi, avec un petit groupe vont s'infiltrer dans un convois de minerais
+ que les extra-terrestres exploitent.
+ Il vont se faire passer pour des gardes d'élite et infiltrer le vaisseau
+ pour s'en servir comme taxi pour le porte OVNI.
+\end_layout
+
+\begin_layout Standard
+Le vaisseau sera attaqué, les membres du pont exécutés et le vaisseau forcé
+ à s'écraser.
+ La structure gigantesque sera mise en pièce a une vitesse incroyable, les
+ OVNI qui y étaient contenus disséminés parmi les réseaux sous-terrains.
+ Lorsque les renforts extra-terrestres purent enfin s'approcher du vaisseau,
+ il ne restait plus qu'une carcasse vide.
+\end_layout
+
+\begin_layout Standard
+Après cette attaque, Takashi demande à être retirée des missions d'assassinat.
+ Il lui est propose de participer a une mission diplomatique secrète et
+ part vers l'antarctique.
+ Elle ne savait pas que l'antarctique avait une base, elle sera informée
+ que la base est la plus importante et la plus équipée.
+ Mais elle est aussi gardée secrète de tous.
+ Durant le trajet, ils recevront un message d'alerte indiquant que les troupes
+ extraterrestres attaquent largement les réseaux sous-terrains, desquels
+ ils n'avaient que peut d'intérêt avant l'attaque du porte OVNI.
+\end_layout
+
+\begin_layout Standard
+Mwana et son camarade arrivent au sommet d'un immeuble alors qu'une de leur
+ mission a été annulée.
+ Du haut du bâtiment ils voient un porte OVNI écrasé sur le sol.
+ Le compagnon parle de la fameuse mission qui a vu un précédent porte OVNI
+ s'écraser et se faire démanteler.
+ Mwana dit que ses parents sont morts dans les attaques surpuissantes survenues
+ après le précédent crash de porte OVNI.
+ Combien de porte OVNI se sont écrasés jusqu'à présent ? Celui-ci est le
+ second et un mauvais présage.
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\series bold
+\shape italic
+\color green
+Ce chapitre sépare Takashi et Mwana dans le temps.
+ Takashi opérait a l'époque du premier crash quand Mwana n'était qu'un petit
+ enfant.
+ Mwana est désormais témoins du second crash presque 20 ans plus tard.
+ Il explique aussi pourquoi Mwana a des gadgets que Takashi ne possède pas.
+\end_layout
+
+\begin_layout Part
+Histoire section B
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{chapter}{0}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Decrit via l'histoire de Takashi la formation de la resistance et via celle
+ de Mwana la mise en place d'une revolution et la boucle temporelle.
+\end_layout
+
+\begin_layout Part
+Chronologie
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{chapter}{0}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Pré-2
+\end_layout
+
+\begin_layout Section
+34-7 ::
+\end_layout
+
+\begin_layout Itemize
+Découverte de la théorie ouvrant les possibles portes de la communication
+ plus rapide que la lumière.
+\end_layout
+
+\begin_layout Itemize
+Le scientifique ayant fait cette découverte se suicide sans raison apparente.
+\end_layout
+
+\begin_layout Itemize
+Construction d'un module expérimental sur la théorie PLET (Physical Light
+ Ether Theory)
+\end_layout
+
+\begin_layout Itemize
+La construction du module est arrêtée, d'après les calculs il y a un fort
+ risque que l'expérience se mette a produire une gigantesque quantité d'énergie
+ mettant en péril la Terre et ses habitants.
+\end_layout
+
+\begin_layout Itemize
+Les grandes entreprises en énergie et les gouvernements voient une chance
+ pour devenir une super puissance.
+\end_layout
+
+\begin_layout Itemize
+Les états-unis sont les premiers a avoir un module expérimental fonctionnel.
+\end_layout
+
+\begin_layout Itemize
+Après une série d'échecs sur les tentative de PLET, la vitesse de développement
+ des modules expérimentaux diminue et la théorie est déclarée comme "peu
+ probable".
+\end_layout
+
+\begin_layout Itemize
++Une dernière tentative du module Américain amené a un accident non rendu
+ publique.
+ Le site est ferme et isolé.
+\end_layout
+
+\begin_layout Itemize
+Les rumeurs que l'expérience aurai marchée et que la théorie serait vraie
+ donne un regain d'intérêt.
+\end_layout
+
+\begin_layout Itemize
+Plusieurs gouvernements s'assemblent pour étendre les possibilités de recherches
+ d'ISS.
+\end_layout
+
+\begin_layout Itemize
+Les risque de la théorie PLET et des possibles théories futures montrent
+ que la station est trop proche et n'offrirait que peu de sécurité.
+\end_layout
+
+\begin_layout Itemize
+Préparation d'un nouveau système expérimental comportant une station de
+ recherche avec tous les équipements nécessaires (Eunice) et un module expérimen
+tal détachable (Bérénice) pour minimiser les risques.
+\end_layout
+
+\begin_layout Itemize
+Construction de Eunice en orbite terrestre.
+\end_layout
+
+\begin_layout Itemize
+Début de la construction de Bérénice en orbite terrestre.
+\end_layout
+
+\begin_layout Itemize
+Eunice étant capable de contenir suffisamment d'équipement pour finir la
+ construction de Bérénice, ses soutes sont remplies et il commence sont
+ lent voyage vers ses coordonnées finales, maintenu sur l'extérieur de la
+ trajectoire terrestre a une distance constante.
+\end_layout
+
+\begin_layout Chapter
+PC
+\end_layout
+
+\begin_layout Section
+34-7 ::
+\end_layout
+
+\begin_layout Itemize
++Opération de test de la chambre du réacteur de Bérénice, ce dernier est
+ pour la première fois indépendant du système énergétique de Eunice.
+ Un réacteur nucléaire a été choisit face a la petite taille de Bérénice
+ et des gigantesques besoins en énergie des expériences.
+\end_layout
+
+\begin_layout Itemize
++Suite a une erreur inconnue Bérénice passe de cvr-34-7--2 (aka 34-7 ou
+ Terre) vers cvr-1-1-+1 (aka 1-1 ou hub)
+\end_layout
+
+\begin_layout Itemize
+#Perte du contact avec Bérénice, Eunice est endommage pour avoir été en
+ partie aspire par Bérénice
+\end_layout
+
+\begin_layout Section
+1-1 ::
+\end_layout
+
+\begin_layout Itemize
+#Bérénice se stabilise dans son nouvel univers fusionnant avec un vaisseau
+ de transport de prisonniers.
+ -> devenu 
+\begin_inset Quotes fld
+\end_inset
+
+Le mur orange
+\begin_inset Quotes frd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
++La police de 1-1 (les forces armées du convois (les hommes en orange))
+ prennent d'assaut Bérénice.
+\end_layout
+
+\begin_layout Itemize
++Les survivants de Bérénice se demandent ce qui a put se passer, monde parallèle
+ ? voyage dans le temps ? téléportation ?
+\end_layout
+
+\begin_layout Itemize
++Les survivants tentent de trouver un moyen de rentrer chez eux.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
++S'ils ont voyages dans le temps, ce que l'accroissement des espèces biologique
+ semble confirmer, leurs chances de revenir sont très faibles comme les
+ théories a la mode voient le temps comme une dimension a sens unique.
+\end_layout
+
+\begin_layout Itemize
++S'ils ont voyages dans l'espace ou change d'univers, il leur faut inverser
+ les coordonnées de ce qui les a amené la et le réactiver.
+\end_layout
+
+\begin_layout Itemize
++S'ils ont voyages a un symétrique dans l'espace, appliquer le même déplacement
+ les ramènera chez eux
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
++Les survivants acceptent de tenter de recréer la situation dans laquelle
+ ils étaient quand ils ont fait le voyage, si ça les ramené chez eux, tant
+ mieux, sinon ils auront plus d'informations sur ce qui leur ai arrive (voyage
+ dans le temps, dans l'espace, ...) et les gens la-bas (ou que soit ce la-bas)
+ seront sûrement moins agressifs.
+\end_layout
+
+\begin_layout Itemize
++Dans un dernier effort, les survivants réactivent l'expérience de Bérénice
+ et quittent 1-1
+\end_layout
+
+\begin_layout Section
+34-7 ::
+\end_layout
+
+\begin_layout Itemize
++Les survivants ne savent pas exactement ce qui s'est passe, en dehors du
+ fait qu'ils ont a nouveau percute quelque chose et que le réacteur s'est
+ coupe par sécurité.
+\end_layout
+
+\begin_layout Itemize
+#Après une analyse de l'état du vaisseau, il semblerait qu'en certains points,
+ il soit en contact avec une atmosphère.
+\end_layout
+
+\begin_layout Itemize
+#Les survivants se dirigent vers la section la plus proche a travers la
+ jungle a l'intérieur de l'engin et après avoir vérifié que l'air est respirable
+, agrandirent une percée dans le fuselage pour atteindre ce qui se trouver
+ derrière.
+\end_layout
+
+\begin_layout Itemize
+#A leur grande surprise et leur grande joie, ils sont dans Eunice, ils sont
+ revenus chez eux.
+\end_layout
+
+\begin_layout Itemize
++Un appel radio leur confirmera leur retour dans notre système solaire rendant
+ espoir aux équipes sur Terre.
+\end_layout
+
+\begin_layout Itemize
+#Après l'explication radio des évènements sur 1-1, les psychologues sur
+ Terre pensent qu'ils sont en phase d'hallucination et qu'ils ont peut-être
+ provoques eux même l'incident.
+ Demandant une mise en quarantaine.
+ Mise en quarantaine soutenue par la description de la jungle a l'intérieur
+ de Bérénice.
+\end_layout
+
+\begin_layout Itemize
+#Les survivants préféreraient rentrer directement, mais une mise en quarantaine
+ est toujours mieux qu'une vie dans un monde inconnu.
+\end_layout
+
+\begin_layout Itemize
+#Leur paix ne durera pas longtemps, quelques prisonniers et membres de forces
+ de l'ordre étaient a bord du vaisseau lors de son changement de monde,
+ ils sont désormais, eux-aussi, a bord de Eunice.
+\end_layout
+
+\begin_layout Itemize
+#Pleins d'espoir les survivants ne sont pas prêts a baisser les bras et
+ se lancent dans une bataille.
+\end_layout
+
+\begin_layout Itemize
+#Répondant au signal de détresse des membres des forces de l'ordre et analysant
+ les traces laissées par le départ de Bérénice, les forces armées de 1-1
+ viennent sur 34-7 a leur tour.
+\end_layout
+
+\begin_layout Itemize
+#Eunice est un engin scientifique, il n'est pas fait pour le combat et ne
+ résiste pas aux attaques.
+\end_layout
+
+\begin_layout Itemize
+#Alors que tout semblait perdu et que les survivants sautent dans une nacelle
+ de secours espérant qu'elle ne se fera pas détruire par les tirs alentours,
+ les troupes arrêtent l'attaque, semblent hésiter et repartent vers 1-1.
+\end_layout
+
+\begin_layout Itemize
+#Les survivants s'arrêtent sur la station en orbite pour prendre une navette
+ de ré-entrée dans l'atmosphère contre les ordres des personnes sur Terre
+\end_layout
+
+\begin_layout Itemize
++L'arrivée sur la Terre ferme ne se fait pas dans la joie, les vaisseaux
+ ont étés détruits et les survivants n'ont pas suivis les ordres de quarantaine.
+\end_layout
+
+\begin_layout Itemize
++Ils sont questionnes par de nombreux groupes durant leur isolation sur
+ ce qu'ils ont fait et vu.
+ #L'attaque de Eunice ayant été enregistrée sur radar et photographie par
+ hubble, personne ne peut plus nier que ce qu'ils disent est vrai.#
+\end_layout
+
+\begin_layout Itemize
++Les scientifiques amenés sur place commence a faire des théories sur ce
+ qui a bien put se passer.
+ Le voyage plus rapide que la lumière semble plaire, bien qu'elle n'explique
+ pas le retour a Eunice ou encore le fait qu'ils ne soient entres en collision
+ avec rien sur leur chemin en dehors de Eunice et d'un vaisseau inconnu.
+\end_layout
+
+\begin_layout Itemize
++Quelques mois passent et les journalistes perdent intérêt dans cette affaire
+ lorsque tout autour du monde de nombreuses étoiles filantes dessinent des
+ lignes dans le ciel, même en plein jour.
+\end_layout
+
+\begin_layout Itemize
++En quelques secondes, toutes les conversations téléphoniques et autres
+ relais d'informations cessent d'exister alors que les militaires remarquent
+ que les débris de tous leurs satellites et d'ISS brûlant a travers l'atmosphère
+ est tout ce qui reste des satellites artificiels.
+\end_layout
+
+\begin_layout Itemize
++La population est énervée d'avoir perdue l'utilisation de leurs téléphone,
+ mais aussi fascines par cette pluie d'étoiles filantes avant d'être terrifies
+ lorsque le ciel semble fondre, s'embraser et se tordre avant d'être transperce
+ par des engins de taille gigantesque.
+\end_layout
+
+\begin_layout Chapter
+SC
+\end_layout
+
+\begin_layout Section*
+34-7 ::
+\end_layout
+
+\begin_layout Itemize
++Les troupes 1-1 avancent vite, détruisent énormément sur leur passage.
+\end_layout
+
+\begin_layout Itemize
++Les gouvernements déclarent avoir perdu la bataille mais pas la guerre.
+\end_layout
+
+\begin_layout Itemize
+#Les hommes politiques disparaissent des feux des projecteurs, leurs conseillers
+ qui les contrôlaient dans l'ombre prennent la parole.
+\end_layout
+
+\begin_layout Itemize
+#Sur les directions des hommes politiques, les principaux écrits, les principale
+s oeuvres, les résultats de recherches, les équipements modernes et les
+ toutes dernières armes sont cachées dans des bunkers fortifies alors que
+ les villes tombent les unes après les autres.
+\end_layout
+
+\begin_layout Itemize
++Les bibliothèques, les écoles, les centres de recherche, les musées sont
+ incendies pour ne pas laisser de traces des connaissances les plus abouties
+ de l'humanité.
+\end_layout
+
+\begin_layout Itemize
++L'attaque 1-1 s'arrête aussi brutalement qu'elle a commencée, ils ne prêtent
+ pas attention aux technologies humaines en place ou disparues, ils ont
+ l'air satisfaits du coup magistral donne au monde.
+\end_layout
+
+\begin_layout Itemize
++Les connaissances et les scientifiques mis en sécurité, la recherche continue
+ dans le secret de sous-terrains, produisant de nouvelles armes et expérimentant
+ sur les technologies 1-1.
+\end_layout
+
+\begin_layout Itemize
++Les scientifiques nécessitent de plus en plus de morceaux technologiques,
+ les vols de matériel extra terrestre se font de plus en plus nombreux.
+\end_layout
+
+\begin_layout Itemize
++Les opérations culminent lorsqu'un groupe organise force un vaisseau de
+ taille majeure (les seul capables de passer de 34-7 a 1-1) a s'écraser
+ sur la planète dans une ville désertée.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
++Le vaisseau n'avait pas encore touche le sol que les troupes au sol étaient
+ prêtent a démanteler.
+\end_layout
+
+\begin_layout Itemize
++Lorsque les troupes de secours 1-1 sont arrivées sur place, il ne restait
+ plus que les gros éléments de la super structure du vaisseau, une coquille
+ vidée de toutes ses technologies.
+\end_layout
+
+\begin_layout Itemize
++Cet évènement force les troupes 1-1 a partir a la recherche de ces laboratoires
+ sous-terrain.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+#Les différents groupes de scientifiques se mettent a migrer en direction
+ des pôles, il a été observe peu de vol de ces zones, certains pensent que
+ c'est parce qu'il n'y a pas d'humains la-bas, d'autres parce que les champs
+ magnétiques font un peu n'importe quoi et l'accélération de coriolis n'y
+ est que peu présente.
+\end_layout
+
+\begin_layout Itemize
+#Les seules personnes en vie ayant vu les troupes de 1-1 sont les rares
+ survivants de Bérénice, déjà rares a leur retour sur Terre, survivre l'attaque
+ a encore plus diminue leur nombre.
+\end_layout
+
+\begin_layout Itemize
+Une fois les morceaux du vaisseau analyses, les groupes ont put mettre en
+ place une radio laissant écouter les vaisseaux a faible distance ainsi
+ que les messages radios des membres des unités d'assaut lors des attaques
+ sur les centres de recherche sous-terrain.
+\end_layout
+
+\begin_layout Itemize
+L'analyse a montré que leur langue est très compacte et bien peu harmonieuse,
+ elle tiens plus du modem 56k que du chant des baleines.
+\end_layout
+
+\begin_layout Itemize
+Il est suggère que leur langue a évoluée pour être claire lors de transmissions
+ a très longues distances a travers l'univers.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Quelques mots de vocabulaires ont été trouves, ainsi que quelques chiffres.
+ Ces chiffres, via un contexte laisse suggérer qu'ils se nomment 1-1 et
+ qu'ils nomment la Terre 34-7
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+L'espionnage des écoutes et les tentatives de décodage de leur langue ne
+ vont guère plus loin, mais une radio est mise en place, détectant certains
+ mots clefs et produisant des avertissements.
+\end_layout
+
+\begin_layout Itemize
+Les troupes 1-1 ne semblent avoir aucun intérêt a propos des humains, ils
+ tentent juste de les garder calmes.
+\end_layout
+
+\begin_layout Itemize
+Les laboratoires mettent en place un système de communication interne qui
+ semble sécurise
+\end_layout
+
+\begin_layout Itemize
+Création de modules pour faire passer de 34-7 a 1-1
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Les troupes de 1-1 arrivent a détecter le signal et savoir qui est partit
+ d'où vers ou.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Début de l'utilisation d'équipes mobiles pour aller vers 1-1
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Le placement d'appareils d'écoute et la récupération de ces appareils permettent
+ d'étendre un peu les connaissances du langage et aussi la liste des coordonnées
+ ou on peut aller
+\end_layout
+
+\begin_layout Itemize
+L'étude du comportement via ces opérations permettent d'en savoir plus sur
+ le cote marchand et exploiteur des troupes de 1-1
+\end_layout
+
+\begin_layout Itemize
+De petites expériences confirment le fait qu'il s'agit de sauts entre des
+ univers parallèles et pas de voyage temporel ou de téléportation
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Début de la visite d'autres "coordonnées", il s'avère que pour aller d'un
+ univers a un autre, il faut toujours passer par 1-1, lui donnant le surnom
+ de 
+\begin_inset Quotes eld
+\end_inset
+
+hub
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Prise de contact avec les réseaux de marche noir des autres coordonnées.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Achat, reverse engineering et recréation de brouilleurs de signal empêchant
+ les troupes de 1-1 de savoir qui viens d'où et va ou
+\end_layout
+
+\begin_layout Itemize
+Rapidement une version améliorée est produite et élimine quasiment entièrement
+ le signal produit rendant les sauts entièrement indétectable.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+#Les troupes de 1-1 arrivent sur la surface et y construisent une mégalopole.
+ -> Inutile
+\end_layout
+
+\begin_layout Chapter
+Rev-1:
+\end_layout
+
+\begin_layout Section
+34-7 ::
+\end_layout
+
+\begin_layout Itemize
+La découverte de la téléportation s'est faite il y a quelques temps déjà,
+ c'est une technologie humaine uniquement.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Elle détruit un objet et produit un équivalent de code source pour pouvoir
+ le recréer
+\end_layout
+
+\begin_layout Itemize
+Le "code source" est extrêmement compacte et ne peut être envoyé pour le
+ moment que sous la forme d'un amas d'impulsions d'ondes
+\end_layout
+
+\begin_layout Itemize
+Si plusieurs antennes reçoivent le code source, alors il est possible d'obtenir
+ plusieurs copies de l'objet d'origine.
+\end_layout
+
+\begin_layout Itemize
+L'amas d'ondes est très sensible aux perturbation et les antennes perturbent
+ l'amas
+\end_layout
+
+\begin_layout Itemize
+Due aux perturbations le modèle produit n'est qu'une version approximative
+ de l'original.
+\end_layout
+
+\begin_layout Itemize
+Due a ces mêmes perturbations et aux approximations qui en résultent, rien
+ de vivant ne peut être envoyé, rien non plus qui doit être extrêmement
+ précis comme un processeur.
+\end_layout
+
+\begin_layout Itemize
+Les perturbations deviennent plus importantes proportionnellement a la distance
+ que les ondes parcourent, il est donc impossible de faire de la téléportation
+ sur de longues distances.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+L'utilisation de cette machine a cloner a rendu le marche noir très facile,
+ ainsi que la production de fourniture de base pour les laboratoires.
+\end_layout
+
+\begin_layout Itemize
+Les troupes de 1-1 ont réussit a pénétrer les systèmes de communication
+ inter-laboratoire, en attendant que quelqu'un trouve encore une idée que
+ personne eut jusqu'à présent, les communications se font via des messagers
+ humains.
+\end_layout
+
+\begin_layout Itemize
+L'intérêt des troupes de 1-1 a percer les réseaux de communication provient
+ de quand ils ont remarque sur leur radar un prototype de vaisseau humain,
+ qui n'a pas vole longtemps mais inquiète les dirigeants.
+\end_layout
+
+\begin_layout Itemize
+Dernièrement les messagers ont plus de travail que d'habitude et la majorité
+ des missions dirigent les paquets vers l'antarctique.
+\end_layout
+
+\begin_layout Itemize
+Un groupe de messagers, les meilleurs, sont appelés a rejoindre l'antarctique
+ sur le champ.
+\end_layout
+
+\begin_layout Itemize
+Conscient du tumulte, les troupes de 1-1 et du nouveau gouvernement décident
+ de vitrifier l'antarctique.
+\end_layout
+
+\begin_layout Itemize
+Sous la pression de l'attaque, les messagers et leurs nouveaux messages
+ sont presses les un après les autres dans une nouvelle version du téléporteur.
+\end_layout
+
+\begin_layout Itemize
+Cette version ne nécessite pas d'antenne a la réception, limitant les perturbati
+ons, mais aussi utilise des ondes portées sur des particules qui voyages
+ en contre sens du flux temporel.
+\end_layout
+
+\begin_layout Itemize
+La destruction de l'antarctique lance une forte perturbation dans les ondes
+ les dispersant dans l'espace et le temps.
+\end_layout
+
+\begin_layout Chapter
+Pré-1
+\end_layout
+
+\begin_layout Section
+34-7 ::
+\end_layout
+
+\begin_layout Itemize
+Un des messagers arrive en pas trop mauvais état, ses messages disperses.
+\end_layout
+
+\begin_layout Itemize
+Chaque message est signe, après avoir construit un nouveau détecteur, le
+ messager part a la recherche des informations.
+\end_layout
+
+\begin_layout Itemize
+Il retrouve une petite partie, largement endommagée, il s'agit de documents
+ techniques et scientifiques décrivant les dernières technologies.
+\end_layout
+
+\begin_layout Itemize
+Une pièce est détectée dans un centre de recherche en suisse
+\end_layout
+
+\begin_layout Itemize
+Une autre pièce est trouvée, une lettre expliquant les raisons de ce voyage
+ temporel et comment s'en servir pour construire une armada avant de sauter
+ en secret sur 1-1.
+\end_layout
+
+\begin_layout Itemize
+Quelques jours plus tard, un scientifique de ce centre de recherche rend
+ publique sa découverte de la théorie PLET
+\end_layout
+
+\begin_layout Itemize
+Après s'être infiltre dans le centre de recherche, le messager trouve le
+ document endommage en possession de ce scientifique.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Le messager explique sa mission, les enjeux et utilise comme preuve les
+ autres fragments d'information retrouves.
+\end_layout
+
+\begin_layout Itemize
+Le scientifique est prit de désespoir, non seulement il a publie des recherches
+ qui n'étaient pas les siennes, mais il a aussi condamne l'humanité a l'esclavag
+e.
+ Il se suicide.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+La théorie PLET devient a la mode
+\end_layout
+
+\begin_layout Itemize
+Le premier module expérimental de la théorie PLET commence sa construction
+\end_layout
+
+\begin_layout Itemize
+La théorie est montrée comme fausse - les données endommagées de la théorie
+ et ont été réparées par le scientifique de la mauvaise manière, rien n'est
+ perdu.
+\end_layout
+
+\begin_layout Itemize
+Les grandes entreprises en énergie investissent dans la théorie PLET, qui
+ est toujours inexacte.
+\end_layout
+
+\begin_layout Itemize
+Le messager continue de rassembler les informations perdues pour lancer
+ la construction de l'armada avant le premier saut.
+\end_layout
+
+\begin_layout Itemize
+Les gouvernements prennent le messager pour un fou et tentent de le faire
+ interner.
+\end_layout
+
+\begin_layout Itemize
+Le laboratoire américain change d'univers et se retrouve prisonnier dans
+ les sous-sols d'une montagne de 1-1, emmures.
+\end_layout
+
+\begin_layout Itemize
+La construction de Eunice et Bérénice commence
+\end_layout
+
+\begin_layout Itemize
+Le messager produit son propre groupe terroriste pour empêcher toute tentative
+ de lancement de Bérénice
+\end_layout
+
+\begin_layout Itemize
+La construction prend du retard.
+\end_layout
+
+\begin_layout Itemize
+Utilisant les informations sur la technologie 1-1, le messager lance la
+ construction d'un croiseur et d'une flotte, téléportant et clonant les
+ ressources nécessaires.
+\end_layout
+
+\begin_layout Itemize
+Les portions construites sont téléportées en antarctique, prisonnières de
+ la glace.
+\end_layout
+
+\begin_layout Itemize
+La flotte n'est pas terminée mais commence a prendre forme
+\end_layout
+
+\begin_layout Itemize
+Bérénice saute vers 1-1
+\end_layout
+
+\begin_layout Itemize
+Les efforts de construction augmentent pour tenter de finir avant l'arrivée
+\end_layout
+
+\begin_layout Itemize
+Les troupes de 1-1 sautent sur 34-7 et lancent l'attaque, le messager regarde
+ le monde s'effondrer impuissant.
+\end_layout
+
+\begin_layout Itemize
+Le messager saute dans un téléporteur cloneur modifie pour voyager dans
+ le temps, quasiment non teste, il retourne a 3 mois avant l'attaque.
+\end_layout
+
+\begin_layout Chapter
+Rev-2
+\end_layout
+
+\begin_layout Section
+34-7 ::
+\end_layout
+
+\begin_layout Itemize
+Le messager arrive dans un quartier abandonne d'une ville humaine a proximité
+ de la ville majeure 1-1.
+\end_layout
+
+\begin_layout Itemize
+Gravement blesse par le voyage expérimental, il se dirige vers une grande
+ rue de la ville pour y voir que les 3 mois se sont déjà passés, il s'est
+ arrêté au moment ou il n'avait aucune chance de modifier le continuum espace-te
+mps.
+ Trop loin pour pouvoir prévenir le laboratoire sous-terrain.
+\end_layout
+
+\begin_layout Itemize
+Personne n'a trouve sa flotte dans la glace
+\end_layout
+
+\begin_layout Itemize
++Il regarde désespéré sur un écran géant le informations spéciales montrant
+ la destruction de l'antarctique et la vapeur monter de la glace fondue
+ brutalement.
+\end_layout
+
+\begin_layout Itemize
+Alors que la vapeur d'eau se dissipe, il voit des gens sortir du laboratoire
+ souterrain désormais hors de la glace, surpris d'être en vie.
+\end_layout
+
+\begin_layout Itemize
+Ils sont encore plus surpris lorsqu'ils remarquent qu'ils ont été protégés
+ par le champ de force d'un croiseur de construction humaine qui se trouvait
+ prisonnier des glaces juste a cote du laboratoire.
+\end_layout
+
+\begin_layout Itemize
+Le messager éclate de rire et de pleurs lorsque le vaisseau active le mode
+ de réponse automatique et tire sur tous les vaisseaux a proximité des projectil
+es que leurs défenses n'arrivent pas a contrer.
+\end_layout
+
+\begin_layout Itemize
+Il s'allonge sur le dos, un large sourire sur le visage et ferme ses yeux
+ alors qu'une larme coule le long de sa joue.
+\end_layout
+
+\begin_layout Standard
+FIN 
+\end_layout
+
+\begin_layout Part
+Éléments
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{chapter}{0}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Psychologie
+\end_layout
+
+\begin_layout Standard
+Le point principal du gameplay vient de la psychologie du personnage et
+ de son stress.
+\end_layout
+
+\begin_layout Standard
+La majorité des jeux de tirs oublient le stress du personnage offrant au
+ joueur des possibilités très larges ou cache de façon simpliste l'impact
+ de ses actions.
+ Par exemple :
+\end_layout
+
+\begin_layout Itemize
+Le joueur est un mercenaire, un militaire, ...
+ donc il est habitue a se faire tirer dessus, a tuer, a découper, ...
+ (Doom, quake 2, far cry, ...) - Même un super militaire ne s'habitue pas vraiment
+ a massacrer ou il devient fou.
+\end_layout
+
+\begin_layout Itemize
+Le joueur est un civil mais ça ne lui fait rien de tuer (Red Faction, HalfLife,
+ ...) - Se trouver forcer a tuer une méchante bête ne donne pas la force d'éclater
+ la tète d'un scientifique blessé a coup de pied de biche sans sourciller.
+\end_layout
+
+\begin_layout Itemize
+La première fois que le joueur tue, on met une séquence vidéo ou il se sent
+ pas bien/vomit (Silent hill 2, ...) - La première fois ça fait mal, on s'y
+ habitue un peu, mais pas si vite...
+\end_layout
+
+\begin_layout Itemize
+Si le joueur tue ou blesse un civile c'est game over (Splinter cell, Return
+ to the castle Wolfenstein, ...) - Simple, efficace et super agaçant.
+\end_layout
+
+\begin_layout Itemize
+Le joueur ne peut pas blesser/tuer les civils, soit parce qu'ils sont invincible
+s, soit parce que les balles passent a travers - Pas très réaliste et ne
+ traite pas des cas d'état mental en cas d'acharnement sur un personnage
+ invincible qui répète inlassablement 
+\begin_inset Quotes fld
+\end_inset
+
+Mais qu'est-ce que tu fais ? Regarde un peu ou tu vises !
+\begin_inset Quotes frd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+...
+\end_layout
+
+\begin_layout Standard
+Peu de jeu ne prend en compte le fait que le personnage est humain et espère
+ que le joueur, sur son fauteuil va avoir assez de remords a tuer un gentil
+ civil sans défense pour garder un personnage réaliste et pas une personne
+ qui tente d'atteindre un score de 0 personnes vivantes dans le niveau a
+ la fin.
+ Un de ces jeux est Duke Nukem 3D, le personnage est tellement cool qu'il
+ n'a ni le temps de saigner, ni le temps d'avoir des remords 
+\begin_inset Quotes fld
+\end_inset
+
+Those alien bastards are gonna pay for shooting up my ride !
+\begin_inset Quotes frd
+\end_inset
+
+.
+ On en trouve d'autres, par exemple l'appel de ctulhu qui gèrent la santé
+ mentale du personnage.
+\end_layout
+
+\begin_layout Standard
+Dans le modèle que je propose, le niveau de stress du personnage n'est pas
+ indique directement au joueur.
+ Ce niveau est affecte par le lieu ou il se trouve, les bruits alentours,
+ la fatigue, le fait d'avoir une arme ou non (un civil avec une arme stresse,
+ alors qu'un militaire sans son arme panique), le fait de faire pourchasser
+ ou non, le fait de se faire tirer dessus ou non, le fait d'être blessé
+ ou non, le fait d'avoir été soigné ou non, le fait d'être seul ou non,
+ le fait de tirer, le fait de blesser un ennemi, le fait de blesser un allie,
+ le fait de tuer un ennemi, le fait de tuer un allie, le fait de voir le
+ cadavre d'un ennemi, le fait de voir le cadavre d'un allie, le fait de
+ voir les blessures d'un allie, ...
+ Plus le personnage est stresse, plus l'écran perd en saturation, culminant
+ dans un noir et blanc déprimant.
+ De plus, a mesure que le stress augmente, l'écran s'assombrit suivant le
+ rythme respiratoire de la personne et un bruit sur l'écran devient de plus
+ en plus fort proportionnellement au stress du personnage.
+ Lorsque tout va bien, l'écran est plein de couleurs et tout est bien visible,
+ lorsque le stress se fait ressentir, les couleur ne sont plus présentent,
+ tout semble sombre et impossible de voir les détails.
+\end_layout
+
+\begin_layout Standard
+Le jeu met en scène 3 personnages, aux 3 personnalités différentes.
+\end_layout
+
+\begin_layout Standard
+- Hendriks, l'astronaute, est entraîné aux machines qui foirent, mais pas
+ au combat, aux armes et a se faire tirer dessus.
+ Il est résistant au stress tout de même, lui permettant d'encaisser beaucoup
+ avant de devenir fou.
+\end_layout
+
+\begin_layout Standard
+- Kitamura Takashi, la militaire, est entraîné a avoir une arme et a faire
+ face aux situations de panique de masse.
+ Mais il ne lui est pas facile de tuer, de blesser ou de se faire poursuivre.
+\end_layout
+
+\begin_layout Standard
+- Mwana Mvita, le messager, a l'habitude de se faire poursuivre et tirer
+ dessus.
+ Mais pas de blesser ou tuer.
+ Contrairement aux 2 autres personnages, il est bien plus impulsif lui permettan
+t de se remettre vite de son stress mais le maximum qu'il peut encaisser
+ n'est pas très élevé.
+\end_layout
+
+\end_body
+\end_document
