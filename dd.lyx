@@ -1,4 +1,4 @@
-#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -227,6 +227,16 @@ Mwana
  J'étais présent lorsque tout débuta.
  J'ai grandit durant la période la plus importante et maintenant j'assiste
  a la fin alors que la vie me quitte.
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\series bold
+\shape italic
+\color red
+Manque de dynamisme peut-etre.
+ Voir aa jouer sur les effets flashs-backs et avec le flash info.
 \end_layout
 
 \begin_layout Chapter
@@ -539,6 +549,26 @@ Les lumières s'éteignent alors que le vaisseau se met a grincer avant de
  
 \end_layout
 
+\begin_layout Standard
+
+\family typewriter
+\series bold
+\shape italic
+\color red
+Donner des boutons aa appuyer aa Hendriks, voir le promener un peu.
+ C'est pas tres long comme intro, mais le joueur a deja vu l'intro avec
+ la TV et il veut jouer un peu.
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\series bold
+\shape italic
+\color magenta
+Ajouter un passage-tuto avec Mwana ?
+\end_layout
+
 \begin_layout Chapter
 Shooting star
 \end_layout
@@ -715,6 +745,17 @@ Dispatch
  : Aucun contact possible, toutes les lignes sont coupées.
  Nous vous mettons sur liste d'attente, votre officier supérieur reprendra
  contact avec vous sur cette fréquence ASAP.
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\series bold
+\shape italic
+\color red
+Donner un maximum le controle au joueur durant cette partie au pire lui
+ donner uniquement le controle de la tete comme c'est la 3eme intro sans
+ action aa la suite.
 \end_layout
 
 \begin_layout Chapter
@@ -1519,7 +1560,7 @@ Lynch
 \begin_layout Standard
 Hendriks arrive vers les commandes de démarrage du réacteur nucléaire dans
  le secteur D-5.
- Il est asse heureux d'être arrive, quelque chose d'étrange flotte dans
+ Il est asse heureux d'être arrivee, quelque chose d'étrange flotte dans
  l'air et il n'arrive pas a mettre le doigt dessus.
  Comme si quelque chose avait change depuis le lancement du réacteur.
  Il y a bien les coupures de courant, l'eau omniprésente et la mousse, mais
@@ -2126,6 +2167,35 @@ Lynch
 Hendriks fait un signe a Lynch et reprend sa route vers le secteur A.
 \end_layout
 
+\begin_layout Standard
+
+\family typewriter
+\series bold
+\shape italic
+\color red
+Intro 4, mouvements et deplacements dans l'environement.
+ Penser aa mettre plus de bruits de pas et autres sons.
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\series bold
+\shape italic
+\color red
+Retirer les toiles d'araignees du reste de l'histoire.
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\series bold
+\shape italic
+\color red
+Faire arriver les hommes en orange dees cette partie, on peut par exemple
+ utiliser Lefebvre via radio.
+\end_layout
+
 \begin_layout Chapter
 Sous la pluie d'étoiles
 \end_layout
@@ -2449,8 +2519,20 @@ Homme
  : Ils arrivent !
 \end_layout
 
+\begin_layout Standard
+
+\family typewriter
+\series bold
+\shape italic
+\color red
+Premiere ballade en environnement pseudo-ouvert.
+ Durant cette partie si le joueur tente de prendre une arteere plus grande
+ ou de grimper dans un vehicule, Takashi lui rapellera les ordres.
+ Takashi ne devient pas le joueur, c'est au joueur de devenir Takashi.
+\end_layout
+
 \begin_layout Chapter
-Le mur orange - TODO
+Le mur orange
 \end_layout
 
 \begin_layout Standard
@@ -3371,7 +3453,29 @@ Lynch
 \end_layout
 
 \begin_layout Standard
-...TO DO...
+Le sas explose, la decompression aspire tout vers l'exterieur.
+ Hendriks s'accroche au montant de la porte voyant les portes se refermer
+ tout autour de lui pour empecher a la decompression de se reependre.
+ Il saiit que derrieere lui se trouve les homme en orange et qu'ils arrivent,
+ il se hisse le long du mur et passe une porte d'isolement qui est endommagee
+ et n'arrive pas a se fermer.
+ Il met tout son poids dessus, elle s'abaisse, la pression autour de lui
+ remonte lentement.
+\end_layout
+
+\begin_layout Standard
+Commence une course dans les couloirs du module jusqu'aa l'ecoutille menant
+ aa la section suivante.
+ Une fois refermee, Hendriks tombe assis et tente de reprendre sa respiration.
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\series bold
+\shape italic
+\color red
+Debut de la course
 \end_layout
 
 \begin_layout Chapter
@@ -3536,6 +3640,16 @@ Elle écrit sur le bord de la carte les informations, dessine un cercle autour
 
 \begin_layout Standard
 ...TO DO...
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\series bold
+\shape italic
+\color red
+Cette portion va mettre en place l'arrivee progressive des sondes et des
+ troupes au sol.
 \end_layout
 
 \begin_layout Chapter
@@ -3775,6 +3889,23 @@ FIN de la partie Hendriks - Lynch - Van Leeuwen, reconnexion avec la période
  de Takashi.
 \end_layout
 
+\begin_layout Part
+Histoire section B
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{chapter}{0}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Chapter
 Le second souffle de l'humanité - TODO
 \end_layout
@@ -3917,7 +4048,7 @@ Ce chapitre sépare Takashi et Mwana dans le temps.
 \end_layout
 
 \begin_layout Part
-Histoire section B
+Histoire section C
 \begin_inset ERT
 status open
 
