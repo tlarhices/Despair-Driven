@@ -9,6 +9,7 @@ import general
 from configuration import Configuration
 from pluginmanager import PluginManager
 general.configuration = Configuration()
+general.configuration.loadConfiguration(os.path.join(".", "configuration", "main.cfg"))
 general.pluginManager = PluginManager()
 if not general.pluginManager.roots:
   print "Error : No plugin found, exiting."

@@ -13,46 +13,43 @@ import sys
 class Configuration:
   """Gère le fichier de configuration"""
   configuration = None #Le dictionnaire qui contient la configuration actuelle
-  fichierConfig = None #Le fichier que l'on a chargé
-  dicoDefinitionsSprite = None #Le dictionnaire qui contient toutes les définitions de sprite déjà chargées
+  configurationFile = None #Le fichier que l'on a chargé
   
   def __init__(self):
     self.configuration = {}
-    self.dicoDefinitionsSprite = {}
     
-  def charge(self, fichier, erreurSiExistePas=True):
+  def loadConfiguration(self, configurationFile, errorIfNotExist=True):
     """Charge un fichier de configuration"""
     section = None
-    soussection = None
+    subsection = None
     
-    if not os.path.exists(fichier):
-      if erreurSiExistePas:
-        print "CONFIGURATION :: ERREUR :"
-        raw_input("Le fichier de configuration '"+fichier+"' n'existe pas.")
+    if not os.path.exists(configurationFile):
+      if errorIfNotExist:
+        raw_input("CONFIGURATION :: ERROR : The configuration file '%s' does not exists." %configurationFile)
       return
     
-    self.fichierConfig = fichier
-    fichier = open(fichier, "r")
-    for ligne in fichier:
-      ligne = ligne.strip().lower() #On passe tout en minuscule
-      if ligne and ligne[0]!="#": #On saut les lignes vides ou commençant par #
-        if ligne.startswith("[[") and ligne.endswith("]]"): #Si la ligne est de la forme [[****]] alors c'est une section
-          section = ligne[2:-2].strip()
-          soussection = None
-        elif ligne.endswith(":"): #Si la ligne se finit par : alors c'est une soussection
-          soussection = ligne[:-1].strip()
-        else: #Si la ligne ne se termine pas par : alors ce sont des infos
+    self.configurationFile = configurationFile
+    configurationFile = open(configurationFile, "r")
+    for line in configurationFile:
+      line = line.strip().lower() #Everythong in lower case
+      if line and line[0]!="#": #We don't look at lines starting by "#" or empty lines
+        if line.startswith("[[") and line.endswith("]]"): #If line is like [[****]] this is a section
+          section = line[2:-2].strip()
+          subsection = None
+        elif line.endswith(":"): #If line ends with : this is a subsection
+          subsection = line[:-1].strip()
+        else: #Otherwise this is content
           if section == None:
-            print "Configuration hors catégorie : ",ligne
+            print "Configuration content without section : ",line
           else:
-            a,b = ligne.split("=")
+            a,b = line.split("=")
             a = a.strip()
             b = b.strip()
             if not section in self.configuration.keys():
               self.configuration[section]={}
-            if not soussection in self.configuration[section].keys():
-              self.configuration[section][soussection]={}
-            self.configuration[section][soussection][a]=b
+            if not subsection in self.configuration[section].keys():
+              self.configuration[section][subsection]={}
+            self.configuration[section][subsection][a]=b
     
   def sauve(self, fichier):
     """Sauvegarde un fichier de configuration (ne garde pas les commentaires)"""
@@ -84,59 +81,6 @@ class Configuration:
       out[clef]=self.configuration["commandes"]["souris"][clef]
     return out
     
-  def parseSprite(self, fichier):
-    """Charge un fichier de définition de sprite et range les valeurs au bon format dans un dictionnaire"""
-    if fichier in self.dicoDefinitionsSprite.keys():
-      return self.dicoDefinitionsSprite[fichier]
-    
-    sprite={}
-    self.fichierConfig = fichier
-    fich = open(fichier, "r")
-    for ligne in fich:
-      ligne = ligne.strip().lower() #On passe tout en minuscule
-      if ligne[0]!="#":
-        a,b = ligne.split("=")
-        a = a.strip()
-        b = b.strip()
-        sprite[a]=b
-      
-    #Type les variables correctement
-    def config(tab, clef, type, defaut):
-      clef=clef.lower().strip()
-      if not clef in tab.keys():
-        return defaut
-      else:
-        return type(tab[clef])
-        
-    sprite["modele"] = config(sprite, "modele", str, "none")
-    sprite["symbole"]  = config(sprite, "symbole", str, "none")
-    sprite["icone"] = config(sprite, "icone", str, "icones/q.png")
-    sprite["icone-actif"] = config(sprite, "icone-actif", str, "icones/q-over.png")
-    sprite["icone-inactif"] = config(sprite, "icone-inactif", str, "icones/q.png")
-    sprite["vie"] = config(sprite, "vie", float, 100.0)
-    sprite["nocturne"] = config(sprite, "nocturne", str, "f")=="t"
-    sprite["terminalvelocity"] = config(sprite, "terminalvelocity", float, 0.03)
-    sprite["distanceProche"] = config(sprite, "distanceProche", float, 0.002)
-    sprite["seuilToucheSol"] = config(sprite, "seuilToucheSol", float, 0.01)
-    sprite["constanteGravitationelle"] = config(sprite, "constanteGravitationelle", float, 0.01)
-    sprite["vitesse"] = config(sprite, "vitesse", float, 0.01)
-    sprite["distancesymbole"] = config(sprite, "distancesymbole", float, 3.0)
-    sprite["bouge"] = config(sprite, "bouge", str, "t")=="t"
-    sprite["aquatique"] = config(sprite, "aquatique", str, "f")=="t"
-    sprite["constructible"] = config(sprite, "constructible", str, "f")=="t"
-    sprite["ai"] = config(sprite, "ai", str, "standard")
-    sprite["seuilrecalculphysique"] = config(sprite, "seuilrecalculphysique", float, 2.0)
-    sprite["masse"] = config(sprite, "masse", float, 1.0)
-    sprite["echelle"] = config(sprite, "echelle", float, 1.0)
-    sprite["nourr"] = config(sprite, "nourr", float, 0.0)
-    sprite["constr"] = config(sprite, "constr", float, 0.0)
-    sprite["stock"] = config(sprite, "stock", str, "f")=="t"
-    sprite["vitesseDePillage"] = config(sprite, "vitesseDePillage", float, 1.0)
-    sprite["faciliteDePillage"] = config(sprite, "faciliteDePillage", float, 1.0)
-    sprite["dureeDeVie"] = config(sprite, "dureeDeVie", float, -1.0)
-    self.dicoDefinitionsSprite[fichier] = sprite
-    return sprite
-      
   def setConfiguration(self, section, soussection, champ, valeur):
     """Change une valeur de la configuration courante"""
     section=str(section).lower()
@@ -206,92 +150,3 @@ class Configuration:
       return self.versType(defaut, defaut, type)
       
     return self.versType(self.configuration[section][soussection][champ], defaut, type)
-    
-  def chargeMenu(self, menu):
-    """Charge un fichier de menu et retourne le contenu du fichier parsé"""
-    if not os.path.exists(os.path.join(".","data","menus",menu+".menu")):
-      print "ChargeMenu, Erreur : fichier de menu inexistant", menu
-      return None
-    fichier = open(os.path.join(".","data","menus",menu+".menu"))
-    sections = []
-    dansSection=False
-    for ligne in fichier:
-      ligne = ligne.strip().split("#")[0].strip().decode("utf-8")
-      if ligne:
-        if ligne[0]!="#":
-          if ligne.startswith("[") and ligne.endswith("]"):
-            sections.append([ligne[1:-1],[],{}])
-            dansSection = True
-          elif ligne.endswith(":") and ligne.find("=")==-1:
-            sections[-1][1].append([ligne[:-1],{}])
-            dansSection = False
-          elif ligne.find("=")!=-1:
-            #clef
-            a,b = ligne.split("=")
-            a = str(a.strip()).lower()
-            b = b.strip()
-            if not dansSection:
-              sections[-1][1][-1][1][a]=b
-            else:
-              sections[-1][2][a]=b
-          else:
-            print "ChargeMenu, Erreur : ligne inconnue :", ligne
-            
-    for nomSection, contenuSection, dicoSection in sections:
-      if not 'nom' in dicoSection.keys():
-        print "manque nom !"
-      if not 'infobulle' in dicoSection.keys():
-        print "manque infobulle !"
-      if not 'icone' in dicoSection.keys():
-        print "manque icone !"
-      else:
-        dicoSection["iconeactif"] = "icones/"+dicoSection["icone"]+"-over.png"
-        dicoSection["iconeinactif"] = "icones/"+dicoSection["icone"]+".png"
-        
-      for nomElement, contenuElement in contenuSection:
-        if not 'nom' in contenuElement.keys():
-          print "manque nom !"
-        if not 'chemin' in contenuElement.keys():
-          print "manque chemin !"
-        else:
-          sect, soussect, var = contenuElement["chemin"].split("/")
-          contenuElement["valeur"] = self.getConfiguration(sect, soussect, var, "Erreur !", str)
-        if not 'infobulle' in contenuElement.keys():
-          print "manque infobulle !"
-        if not 'icone' in contenuElement.keys():
-          print "manque icone !"
-        else:
-          contenuElement["iconeactif"] = "icones/"+contenuElement["icone"]+"-over.png"
-          contenuElement["iconeinactif"] = "icones/"+contenuElement["icone"]+".png"
-        if not 'type' in contenuElement.keys():
-          print "manque type !"
-          contenuElement["type"] = "None"
-        elif contenuElement["type"] not in ["bool", "int", "liste", "float", "str"]:
-          print "type inconnu !", contenuElement["type"]
-          contenuElement["type"] = "None"
-        else:
-          if contenuElement["type"]=="liste":
-            if not 'valeurs' in contenuElement.keys():
-              print "manque valeurs pour type liste !"
-              contenuElement["type"] = "None"
-            else:
-              contenuElement["valeurs"] = contenuElement["valeurs"].split("|")
-          elif contenuElement["type"]=="bool":
-            if contenuElement["valeur"].lower()=="t":
-              contenuElement["valeur"] = True
-            else:
-              contenuElement["valeur"] = False
-          elif contenuElement["type"]=="float":
-            if (not 'valeurmin' in contenuElement.keys()) and (not 'valeurmax' in contenuElement.keys()):
-              print "manque bornes pour type float !"
-              contenuElement["type"] = "None"
-            else:
-              contenuElement["valeur"] = float(contenuElement["valeur"])
-          elif contenuElement["type"]=="int":
-            if (not 'valeurmin' in contenuElement.keys()) and (not 'valeurmax' in contenuElement.keys()):
-              print "manque bornes pour type int !"
-              contenuElement["type"] = "None"
-            else:
-              contenuElement["valeur"] = int(float(contenuElement["valeur"]))
-    return sections
-    
