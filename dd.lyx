@@ -229,16 +229,6 @@ Mwana
  a la fin alors que la vie me quitte.
 \end_layout
 
-\begin_layout Standard
-
-\family typewriter
-\series bold
-\shape italic
-\color red
-Manque de dynamisme peut-etre.
- Voir aa jouer sur les effets flashs-backs et avec le flash info.
-\end_layout
-
 \begin_layout Chapter
 Mission 
 \begin_inset Formula $ARES^{2}$
@@ -549,26 +539,6 @@ Les lumières s'éteignent alors que le vaisseau se met a grincer avant de
  
 \end_layout
 
-\begin_layout Standard
-
-\family typewriter
-\series bold
-\shape italic
-\color red
-Donner des boutons aa appuyer aa Hendriks, voir le promener un peu.
- C'est pas tres long comme intro, mais le joueur a deja vu l'intro avec
- la TV et il veut jouer un peu.
-\end_layout
-
-\begin_layout Standard
-
-\family typewriter
-\series bold
-\shape italic
-\color magenta
-Ajouter un passage-tuto avec Mwana ?
-\end_layout
-
 \begin_layout Chapter
 Shooting star
 \end_layout
@@ -745,17 +715,6 @@ Dispatch
  : Aucun contact possible, toutes les lignes sont coupées.
  Nous vous mettons sur liste d'attente, votre officier supérieur reprendra
  contact avec vous sur cette fréquence ASAP.
-\end_layout
-
-\begin_layout Standard
-
-\family typewriter
-\series bold
-\shape italic
-\color red
-Donner un maximum le controle au joueur durant cette partie au pire lui
- donner uniquement le controle de la tete comme c'est la 3eme intro sans
- action aa la suite.
 \end_layout
 
 \begin_layout Chapter
@@ -1560,7 +1519,7 @@ Lynch
 \begin_layout Standard
 Hendriks arrive vers les commandes de démarrage du réacteur nucléaire dans
  le secteur D-5.
- Il est asse heureux d'être arrivee, quelque chose d'étrange flotte dans
+ Il est asse heureux d'être arrivé, quelque chose d'étrange flotte dans
  l'air et il n'arrive pas a mettre le doigt dessus.
  Comme si quelque chose avait change depuis le lancement du réacteur.
  Il y a bien les coupures de courant, l'eau omniprésente et la mousse, mais
@@ -2167,35 +2126,6 @@ Lynch
 Hendriks fait un signe a Lynch et reprend sa route vers le secteur A.
 \end_layout
 
-\begin_layout Standard
-
-\family typewriter
-\series bold
-\shape italic
-\color red
-Intro 4, mouvements et deplacements dans l'environement.
- Penser aa mettre plus de bruits de pas et autres sons.
-\end_layout
-
-\begin_layout Standard
-
-\family typewriter
-\series bold
-\shape italic
-\color red
-Retirer les toiles d'araignees du reste de l'histoire.
-\end_layout
-
-\begin_layout Standard
-
-\family typewriter
-\series bold
-\shape italic
-\color red
-Faire arriver les hommes en orange dees cette partie, on peut par exemple
- utiliser Lefebvre via radio.
-\end_layout
-
 \begin_layout Chapter
 Sous la pluie d'étoiles
 \end_layout
@@ -2517,18 +2447,6 @@ e des pustule creva laissant sortir objet volant sombre de faible taille
 Homme
 \emph default
  : Ils arrivent !
-\end_layout
-
-\begin_layout Standard
-
-\family typewriter
-\series bold
-\shape italic
-\color red
-Premiere ballade en environnement pseudo-ouvert.
- Durant cette partie si le joueur tente de prendre une arteere plus grande
- ou de grimper dans un vehicule, Takashi lui rapellera les ordres.
- Takashi ne devient pas le joueur, c'est au joueur de devenir Takashi.
 \end_layout
 
 \begin_layout Chapter
@@ -3453,29 +3371,20 @@ Lynch
 \end_layout
 
 \begin_layout Standard
-Le sas explose, la decompression aspire tout vers l'exterieur.
+Le sas explose, la décompression aspire tout vers l'extérieur.
  Hendriks s'accroche au montant de la porte voyant les portes se refermer
- tout autour de lui pour empecher a la decompression de se reependre.
- Il saiit que derrieere lui se trouve les homme en orange et qu'ils arrivent,
- il se hisse le long du mur et passe une porte d'isolement qui est endommagee
+ tout autour de lui pour empêcher a la décompression de se répandre.
+ Il sait que derrière lui se trouve les homme en orange et qu'ils arrivent,
+ il se hisse le long du mur et passe une porte d'isolement qui est endommagée
  et n'arrive pas a se fermer.
  Il met tout son poids dessus, elle s'abaisse, la pression autour de lui
  remonte lentement.
 \end_layout
 
 \begin_layout Standard
-Commence une course dans les couloirs du module jusqu'aa l'ecoutille menant
- aa la section suivante.
- Une fois refermee, Hendriks tombe assis et tente de reprendre sa respiration.
-\end_layout
-
-\begin_layout Standard
-
-\family typewriter
-\series bold
-\shape italic
-\color red
-Debut de la course
+Commence une course dans les couloirs du module jusqu'à l'écoutille menant
+ à la section suivante.
+ Une fois refermée, Hendriks tombe assis et tente de reprendre sa respiration.
 \end_layout
 
 \begin_layout Chapter
@@ -3640,16 +3549,6 @@ Elle écrit sur le bord de la carte les informations, dessine un cercle autour
 
 \begin_layout Standard
 ...TO DO...
-\end_layout
-
-\begin_layout Standard
-
-\family typewriter
-\series bold
-\shape italic
-\color red
-Cette portion va mettre en place l'arrivee progressive des sondes et des
- troupes au sol.
 \end_layout
 
 \begin_layout Chapter
@@ -3879,16 +3778,6 @@ live
  par des des météores.
 \end_layout
 
-\begin_layout Standard
-
-\family typewriter
-\series bold
-\shape italic
-\color green
-FIN de la partie Hendriks - Lynch - Van Leeuwen, reconnexion avec la période
- de Takashi.
-\end_layout
-
 \begin_layout Part
 Histoire section B
 \begin_inset ERT
@@ -4034,19 +3923,6 @@ Mwana et son camarade arrivent au sommet d'un immeuble alors qu'une de leur
  second et un mauvais présage.
 \end_layout
 
-\begin_layout Standard
-
-\family typewriter
-\series bold
-\shape italic
-\color green
-Ce chapitre sépare Takashi et Mwana dans le temps.
- Takashi opérait a l'époque du premier crash quand Mwana n'était qu'un petit
- enfant.
- Mwana est désormais témoins du second crash presque 20 ans plus tard.
- Il explique aussi pourquoi Mwana a des gadgets que Takashi ne possède pas.
-\end_layout
-
 \begin_layout Part
 Histoire section C
 \begin_inset ERT
@@ -4065,8 +3941,8 @@ setcounter{chapter}{0}
 \end_layout
 
 \begin_layout Standard
-Decrit via l'histoire de Takashi la formation de la resistance et via celle
- de Mwana la mise en place d'une revolution et la boucle temporelle.
+Décrit via l'histoire de Takashi la formation de la résistance et via celle
+ de Mwana la mise en place d'une révolution et la boucle temporelle.
 \end_layout
 
 \begin_layout Part
@@ -4868,150 +4744,6 @@ Il s'allonge sur le dos, un large sourire sur le visage et ferme ses yeux
 
 \begin_layout Standard
 FIN 
-\end_layout
-
-\begin_layout Part
-Éléments
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-setcounter{chapter}{0}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Chapter
-Psychologie
-\end_layout
-
-\begin_layout Standard
-Le point principal du gameplay vient de la psychologie du personnage et
- de son stress.
-\end_layout
-
-\begin_layout Standard
-La majorité des jeux de tirs oublient le stress du personnage offrant au
- joueur des possibilités très larges ou cache de façon simpliste l'impact
- de ses actions.
- Par exemple :
-\end_layout
-
-\begin_layout Itemize
-Le joueur est un mercenaire, un militaire, ...
- donc il est habitue a se faire tirer dessus, a tuer, a découper, ...
- (Doom, quake 2, far cry, ...) - Même un super militaire ne s'habitue pas vraiment
- a massacrer ou il devient fou.
-\end_layout
-
-\begin_layout Itemize
-Le joueur est un civil mais ça ne lui fait rien de tuer (Red Faction, HalfLife,
- ...) - Se trouver forcer a tuer une méchante bête ne donne pas la force d'éclater
- la tète d'un scientifique blessé a coup de pied de biche sans sourciller.
-\end_layout
-
-\begin_layout Itemize
-La première fois que le joueur tue, on met une séquence vidéo ou il se sent
- pas bien/vomit (Silent hill 2, ...) - La première fois ça fait mal, on s'y
- habitue un peu, mais pas si vite...
-\end_layout
-
-\begin_layout Itemize
-Si le joueur tue ou blesse un civile c'est game over (Splinter cell, Return
- to the castle Wolfenstein, ...) - Simple, efficace et super agaçant.
-\end_layout
-
-\begin_layout Itemize
-Le joueur ne peut pas blesser/tuer les civils, soit parce qu'ils sont invincible
-s, soit parce que les balles passent a travers - Pas très réaliste et ne
- traite pas des cas d'état mental en cas d'acharnement sur un personnage
- invincible qui répète inlassablement 
-\begin_inset Quotes fld
-\end_inset
-
-Mais qu'est-ce que tu fais ? Regarde un peu ou tu vises !
-\begin_inset Quotes frd
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-...
-\end_layout
-
-\begin_layout Standard
-Peu de jeu ne prend en compte le fait que le personnage est humain et espère
- que le joueur, sur son fauteuil va avoir assez de remords a tuer un gentil
- civil sans défense pour garder un personnage réaliste et pas une personne
- qui tente d'atteindre un score de 0 personnes vivantes dans le niveau a
- la fin.
- Un de ces jeux est Duke Nukem 3D, le personnage est tellement cool qu'il
- n'a ni le temps de saigner, ni le temps d'avoir des remords 
-\begin_inset Quotes fld
-\end_inset
-
-Those alien bastards are gonna pay for shooting up my ride !
-\begin_inset Quotes frd
-\end_inset
-
-.
- On en trouve d'autres, par exemple l'appel de ctulhu qui gèrent la santé
- mentale du personnage.
-\end_layout
-
-\begin_layout Standard
-Dans le modèle que je propose, le niveau de stress du personnage n'est pas
- indique directement au joueur.
- Ce niveau est affecte par le lieu ou il se trouve, les bruits alentours,
- la fatigue, le fait d'avoir une arme ou non (un civil avec une arme stresse,
- alors qu'un militaire sans son arme panique), le fait de faire pourchasser
- ou non, le fait de se faire tirer dessus ou non, le fait d'être blessé
- ou non, le fait d'avoir été soigné ou non, le fait d'être seul ou non,
- le fait de tirer, le fait de blesser un ennemi, le fait de blesser un allie,
- le fait de tuer un ennemi, le fait de tuer un allie, le fait de voir le
- cadavre d'un ennemi, le fait de voir le cadavre d'un allie, le fait de
- voir les blessures d'un allie, ...
- Plus le personnage est stresse, plus l'écran perd en saturation, culminant
- dans un noir et blanc déprimant.
- De plus, a mesure que le stress augmente, l'écran s'assombrit suivant le
- rythme respiratoire de la personne et un bruit sur l'écran devient de plus
- en plus fort proportionnellement au stress du personnage.
- Lorsque tout va bien, l'écran est plein de couleurs et tout est bien visible,
- lorsque le stress se fait ressentir, les couleur ne sont plus présentent,
- tout semble sombre et impossible de voir les détails.
-\end_layout
-
-\begin_layout Standard
-Le jeu met en scène 3 personnages, aux 3 personnalités différentes.
-\end_layout
-
-\begin_layout Standard
-- Hendriks, l'astronaute, est entraîné aux machines qui foirent, mais pas
- au combat, aux armes et a se faire tirer dessus.
- Il est résistant au stress tout de même, lui permettant d'encaisser beaucoup
- avant de devenir fou.
-\end_layout
-
-\begin_layout Standard
-- Kitamura Takashi, la militaire, est entraîné a avoir une arme et a faire
- face aux situations de panique de masse.
- Mais il ne lui est pas facile de tuer, de blesser ou de se faire poursuivre.
-\end_layout
-
-\begin_layout Standard
-- Mwana Mvita, le messager, a l'habitude de se faire poursuivre et tirer
- dessus.
- Mais pas de blesser ou tuer.
- Contrairement aux 2 autres personnages, il est bien plus impulsif lui permettan
-t de se remettre vite de son stress mais le maximum qu'il peut encaisser
- n'est pas très élevé.
 \end_layout
 
 \end_body
