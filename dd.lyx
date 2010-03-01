@@ -1,4 +1,4 @@
-#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -1416,120 +1416,12 @@ on dans la pièce ou je suis.
 Hendriks reprit son chemin de plus belle, slalomant au milieu des tuyaux
  et des câbles en direction de la section D-5.
  Il devrait y trouver Novotny près du bouton stop.
- Après avoir marche pendant quelques minutes dans les couloirs sombres et
- humide, il remarque au bord de la ventilation la présence d'une mousse
- fine et verte.
- Il prend la radio.
-\end_layout
-
-\begin_layout Standard
-
-\emph on
-Hendriks
-\emph default
- : Hey ! Il y a de la moisissure qui sort de la ventilation.
- Qu'est ce quelle fout la ?
-\end_layout
-
-\begin_layout Standard
-
-\emph on
-Lynch
-\emph default
- : De la moisissure ?
-\end_layout
-
-\begin_layout Standard
-
-\emph on
-Van Leeuwen
-\emph default
- : Ouais ! Je savais bien qu'un truc clochait et que j'arrivais pas a trouver
- ce que c'était !
-\end_layout
-
-\begin_layout Standard
-
-\emph on
-Lynch
-\emph default
- : Ça pourrais expliquer pourquoi la clim ne marche plus.
- Il y en a beaucoup ?
-\end_layout
-
-\begin_layout Standard
-
-\emph on
-Hendriks
-\emph default
- : Juste une fine pellicule ici en D-2.
- Mais d'où est-ce qu'elle viens ?
-\end_layout
-
-\begin_layout Standard
-
-\emph on
-Lynch
-\emph default
- : Je n'en vois pas vers le SNAP.
- C'est peut-être lie a l'eau que vous voyez...
-\end_layout
-
-\begin_layout Standard
-
-\emph on
-Van Leeuwen
-\emph default
- : On est en environnement contrôle et on a respiré de l'air filtre et recycle
- depuis avant notre départ de la Terre.
- Il ne devrait pas y avoir de moisissure qui provient de ça.
- On a amené quelques spécimens pour faire des expériences.
- Je ne sais pas si les containers sont sur Bérénice ou Eunice avec le fiasco
- du départ.
-\end_layout
-
-\begin_layout Standard
-
-\emph on
-Hendriks
-\emph default
- : Un container endommage pourrais contaminer autant ?
-\end_layout
-
-\begin_layout Standard
-
-\emph on
-Van Leeuwen
-\emph default
- : La composition de l'air est différente, je ne sais pas comment les moisissure
-s devrait y réagir.
- Mais il faut chaud, humide, il y a une circulation de l'air continuelle.
- Je pense que oui, elles peuvent pousser assez vite.
- De la a conquérir tout le module j'en doute.
- Ça pourrais être un produit réfrigérant qui ressemblerait a de la mousse
- ?
-\end_layout
-
-\begin_layout Standard
-
-\emph on
-Lynch
-\emph default
- : La majorité du circuit de refroidissement passe dans le secteur D pour
- refroidir le réacteur mais je n'arrive pas a penser a un produit qui pourrais
- ressembler a de la moisissure.
- Mais avec cette composition de l'air, c'est possible.
-\end_layout
-
-\begin_layout Standard
-Hendriks arrive vers les commandes de démarrage du réacteur nucléaire dans
- le secteur D-5.
- Il est asse heureux d'être arrivé, quelque chose d'étrange flotte dans
- l'air et il n'arrive pas a mettre le doigt dessus.
+ Alors qu'Hendriks arrive vers les commandes de démarrage du réacteur nucléaire
+ dans le secteur D-5, il se sent heureux d'être arrivé, mais quelque chose
+ d'étrange flotte dans l'air et il n'arrive pas a mettre le doigt dessus.
  Comme si quelque chose avait change depuis le lancement du réacteur.
- Il y a bien les coupures de courant, l'eau omniprésente et la mousse, mais
- quelque chose a change et est soit cache, soit trop visible pour s'en rendre
- compte.
+ Il y a bien les coupures de courant et l'eau omniprésente, mais quelque
+ chose a change et est soit cache, soit trop visible pour s'en rendre compte.
  Il regarde autour des commandes pour voir s'il trouve ou entend Novotny,
  il appel plusieurs fois.
  Rien, Novotny s'est envole.
@@ -2113,8 +2005,7 @@ Lynch
 Van Leeuwen
 \emph default
  : Ce vaisseau me tape sur les nerfs ! Il y a de l'eau partout, les portes
- déconnent, entre la mousse et les toiles d'araignées les conduits sont
- impraticables.
+ déconnent, les conduits sont impraticables.
  Sans compter ce mur orange et chaud.
 \end_layout
 
@@ -2123,8 +2014,7 @@ Van Leeuwen
 \emph on
 Lynch
 \emph default
- : Des toiles d'araignées ? Un mur orange ? Je pense que tu devrais prendre
- quelques minutes de repos.
+ : Un mur orange ? Je pense que tu devrais prendre quelques minutes de repos.
 \end_layout
 
 \begin_layout Standard
@@ -2462,13 +2352,11 @@ Le mur orange
 Hendriks continue sa route vers le secteur A.
  Les mouvements sont de plus en plus complexes avant de redevenir presque
  simples.
- Il y a moins de mousse et d'eau, les portes fonctionnent assez bien et
- les toiles d'araignées ont disparues.
- Il n'avait rien dit au sujet de ces toiles, ou au sujet des bruits de pas
- précipités et des coups qu'il entend par moment pour ne pas passer pour
- plus dingue que Van Leeuwen mais une fois arrive en face d'un mur orange
- qui coupe une salle en 2 nettement, un écran d'une console ayant comme
- glisse dans le mur s'en est trop.
+ Il y a moins d'eau et les portes fonctionnent assez bien ici.
+ Il n'avait rien dit au sujet des bruits de pas précipités et des coups
+ qu'il entend par moment pour ne pas passer pour plus dingue que Van Leeuwen
+ mais une fois arrive en face d'un mur orange qui coupe une salle en 2 nettement
+, un écran d'une console ayant comme glisse dans le mur s'en est trop.
 \end_layout
 
 \begin_layout Standard
@@ -3428,12 +3316,24 @@ Takashi
 \begin_layout Standard
 
 \emph on
+Takashi
+\emph default
+ : Central, ici charly echo lima 87.
+ A vous.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
 Dispatch
 \emph default
  : Charly echo lima 87, ici central, on vous reçoit 2/5.
  Toutes les missions courantes sont à abandonner, code prioritaire.
  Veuillez vous préparer pour nouvelle affectation effective immédiatement.
- A vous.
+ Je répète.
+ Toutes les missions courantes sont à abandonner, code prioritaire.
+ Veuillez vous préparer pour nouvelle affectation effective immédiatement.
+ À vous.
 \end_layout
 
 \begin_layout Standard
@@ -3484,13 +3384,26 @@ Takashi
 \emph on
 Major
 \emph default
- : L'humanité a capitulé mais les humains non.
+ : Peut-être que vous [brouille].
+ Les gouvernements ont capitulé, mais pas l'humanité.
  Des poches de résistance se forment et s'organisent à travers tous les
  pays.
- Je quitte le commandement ici et m'en vais rejoindre une cellule.
- Je comprends si vous ne voulez pas nous rejoindre, ce fut un plaisir de
- travailler avec vous.
- A vous.
+ Les armées ont été réquisitionnées pour mettre à l'abris les personnes
+ importantes pour le gouvernement.
+ C'est à dire eux même, mais aussi combattre les poches de résistance pour
+ montrer la capitulation générale.
+ La résistance porte un grand intérêt à toutes les découvertes scientifiques
+ et considère comme prioritaire de sauvegarder les résultats de recherche
+ et les chefs scientifiques pour préparer une contre-attaque en continuant
+ les recherches.
+ J'ai décidé de quitter le commandement militaire pour entrer dans une de
+ ces cellules.
+ Votre choix ne dépend que de vous.
+ Si vous voulez vous joindre à la résistance, rendez-vous au sanctuaire
+ Inari au nord de votre position.
+ Sinon, votre mission reste la même et l'équipe d'extraction est toujours
+ en approche.
+ Mais n'oubliez pas que [coupure]
 \end_layout
 
 \begin_layout Standard
@@ -3498,23 +3411,21 @@ Major
 \emph on
 Takashi
 \emph default
- : Je suis prête à tout pour la liberté.
- Quels sont vos ordres.
+ : Major ? ...
+ Major ? ...
+ Vous me recevez ? À vous.
 \end_layout
 
 \begin_layout Standard
 
 \emph on
-Major
+Dispatch
 \emph default
- : Il y a une université au nord de votre position, allez dans le laboratoire
- Oono et récupérez les documents sur le déphaseur quantique.
- Une fois en votre possession, détruisez les locaux ainsi que les autres
- laboratoires.
- Le point de rendez-vous est encore non défini.
- Vous aurez plus d'informations dans le sanctuaire Inari tout proche dans
- 4 heures.
- A vous.
+ : Charly echo lima 87, ici central, votre officier supérieur a été relevé
+ de ses fonctions et mit aux arrêts.
+ Un nouvel officier vous sera assigné.
+ Veuillez attendre votre nouvelle affectation.
+ À vous.
 \end_layout
 
 \begin_layout Standard
@@ -3522,38 +3433,527 @@ Major
 \emph on
 Takashi
 \emph default
- : Bien compris.
- Laboratoire Oono, sécuriser documents sur 
+ : Ici charly echo lima 87, bien reçut.
+\end_layout
+
+\begin_layout Standard
+Elle raccroche la radio.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Politicien
+\emph default
+ : Qu'est-ce que vous allez faire maintenant ? Vous ne pouvez pas me laisser
+ !
+\end_layout
+
+\begin_layout Standard
+Note : 
+\color green
+Cette couleur sera utilisée pour l'histoire si le joueur a décide de laisser
+ Takashi chez les militaires
+\color inherit
+.
+ 
+\color blue
+Cette couleur sera utilisée pour l'histoire si le joueur a décide de faire
+ entrer Takashi dans la résistance.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\color green
+TODO
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+Takashi s'éloigne de l'ambulance.
+ Elle prend sa carte et entoure le sanctuaire voisin.
+ Le politicien la suit avec l'entrain d'un zombie.
+ Elle le regarde marcher et lui dit :
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Takashi
+\emph default
+ : Si vous continuez à traîner des pieds, je vous abandonne ici !
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+Il lève la tête vers son ange gardien et lui sourit.
+ La vitalité le retrouve et il se hâte pour la rejoindre.
+ Elle regarde la carte et dit :
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Takashi
+\emph default
+ : On va prendre cette ruelle, il semblerait qu'elle n'ai pas été attaquée.
+ On doit se dépêcher, le vent se lève et j'ai peur que l'incendie ne se
+ repende.
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+Ils partent tous les deux au milieu des ruines de l'aile de l'hôpital et
+ se glissent dans une petite ruelle, qui continue de descendre la colline.
+ C'est un quartier d'habitation dont une grande partie a été évacué pour
+ être remplacé par un nouveau lotissement tout confort.
+ Takashi doit aider le politicien à escalader les grilles, se glisser dans
+ les appartements délabrés et forcer quelques ouvertures qui ont étés bouchées
+ par des planches.
+ De l'autre cote du quartier commence un escalier metalique rouille qui
+ serpente le long du mur.
+ Takashi regarde sa carte aa la recherche d'un autre itineraire.
+ L'acces suivant le plus proche demande a faire un grand detour.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Politicien
+\emph default
+ : J'espère qu'on ne va pas prendre cet escalier.
+ Je ne suis pas sûr qu'il puisse supporter mon poids !
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+Il s'approche et prends la rambarde, il la secoue.
+ L'escalier grince mais semble en meilleur état que ce qu'il semblait.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Takashi
+\emph default
+ : Il n'y a pas d'autre chemin.
+ j'ai bien peur.
+ J'aurais bien voulut un autre itinéraire moi aussi.
+ Allons-y doucement.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Politicien
+\emph default
+ : Vous pensez qu'il y aura quelqu'un au rendez-vous ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Takashi
+\emph default
+ : Le major est fiable.
+ Allons-y.
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+Elle commence à monter sur l'escalier.
+ Il la suit sans trop avoir le choix.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Politicien
+\emph default
+ : C'est pas ce que je voulais dire.
+ Votre 
 \begin_inset Quotes fld
 \end_inset
 
-déphaseur quantique
+Major
 \begin_inset Quotes frd
 \end_inset
 
-, destruction des laboratoires puis rendez-vous sanctuaire Inari dans 4
- heures.
- Terminé.
+ n'a pas eut le temps de finir ce qu'il disait.
+ Vous êtes sûr qu'il a eut le temps d'organiser ce rendez-vous ?
 \end_layout
 
 \begin_layout Standard
 
 \emph on
-Major
+\color blue
+Takashi
+\emph default
+ : Le temps, peut-être pas.
+ Mais tout est prêt pour notre arrivée.
+ J'ai plus peur des militaires que par contre...
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Politicien
+\emph default
+ : Comment ça ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Takashi
+\emph default
+ : Si les militaires tentent de détruire la résistance, ils peuvent être
+ intéressés par leurs rendez-vous.
+ Et le notre a été fait depuis le QG de l'armée sur une fréquence de l'armée.
+ Difficile de faire plus de publicité.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Politicien
+\emph default
+ : Mais vous avez un plan, non ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Takashi
+\emph default
+ : Cet escalier va nous faire arriver dans le quartier en face du sanctuaire.
+ De là, on devrait pouvoir trouver un endroit pour jeter un oeil sur le
+ comité d'accueil.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Politicien
+\emph default
+ : Et si jamais ça se passe mal ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Takashi
+\emph default
+ : Si jamais ça se passe mal, on a une excellente couverture.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Politicien
+\emph default
+ : Laquelle ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Takashi
+\emph default
+ : Vous.
+ les militaires mettent en sécurité des hommes politiques influant.
+ Ma dernière mission était de vous protéger.
+ Ça devrait faire l'affaire.
+ Non ?
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+Arrivé à mit chemin de l'escalier, les craquements deviennent plus importants.
+ Takashi regarde du cote du mur et voit l'escalier s'en séparer lentement.
+ Elle regarde de l'autre cote, les boules de feu tombent toujours du ciel
+ arrosant la ville.
+ Ils ont fait beaucoup de chemin, la chute n'est plus une option.
+ Il faut courir.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Takashi
+\emph default
+ : Courez !
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+Ils se ruent sur les marchent, leurs pas raisonnant dans le quartier abandonne
+ en dessous d'eux auxquels s'ajoutent les craquements de l'escalier, de
+ plus en plus forts et de plus en plus effrayants.
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+Dans leur précipitation, certaines marches cèdent sous leurs pieds, leur
+ faisant perdre l'équilibre.
+ À la fin d'une course intense, ils arrivent au sommet de l'escalier alors
+ que ce dernier se détache du mur et va s'écraser dans le quartier en dessous
+ dans un chaos de métal.
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+Takashi aide le politicien à franchir le barrière bloquant l'accès à l'escalier
+ et ils s'arrêtent pour reprendre leur respiration.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Politicien 
+\emph default
+: On peut oublier l'arrivée discrète je pense...
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+Pensant aux militaires qui pourraient être en chemin pour voir ce qui s'est
+ passe, Takashi attrape le politicien par le bras et l'entraîne parmi les
+ ruelles.
+ Se perdant entre les maisons, ils arrivent à proximité du sanctuaire.
+ Les lumières de la coure y sont allumées, normal pour un sanctuaire en
+ temps normal mais dans de telles conditions veut dire qu'il y a encore
+ de l'électricité alors que la ville s'effondre en-dessous.
+ Il y a un seul homme dans la coure, regardant le ciel buvant du thé.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Homme
+\emph default
+ : Vous devez-être Takashi.
+ Le major m'a souvent parle de vous.
+ Venez, suivez-moi.
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+Il les guide jusqu'à une porte en bois dans la paroi en pierre s'élevant
+ derrière le bâtiment principal.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Homme
+\emph default
+ : C'est une rivière souterraine.
+ Ne vous inquiétez pas, le tunnel ne s'écroulera pas.
+ Les dieux le protègent et il a résisté à plusieurs bombardements déjà.
+ Le major m'a dicte ce message pour vous.
+ Vous avez une carte ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Takashi
+\emph default
+ : Oui, tenez.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Homme
+\emph default
+ : Le tunnel ressort dans ce parc.
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+Il entoure le parc.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Homme
 \emph default
  : Bonne chance.
- Terminé.
 \end_layout
 
 \begin_layout Standard
-Elle écrit sur le bord de la carte les informations, dessine un cercle autour
- de l'université et du sanctuaire et reprend son chemin dans la nuit.
- Après quelques mètres, le politicien l'appelle.
- Elle se retourne et continue son chemin laissant là son colis.
+
+\emph on
+\color blue
+Takashi
+\emph default
+ : Merci.
 \end_layout
 
 \begin_layout Standard
-...TO DO...
+
+\color blue
+L'homme leur tend une lanterne et referme la porte.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Politicien
+\emph default
+ : Vous le connaissez ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Takashi
+\emph default
+ : Non.
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+Elle approche le message de la lanterne pour le lire.
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+\begin_inset Quotes fld
+\end_inset
+
+Takashi, vous avez fait le bon choix.
+ L'humanité a besoin de plus de personnes comme vous.
+ Il y a une université à l'est du parc ou vous vous trouvez peut-être, au
+ bout du passage.
+ Une fois à cette université, allez dans le laboratoire Oono et récupérez
+ les documents sur le déphaseur quantique.
+ Une fois en votre possession, détruisez les locaux.
+ Le point de rendez-vous est encore non défini.
+ Une fois votre travail achevé, dirigez-vous à la station Suinin.
+\begin_inset Quotes frd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Politicien
+\emph default
+ : Je ne me rappel pas d'une station 
+\begin_inset Quotes fld
+\end_inset
+
+Suinin
+\begin_inset Quotes frd
+\end_inset
+
+.
+ Mais je ne prends pas le train souvent.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Takashi
+\emph default
+ : Il n'y en a pas.
+ Il fait référence à la 11eme station.
+ Et la ligne doit être celle qui passe proche de l'université.
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+Politicien : Je ne vois pas le rapport entre 
+\begin_inset Quotes fld
+\end_inset
+
+Suinin
+\begin_inset Quotes frd
+\end_inset
+
+ et 11.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Takashi
+\emph default
+ : 
+\begin_inset Quotes fld
+\end_inset
+
+Quand ton ennemi est étranger à ta culture, le meilleur code se trouve caché
+ en elle
+\begin_inset Quotes frd
+\end_inset
+
+.
+ C'est ce que le major répétait tout le temps.
+ Suinin était le 11eme empereur.
+ Le lien est facile a faire si on sait où regarder.
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+TODO
 \end_layout
 
 \begin_layout Chapter
@@ -3607,10 +4007,7 @@ Durant les préparatifs, Novotny sera retrouve.
  Avec sa combinaison inutilisable et un bras casse, il va se glisser dans
  les le conduit d'aération qui est la seule voie en dehors du cul de sac
  où il s'est retrouvé emprisonné.
- Il va endommager sa combinaison dans un conduit ce qui va libérer de la
- mousse dans l'air et produire l'espèce de moisissure qui a été vue dans
- le vaisseau.
- Il aura erre dans les conduits un moment avant de perdre espoir de trouver
+ Il aura erré dans les conduits un moment avant de perdre espoir de trouver
  une sortie et de s'arrêter.
  Il sera retrouvé par Hendriks lors de la recherche de la conduite percée.
  Il confirmera que la langue parlée par les envahisseurs n'est pas du russe.
@@ -3655,9 +4052,9 @@ Exile - TODO
 
 \begin_layout Standard
 Takashi va visiter les sous-sols aménagés par la résistance.
- Ils se sont installes temporairement dans le système anti-tsunami, qui
- est une gigantesque caverne reliant les principaux fleuves, ainsi que la
- baie à proximité.
+ Ils se sont installes temporairement dans le système anti-coulées de lave,
+ qui est une gigantesque caverne reliant les principaux fleuves, ainsi que
+ la baie à proximité.
  Ils prévoient des convois qui vont aller dans des lieux tenus secrets.
  Les différents convois se séparent et se dirigent vers les puits d'accès
  pour véhicules, à la surface, l'attaque fait toujours rage et des portions
