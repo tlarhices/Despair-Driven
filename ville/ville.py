@@ -59,10 +59,31 @@ class Ville:
     for C,D in self.lignes:
       r = self.intersection(A, B, C, D)
       if r!=None:
-        coll=r
-    return coll!=None
+        Px=A[0]+r*(B[0]-A[0])
+        Py=A[1]+r*(B[1]-A[1])
+        P = Px, Py, 0.0
+        d2 = (Vec3(*A)-Vec3(*P)).lengthSquared()
+        if coll==None or d2<d:
+          coll=P
+          d=d2
+    return coll
       
-      
+  def ajouteBatiments(self, A, B):
+    i=0.0
+    rayon = 0.5
+    pas = 1.0/(Vec3(*B)-Vec3(*A)).length()*rayon
+    Px=A[0]-5*(B[0]-A[0])
+    Py=A[1]-5*(B[1]-A[1])
+    prev=Vec3(Px, Py, 0.0)
+    while i<=1.0:
+      i+=pas
+      Px=A[0]+i*(B[0]-A[0])
+      Py=A[1]+i*(B[1]-A[1])
+      if (Vec3(Px, Py, 0.0)-prev).length()>3*rayon+random.random()*rayon*5:
+        prev=Vec3(Px, Py, 0.0)
+        mdl = loader.loadModel("sphere.egg")
+        mdl.setPos(Px, Py, 0.0)
+        mdl.reparentTo(render)
 
   def ajouteRouteAlea(self):
     depx, depy, depz = random.choice(self.points)
@@ -71,18 +92,29 @@ class Ville:
     if len(autres)>0:
       arrx, arry, arrz = random.choice(autres)
       autres.remove((arrx, arry, arrz))
-    while len(autres)>0 and self.intersectionne((depx, depy, depz),(arrx, arry, arrz)):
+    while len(autres)>0 and self.intersectionne((depx, depy, depz),(arrx, arry, arrz))!=None:
       arrx, arry, arrz = random.choice(autres)
       autres.remove((arrx, arry, arrz))
     else:
       arrx, arry, arrz = self.pointAlea((depx, depy, depz))
-    if not self.intersectionne((depx, depy, depz),(arrx, arry, arrz)):
-      self.points.append((arrx, arry, arrz))
-      self.points.append(((arrx+depx)/2, (arry+depy)/2, (arrz+depz)/2))
+    
+    r=self.intersectionne((depx, depy, depz),(arrx, arry, arrz))
+    if r!=None:
+      arrx, arry, arrz = r
+      
+    if (Vec3(depx, depy, depz)-Vec3(arrx, arry, arrz)).lengthSquared() > 2.0:
+      if (arrx, arry, arrz) not in self.points:
+        self.points.append((arrx, arry, arrz))
+      if ((arrx+depx)/2, (arry+depy)/2, (arrz+depz)/2) not in self.points:
+        self.points.append(((arrx+depx)/2, (arry+depy)/2, (arrz+depz)/2))
       lseg = LineSegs()
       lseg.moveTo(depx, depy, depz)
       lseg.drawTo(arrx, arry, arrz)
-      self.lignes.append(((depx, depy, depz),(arrx, arry, arrz)))
+      self.ajouteBatiments((depx, depy, depz), (arrx, arry, arrz))
+      if ((depx, depy, depz),(arrx, arry, arrz)) not in self.lignes:
+        self.lignes.append(((depx, depy, depz),(arrx, arry, arrz)))
+      else:
+        print "danger !"
       render.attachNewNode(lseg.create())
       
   def ping(self, task):
