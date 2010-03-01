@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#import direct.directbase.DirectStart
+import direct.directbase.DirectStart
 from pandac.PandaModules import *
 
 from weakref import proxy
@@ -8,262 +8,87 @@ from weakref import proxy
 import random
   
 class Ville:
-  surface = None
-  def __init__(self, tailleX, tailleY):
-    self.surface = []
-    for i in range(0, tailleY):
-      self.surface.append([])
-      for j in range(0, tailleX):
-        self.surface[i].append(0)
-    #for i in range(0, tailleY):
-    #  for j in range(0, tailleX):
-    #    if random.random()<0.02:
-    #      self.ajouteRouteAlea()
-        
-  def affiche(self):
-    for ligne in self.surface:
-      for bloc in ligne:
-        if bloc==0:
-          print "?",
-        elif bloc==-1:
-          print " ",
-        elif bloc==1:
-          print "#",
-        else:
-          print bloc,
-      print
+  points = None
+  rayon = None
+  lignes = None
+  
+  def __init__(self, rayon):
+    self.rayon = rayon
+    self.points = [self.pointAlea((0.0,0.0,0.0))]
+    self.lignes = []
+    self.ajouteRouteAlea()
       
-  def pointAlea(self):
-    return (int(random.random()*len(self.surface)), int(random.random()*len(self.surface[0])))
+  def pointAlea(self, pt):
+    x,y,z = pt
+    return ((random.random()*2-1)*self.rayon+x, (random.random()*2-1)*self.rayon+y, 0.0+z)
       
-  def ajouteRouteAlea(self):
-    depx, depy = self.pointAlea()
-    arrx, arry = self.pointAlea()
-    self.surface[depx][depy] = -1
-    self.surface[arrx][arry] = -1
-    posx, posy = depx, depy
-    while posx!=arrx or posy!=arry:
-      if random.random()>0.5:
-        if posx>arrx:
-          posx-=1
-        elif posx<arrx:
-          posx+=1
-      else:
-        if posy>arry:
-          posy-=1
-        elif posy<arry:
-          posy+=1
-      self.surface[posx][posy]=-1
-      
-  def ping(self):
-    cx,cy = self.pointAlea()
-    c = self.surface[cx][cy]
-    voisins = []
-    for i in [-1, 0, 1]:
-      elem = []
-      for j in [-1, 0, 1]:
-        if cx+i>=0 and cy+i>=0:
-          if cx+i<len(self.surface) and cy+j<len(self.surface[0]):
-            elem.append(self.surface[cx+i][cy+j])
-      voisins.append(elem)
+  def equationDroite(self, dep, arr):
+    if arr[0] == dep[0]:
+      arr = list(arr)
+      arr[0]+=0.0001
+    m = (arr[1] - dep[1]) / (arr[0] - dep[0])
+    b = dep[1] - m*dep[0]
+    return m, b
     
-    blocs = None
-    if voisins == [[0, 0, 0], [0, 0, 0], [0, 0, 0]]:
-      blocs = [
-        [[0, 0, 0], [0, 1, 0], [0, 0, 0]],
-        [[0, 0, 0], [0, -1, 0], [0, 0, 0]],
-        [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
-        [[1, 1, 1], [0, 1, 0], [1, 1, 1]],
-        [[1, 0, 1], [1, 1, 1], [1, 0, 1]],
-        [[1, 1, 1], [1, 0, 1], [0, 0, 0]],
-        [[0, 0, 0], [1, 0, 1], [1, 1, 1]],
-        [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
-        [[1, 0, 0], [1, 0, 1], [1, 1, 1]],
-        [[1, 1, 0], [1, 1, 0], [0, 1, 1]],
-        [[-1, -1, -1], [0, 0, 0], [0, 0, 0]],
-        [[0, 0, 0], [-1, -1, -1], [0, 0, 0]],
-        [[0, 0, 0], [0, 0, 0], [-1, -1, -1]],
-        [[-1, 0, 0], [-1, 0, 0], [-1, 0, 0]],
-        [[0, -1, 0], [0, -1, 0], [0, -1, 0]],
-        [[0, 0, -1], [0, 0, -1], [0, 0, -1]],
-        [[-1, 0, 0], [0, -1, 0], [0, 0, -1]],
-        [[0, 0, -1], [0, -1, 0], [0, 0, -1]],
-        [[-1, 0, 0], [0, -1, 0], [-1, 0, 0]],
-        [[0, 0, -1], [0, -1, 0], [0, 0, -1]],
-        [[-1, 0, -1], [0, -1, 0], [0, 0, 0]],
-        [[0, 0, 0], [0, -1, 0], [-1, 0, -1]]
-      ]
-    if voisins == [[1,0,1],[1,1,1],[1,0,1]]:
-      blocs = [
-        [[1,-1,1],[1,1,1],[1,-1,1]],
-        [[1,0,1],[1,1,1],[1,-1,1]],
-        [[1,-1,1],[1,1,1],[1,0,1]]
-      ]
-    if voisins == [[0,0,0],[0,0,0],[1,1,1]]:
-      blocs = [
-        [[0,0,0],[1,0,1],[1,1,1]],
-        [[0,0,0],[1,1,1],[1,1,1]],
-        [[1,1,1],[0,0,1],[1,1,1]],
-        [[1,1,1],[0,1,0],[1,1,1]],
-        [[0,0,0],[-1,-1,-1],[1,1,1]],
-        [[0,-1,0],[-1,-1,-1],[1,1,1]],
-        [[-1,0,0],[-1,-1,-1],[1,1,1]],
-        [[1,-1,0],[1,-1,-1],[1,1,1]]
-      ]
-    if voisins == [[0,0,0],[0,0,0],[1,1,1]]:
-      blocs = [
-        [[0,0,0],[1,0,1],[1,1,1]],
-        [[0,0,0],[1,1,1],[1,1,1]],
-        [[1,1,1],[0,0,1],[1,1,1]],
-        [[1,1,1],[0,1,0],[1,1,1]],
-        [[0,0,0],[-1,-1,-1],[1,1,1]],
-        [[0,-1,0],[-1,-1,-1],[1,1,1]],
-        [[-1,0,0],[-1,-1,-1],[1,1,1]],
-        [[1,-1,0],[1,-1,-1],[1,1,1]]
-      ]
-    if voisins == [[0,1,1],[0,1,1],[0,1,1]]:
-      blocs = [
-        [[-1,1,1],[-1,1,1],[-1,1,1]],
-        [[-1,1,1],[-1,1,1],[0,1,1]],
-        [[0,1,1],[-1,1,1],[-1,1,1]],
-        [[0,1,1],[0,1,1],[1,1,1]],
-        [[1,1,1],[0,1,1],[0,1,1]],
-        [[0,1,1],[1,1,1],[0,1,1]]
-      ]
-    if voisins == [[0,0,0],[0,-1,-1],[0,0,0]]:
-      blocs = [
-        [[0,0,0],[-1,-1,-1],[0,0,0]],
-        [[0,0,-1],[0,-1,-1],[0,0,0]],
-        [[0,-1,0],[0,-1,-1],[0,0,0]],
-        [[-1,0,0],[0,-1,-1],[0,0,0]],
-        [[0,0,0],[0,-1,-1],[0,0,-1]],
-        [[0,0,0],[0,-1,-1],[0,-1,0]],
-        [[0,0,0],[0,-1,-1],[-1,0,0]]
-      ]
-    if voisins == [[0,0,0],[-1,0,0],[-1,0,-1]]:
-      blocs = [
-        [[0,0,0],[-1,0,0],[-1,-1,-1]],
-        [[0,0,0],[-1,-1,-1],[-1,0,-1]],
-        [[0,0,0],[-1,1,1],[-1,-1,-1]],
-        [[1,1,1],[-1,-1,-1],[-1,0,-1]]
-      ]
-    if voisins == [[-1,0,-1],[0,-1,0],[0,0,0]]:
-      blocs = [
-        [[-1,0,-1],[0,-1,-1],[0,0,0]],
-        [[-1,0,-1],[-1,-1,0],[0,0,0]],
-        [[-1,-1,-1],[0,-1,0],[0,0,0]]
-      ]
-    if voisins == [[0,0,0],[0,0,0],[-1,1,1]]:
-      blocs = [
-        [[-1,-1,-1],[-1,1,-1],[-1,1,1]],
-        [[1,1,1],[1,1,1],[-1,1,1]],
-        [[-1,0,0],[-1,0,0],[-1,1,1]]
-      ]
-    if voisins == [[1,1,0],[1,1,0],[0,1,1]]:
-      blocs = [
-        [[1,1,0],[1,1,0],[-1,1,1]],
-        [[1,1,-1],[1,1,-1],[0,1,1]],
-        [[1,1,0],[1,1,0],[1,1,1]]
-      ]
-    if voisins == [[0,0,0],[0,-1,-1],[0,-1,0]]:
-      blocs = [
-        [[1,1,1],[0,-1,-1],[0,-1,0]],
-        [[1,0,0],[1,-1,-1],[1,-1,0]],
-        [[0,-1,0],[0,-1,-1],[0,-1,0]],
-        [[0,-1,0],[-1,-1,-1],[0,-1,0]],
-        [[0,0,0],[-1,-1,-1],[0,-1,0]]
-      ]
-    if voisins == [[0,0,0],[0,0,-1],[0,0,0]]:
-      blocs = [
-        [[0,0,-1],[0,0,-1],[0,0,-1]],
-        [[0,0,0],[-1,-1,-1],[0,0,0]],
-        [[0,-1,0],[0,-1,-1],[0,0,0]]
-      ]
-    if voisins == [[0,0,0],[-1,-1,-1],[0,0,0]]:
-      blocs = [
-        [[1,1,1],[-1,-1,-1],[0,0,0]],
-        [[0,0,0],[-1,-1,-1],[0,-1,0]],
-        [[0,-1,0],[-1,-1,-1],[1,1,1]]
-      ]
-    if voisins == [[0,0,-1],[0,0,-1],[0,0,-1]]:
-      blocs = [
-        [[1,1,-1],[1,1,-1],[1,1,-1]],
-        [[0,0,-1],[0,0,-1],[-1,-1,-1]],
-        [[0,0,-1],[-1,-1,-1],[-1,0,-1]]
-      ]
-    if voisins == [[0,0,0],[0,-1,0],[0,0,0]]:
-      blocs = [
-        [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
-        [[1, 1, 1], [0, 1, 0], [1, 1, 1]],
-        [[1, 0, 1], [1, 1, 1], [1, 0, 1]],
-        [[1, 1, 1], [1, 0, 1], [0, 0, 0]],
-        [[0, 0, 0], [1, 0, 1], [1, 1, 1]],
-        [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
-        [[1, 0, 0], [1, 0, 1], [1, 1, 1]],
-        [[1, 1, 0], [1, 1, 0], [0, 1, 1]],
-        [[-1, -1, -1], [0, 0, 0], [0, 0, 0]],
-        [[0, 0, 0], [-1, -1, -1], [0, 0, 0]],
-        [[0, 0, 0], [0, 0, 0], [-1, -1, -1]],
-        [[-1, 0, 0], [-1, 0, 0], [-1, 0, 0]],
-        [[0, -1, 0], [0, -1, 0], [0, -1, 0]],
-        [[0, 0, -1], [0, 0, -1], [0, 0, -1]],
-        [[-1, 0, 0], [0, -1, 0], [0, 0, -1]],
-        [[0, 0, -1], [0, -1, 0], [0, 0, -1]],
-        [[-1, 0, 0], [0, -1, 0], [-1, 0, 0]],
-        [[0, 0, -1], [0, -1, 0], [0, 0, -1]],
-        [[-1, 0, -1], [0, -1, 0], [0, 0, 0]],
-        [[0, 0, 0], [0, -1, 0], [-1, 0, -1]]
-      ]
-    if voisins == [[0,0,0],[0,0,-1],[-1,-1,-1]]:
-      blocs = [
-        [[0,0,-1],[0,0,-1],[-1,-1,-1]],
-        [[1,1,0],[1,1,-1],[-1,-1,-1]],
-        [[1,1,-1],[1,1,-1],[-1,-1,-1]]
-      ]
-    if voisins == [[0,0,0],[1,0,1],[1,1,1]]:
-      blocs = [
-        [[0,-1,0],[1,-1,1],[1,-1,1]],
-        [[-1,-1,-1],[1,0,1],[1,1,1]],
-        [[1,-1,-1],[1,-1,1],[1,1,1]]
-      ]
-    if voisins == [[0,0,0],[0,0,1],[0,0,0]]:
-      blocs = [
-        [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
-        [[1, 1, 1], [0, 1, 0], [1, 1, 1]],
-        [[1, 0, 1], [1, 1, 1], [1, 0, 1]],
-        [[1, 1, 1], [1, 0, 1], [0, 0, 0]],
-        [[0, 0, 0], [1, 0, 1], [1, 1, 1]],
-        [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
-        [[1, 0, 0], [1, 0, 1], [1, 1, 1]],
-        [[1, 1, 0], [1, 1, 0], [0, 1, 1]],
-        [[-1, -1, -1], [0, 0, 0], [0, 0, 0]],
-        [[0, 0, 0], [-1, -1, -1], [0, 0, 0]],
-        [[0, 0, 0], [0, 0, 0], [-1, -1, -1]],
-        [[-1, 0, 0], [-1, 0, 0], [-1, 0, 0]],
-        [[0, -1, 0], [0, -1, 0], [0, -1, 0]],
-        [[0, 0, -1], [0, 0, -1], [0, 0, -1]],
-        [[-1, 0, 0], [0, -1, 0], [0, 0, -1]],
-        [[0, 0, -1], [0, -1, 0], [0, 0, -1]],
-        [[-1, 0, 0], [0, -1, 0], [-1, 0, 0]],
-        [[0, 0, -1], [0, -1, 0], [0, 0, -1]],
-        [[-1, 0, -1], [0, -1, 0], [0, 0, 0]],
-        [[0, 0, 0], [0, -1, 0], [-1, 0, -1]]
-      ]
+  def intersection(self, A, B, C, D):
+    Ax, Ay, Az = A
+    Bx, By, Bz = B
+    Cx, Cy, Cz = C
+    Dx, Dy, Dz = D
+    
+    try:
+      r=((Ay-Cy)*(Dx-Cx)-(Ax-Cx)*(Dy-Cy))/((Bx-Ax)*(Dy-Cy)-(By-Ay)*(Dx-Cx))
+    except:
+      r=0.5
+    try:
+      s=((Ay-Cy)*(Bx-Ax)-(Ax-Cx)*(By-Ay))/((Bx-Ax)*(Dy-Cy)-(By-Ay)*(Dx-Cx))
+    except:
+      s=0.5
+    if 0<r and r<1 and 0<s and s<1:
+      return r
+    else:
+      return None
       
-    if blocs :
-      bloc = random.choice(blocs)
-      for i in [-1, 0, 1]:
-        for j in [-1, 0, 1]:
-          if cx+i<len(self.surface) and cy+j<len(self.surface[0]):
-            self.surface[cx+i][cy+j] = bloc[i+1][j+1]
+      
+  def intersectionne(self, A, B):
+    d = (Vec3(*A)-Vec3(*B)).lengthSquared()
+    deb = A
+    fin = B
+
+    coll = None
+    for C,D in self.lignes:
+      r = self.intersection(A, B, C, D)
+      if r!=None:
+        coll=r
+    return coll!=None
+      
       
 
-ville=Ville(25,20)
-ville.affiche()
-while True:
-  print "-------"
-  for i in range(0,10000 ):
-    ville.ping()
-  ville.affiche()
-  raw_input()
-#run()
+  def ajouteRouteAlea(self):
+    depx, depy, depz = random.choice(self.points)
+    autres = self.points[:]
+    autres.remove((depx, depy, depz))
+    if len(autres)>0:
+      arrx, arry, arrz = random.choice(autres)
+      autres.remove((arrx, arry, arrz))
+    while len(autres)>0 and self.intersectionne((depx, depy, depz),(arrx, arry, arrz)):
+      arrx, arry, arrz = random.choice(autres)
+      autres.remove((arrx, arry, arrz))
+    else:
+      arrx, arry, arrz = self.pointAlea((depx, depy, depz))
+    if not self.intersectionne((depx, depy, depz),(arrx, arry, arrz)):
+      self.points.append((arrx, arry, arrz))
+      self.points.append(((arrx+depx)/2, (arry+depy)/2, (arrz+depz)/2))
+      lseg = LineSegs()
+      lseg.moveTo(depx, depy, depz)
+      lseg.drawTo(arrx, arry, arrz)
+      self.lignes.append(((depx, depy, depz),(arrx, arry, arrz)))
+      render.attachNewNode(lseg.create())
+      
+  def ping(self, task):
+    self.ajouteRouteAlea()
+    return task.cont      
+
+ville=Ville(25)
+taskMgr.add(ville.ping, 'PingVille')
+run()
