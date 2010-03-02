@@ -16,14 +16,17 @@ class Ville:
   
   def __init__(self, rayon):
     self.rayon = rayon
-    self.points = [self.pointAlea((0.0,0.0,0.0))]
-    self.lignes = []
+    self.points = [self.pointAlea((0.0,0.0,0.0)), self.pointAlea((0.0,0.0,0.0))]
+    self.lignes = [(self.points[0], self.points[1])]
     self.batiments = []
     self.ajouteRouteAlea()
       
-  def pointAlea(self, pt):
+  def pointAlea(self, pt, delta=None):
+    if delta==None:
+      delta = self.rayon
+    
     x,y,z = pt
-    return ((random.random()*2-1)*self.rayon+x, (random.random()*2-1)*self.rayon+y, 0.0+z)
+    return ((random.random()*2-1)*delta+x, (random.random()*2-1)*delta+y, 0.0+z)
       
   def equationDroite(self, dep, arr):
     if arr[0] == dep[0]:
@@ -119,80 +122,120 @@ class Ville:
     n=Vec3(direction*dy, -direction*dx, 0.0)
     n.normalize()
     
+    cpt=0
+    dec = random.random()*rayon*30
     while i<=1.0:
       i+=pas
       taille=random.random()*1.0+0.5
+      Cx = A[0]+i*(B[0]-A[0])
+      Cy = A[1]+i*(B[1]-A[1])
       Px=A[0]+i*(B[0]-A[0])+n[0]*taille
       Py=A[1]+i*(B[1]-A[1])+n[1]*taille
-      if (Vec3(Px, Py, 0.0)-prev).length()>10*rayon+random.random()*rayon*20:
+      if (Vec3(Px, Py, 0.0)-prev).length()>3*rayon+dec:
+        dec = random.random()*rayon*30
         noeudColl = self.collisionBatimentBatiment((Px, Py, 0.0), taille)
         if not noeudColl:
           if not self.collisionBatimentLigne((Px, Py, 0.0), taille):
-            if random.random()>0.5:
+            if random.random()>0.3:
+              cpt+=1
               prev=Vec3(Px, Py, 0.0)
+              top = NodePath("")
               mdl = loader.loadModel("box.egg")
-              mdl.setPos(Px-0.5, Py-0.5, -0.5)
-              mdl.reparentTo(render)
-              mdl.setColor(random.random()/2, random.random()/2, random.random()/2)
+              top.setPos(Px, Py, 0.0)
+              mdl.setPos(-0.5,-0.5,0.0)
+              mdl.reparentTo(top)
+              #mdl.setColor(random.random()/2, random.random()/2, random.random()/2)
+              mdl.setColor(0.5, 0.5, 0.5)
               self.batiments.append(((Px,Py,0.0), taille, mdl))
-              mdl.setScale(taille, taille, 1.0)
+              mdl.setScale(taille*(random.random()/2+0.5), taille*(random.random()/2+0.5), 1.0)
+              sol = loader.loadModel("box.egg")
+              sol.setScale(taille, taille*1.5, 0.001)
+              sol.setColor(30.0/255, 159.0/255, 02.0/255)
+              sol.setPos(-0.5,-0.5,0.0)
+              sol.reparentTo(top)
+              top.lookAt(Cx, Cy, 0.0)
+              top.reparentTo(render)
         else:
           sc = noeudColl.getScale()
           noeudColl.setScale(sc[0], sc[1], sc[2]*1.05)
+    return cpt
 
-  def ajouteRouteAlea(self):
+  def continueRoute(self, route, versFin):
+    vecteurRoute = Vec3(*route[1])-Vec3(*route[0])
+    origine = route[1]
+    if not versFin:
+      vecteurRoute = -vecteurRoute
+      origine = route[0]
+    vecteurRoute[0] = vecteurRoute[0]+(random.random()-0.5)/2
+    vecteurRoute[1] = vecteurRoute[1]+(random.random()-0.5)/2
+    cible = self.pointAlea(Vec3(*origine)+vecteurRoute)
+    self.ajouteRoute(origine, cible)
     
-    depx, depy, depz = random.choice(self.points)
-    autres = self.points[:]
-    autres.remove((depx, depy, depz))
-    if len(autres)>0:
-      arrx, arry, arrz = random.choice(autres)
-      autres.remove((arrx, arry, arrz))
-    while len(autres)>0 and self.intersectionne((depx, depy, depz),(arrx, arry, arrz))!=None:
-      arrx, arry, arrz = random.choice(autres)
-      autres.remove((arrx, arry, arrz))
-    else:
-      arrx, arry, arrz = self.pointAlea((depx, depy, depz))
-    
-    r=self.intersectionne((depx, depy, depz),(arrx, arry, arrz))
-    if r!=None:
-      arrx, arry, arrz = r
+  def ajouteRoute(self, depart, arrivee):
+    coll = self.intersectionne(depart, arrivee)
+    if coll:
+      arrivee = coll
       
-    if (Vec3(depx, depy, depz)-Vec3(arrx, arry, arrz)).lengthSquared() > 2.0:
-      pt1, d1 = self.pointPlusProche((depx, depy, depz))
-      pt2, d2 = self.pointPlusProche((arrx, arry, arrz))
-      seuilMinD = 8.0
-      if d1<seuilMinD:
-        (depx, depy, depz) = pt1
-      if d2<seuilMinD:
-        (arrx, arry, arrz) = pt2
-      if ((depx, depy, depz),(arrx, arry, arrz)) not in self.lignes and (Vec3(depx, depy, depz)-Vec3(arrx, arry, arrz)).length()>2.5:
-        if not self.collisionLigneBatiment((depx, depy, depz), (arrx, arry, arrz)):
-          if True:#(d1>seuilMinDAffiche or pt1==(depx, depy, depz)) and (d2>seuilMinDAffiche or pt2==(arrx, arry, arrz)):
-            if (arrx, arry, arrz) not in self.points:
-              self.points.append((arrx, arry, arrz))
-            t = int((Vec3(depx, depy, depz)-Vec3(arrx, arry, arrz)).length())
-            if t<8:
-              return
-            if t>=12:
-              cp = int(math.sqrt(t-2))
-              for i in range(1, cp, 11):
-                i = float(i)
-                if ((arrx+depx)*i/cp, (arry+depy)*i/cp, (arrz+depz)*i/cp) not in self.points:
-                  self.points.append(((arrx+depx)*i/cp, (arry+depy)*i/cp, (arrz+depz)*i/cp))
-              #self.points.append(((arrx+depx)/2, (arry+depy)/2, (arrz+depz)/2))
-            lseg = LineSegs()
-            lseg.moveTo(depx, depy, depz)
-            lseg.drawTo(arrx, arry, arrz)
-            if ((depx, depy, depz),(arrx, arry, arrz)) not in self.lignes:
-              self.lignes.append(((depx, depy, depz),(arrx, arry, arrz)))
-            else:
-              print "danger !"
-            render.attachNewNode(lseg.create())
-          self.ajouteBatiments((depx, depy, depz), (arrx, arry, arrz), 1.0)
-          self.ajouteBatiments((depx, depy, depz), (arrx, arry, arrz), -1.0)
-    print "routes :", len(self.lignes)
-    print "batiments :", len(self.batiments)
+    if Vec3(*depart).length()>self.rayon:
+      return
+    if Vec3(*arrivee).length()>self.rayon:
+      return
+      
+    seuilFusion = min(5.0, 5.0*(Vec3(*arrivee)-Vec3(*depart)).length())
+    d1, pt1 = self.pointPlusProche(depart)
+    d2, pt2 = self.pointPlusProche(arrivee)
+    if d1<seuilFusion:
+      depart=pt1
+    if d2<seuilFusion:
+      arrivee=pt2
+      
+    longueurMin = 4.0
+    if (Vec3(*arrivee)-Vec3(*depart)).length()<longueurMin:
+      return
+      
+    if (depart,arrivee) in self.lignes:
+      return
+      
+    if self.collisionLigneBatiment(depart, arrivee):
+      return    
+      
+    position = depart
+    racine = NodePath("00")
+    points = []
+    lignes = []
+    cptBat = 0
+    while (Vec3(*position)-Vec3(*arrivee)).length()>0:
+      direction = (Vec3(*arrivee)-Vec3(*position))
+      if direction.length()<5.0:
+        plus=arrivee
+      else:
+        direction.normalize()*5.0
+        plus=Vec3(*position)+direction
+      cptBat += self.ajouteBatiments(position, plus, 1) + self.ajouteBatiments(position, plus, -1)
+
+      points.append(position)
+      lignes.append((position,plus))
+      ligne = LineSegs()
+      ligne.setColor(0.1, 0.1, 0.1)
+      ligne.moveTo(*position)
+      ligne.drawTo(*plus)
+      rt = racine.attachNewNode(ligne.create())
+      position = plus
+      
+    if cptBat==0:
+      racine.detachNode()
+      racine.removeNode()
+    else:
+      racine.reparentTo(render)
+      self.points+=points
+      self.lignes+=lignes
+    self.points.append(arrivee)
+    
+  def ajouteRouteAlea(self):
+    routeOrigine = random.choice(self.lignes)
+    choix = random.random()
+    self.continueRoute(routeOrigine, choix>=0.5)
+    print "Batiments : %i\r" %len(self.batiments),
       
   def pointPlusProche(self, pt):
     d=800000.0
@@ -208,6 +251,13 @@ class Ville:
     self.ajouteRouteAlea()
     return task.cont      
 
-ville=Ville(30)
+base.setBackgroundColor(40.0/255, 169.0/255, 12.0/255)
+
+dlight = PointLight('my dlight')
+dlnp = render.attachNewNode(dlight)
+dlnp.setPos(-75, -30, 20)
+render.setLight(dlnp)
+
+ville=Ville(75)
 taskMgr.add(ville.ping, 'PingVille')
 run()
