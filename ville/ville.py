@@ -7,17 +7,19 @@ from weakref import proxy
 
 import random
 import math
+import time
 
 class Ville:
   points = None
   rayon = None
   lignes = None
   batiments = None
+  longueurSegment = 4.0
   
   def __init__(self, rayon):
     self.rayon = rayon
     self.points = [self.pointAlea((0.0,0.0,0.0)), self.pointAlea((0.0,0.0,0.0))]
-    self.lignes = [(self.points[0], self.points[1])]
+    self.lignes = [[(self.points[0], self.points[1]), None, False]]
     self.batiments = []
     self.ajouteRouteAlea()
       
@@ -56,22 +58,34 @@ class Ville:
       return None
       
       
-  def intersectionne(self, A, B):
+  def intersectionne(self, A, B, force=False):
     d = (Vec3(*A)-Vec3(*B)).lengthSquared()
     deb = A
     fin = B
 
     coll = None
-    for C,D in self.lignes:
+    for obj in self.lignes:
+      ((C,D), mdl, estAvenue) = obj
       r = self.intersection(A, B, C, D)
       if r!=None:
+          
         Px=A[0]+r*(B[0]-A[0])
         Py=A[1]+r*(B[1]-A[1])
         P = Px, Py, 0.0
+        if force:
+          self.lignes.remove(obj)
+          self.ajouteRoute(C, P, cptBatiments=False)
+          self.ajouteRoute(P, D, cptBatiments=False)
         d2 = (Vec3(*A)-Vec3(*P)).lengthSquared()
         if coll==None or d2<d:
           coll=P
           d=d2
+    if force:
+      return None
+    if coll==A:
+      return None
+    if coll==B:
+      return None
     return coll
     
   def collisionBatimentBatiment(self, position, rayon):
@@ -81,14 +95,19 @@ class Ville:
         return noeud
     return False
     
-  def collisionLigneBatiment(self, pointA, pointB):
+  def collisionLigneBatiment(self, pointA, pointB, force=False):
     for centre, rayon, noeud in self.batiments:
       if self.collisionLigneCercle(pointA, pointB, centre, rayon):
-        return True
+        if not force:
+          return True
+        else:
+          self.batiments.remove((centre,rayon,noeud))
+          noeud.detachNode()
+          noeud.removeNode()
     return False
     
   def collisionBatimentLigne(self, position, rayon):
-    for pointA, pointB in self.lignes:
+    for (pointA, pointB), mdl, estAvenue in self.lignes:
       if self.collisionLigneCercle(pointA, pointB, position, rayon):
         return True
     return False
@@ -161,6 +180,7 @@ class Ville:
     return cpt
 
   def continueRoute(self, route, versFin):
+    route = route[0]
     vecteurRoute = Vec3(*route[1])-Vec3(*route[0])
     origine = route[1]
     if not versFin:
@@ -171,32 +191,36 @@ class Ville:
     cible = self.pointAlea(Vec3(*origine)+vecteurRoute)
     self.ajouteRoute(origine, cible)
     
-  def ajouteRoute(self, depart, arrivee):
-    coll = self.intersectionne(depart, arrivee)
+  def ajouteRoute(self, depart, arrivee, couleur=(0.1, 0.1, 0.1), force=False, estAvenue=False, cptBatiments=True, testeDistance=True):
+    coll = self.intersectionne(depart, arrivee, force=force)
     if coll:
       arrivee = coll
-      
+
     if Vec3(*depart).length()>self.rayon:
       return
     if Vec3(*arrivee).length()>self.rayon:
       return
       
-    seuilFusion = min(5.0, 5.0*(Vec3(*arrivee)-Vec3(*depart)).length())
-    d1, pt1 = self.pointPlusProche(depart)
-    d2, pt2 = self.pointPlusProche(arrivee)
-    if d1<seuilFusion:
-      depart=pt1
-    if d2<seuilFusion:
-      arrivee=pt2
+    if testeDistance and not force:
+      d1, pt1 = self.pointPlusProche(depart)
+      d2, pt2 = self.pointPlusProche(arrivee)
+      if d1<self.longueurSegment:
+        print depart,"=>",pt1
+        depart=pt1
+      if d2<self.longueurSegment:
+        print arrivee,"=>",pt2
+        arrivee=pt2
       
-    longueurMin = 4.0
-    if (Vec3(*arrivee)-Vec3(*depart)).length()<longueurMin:
+    longueurMin = self.longueurSegment
+    if (not force) and testeDistance and (Vec3(*arrivee)-Vec3(*depart)).length()<longueurMin:
       return
       
-    if (depart,arrivee) in self.lignes:
-      return
+    if not force:
+      for lpos, mdl, estAvenue in self.lignes:
+        if (depart,arrivee)==lpos or (arrivee,depart)==lpos:
+          return
       
-    if self.collisionLigneBatiment(depart, arrivee):
+    if self.collisionLigneBatiment(depart, arrivee, force=force):
       return    
       
     position = depart
@@ -206,23 +230,23 @@ class Ville:
     cptBat = 0
     while (Vec3(*position)-Vec3(*arrivee)).length()>0:
       direction = (Vec3(*arrivee)-Vec3(*position))
-      if direction.length()<5.0:
+      if direction.length()<self.longueurSegment:
         plus=arrivee
       else:
-        direction.normalize()*5.0
+        direction.normalize()*self.longueurSegment
         plus=Vec3(*position)+direction
       cptBat += self.ajouteBatiments(position, plus, 1) + self.ajouteBatiments(position, plus, -1)
 
       points.append(position)
-      lignes.append((position,plus))
       ligne = LineSegs()
-      ligne.setColor(0.1, 0.1, 0.1)
+      ligne.setColor(*couleur)
       ligne.moveTo(*position)
       ligne.drawTo(*plus)
       rt = racine.attachNewNode(ligne.create())
+      lignes.append([(position,plus), rt, estAvenue])
       position = plus
       
-    if cptBat==0:
+    if (not force) and cptBatiments and cptBat==0:
       racine.detachNode()
       racine.removeNode()
     else:
@@ -230,22 +254,167 @@ class Ville:
       self.points+=points
       self.lignes+=lignes
     self.points.append(arrivee)
+    return racine
     
+  heurePing = None
   def ajouteRouteAlea(self):
     routeOrigine = random.choice(self.lignes)
     choix = random.random()
     self.continueRoute(routeOrigine, choix>=0.5)
+    if self.heurePing == None or time.time()-self.heurePing>5:
+      if self.heurePing!=None:
+        print time.time()-self.heurePing, "Go !"
+      self.heurePing = time.time()
+      self.ajouteAvenue()
+      print "moukiz"
+      #self.connecterLesBouts()
+      self.heurePing = time.time() + (time.time()-self.heurePing)
     print "Batiments : %i\r" %len(self.batiments),
       
-  def pointPlusProche(self, pt):
+  def pointPlusProche(self, pt, egalOK=True):
     d=800000.0
     ptProche=None
     for point in self.points:
-      dist = (Vec3(*point)-Vec3(*pt)).lengthSquared()
-      if dist < d:
-        ptProche = point
-        d = dist
+      if egalOK or (point!=pt):
+        dist = (Vec3(*point)-Vec3(*pt)).lengthSquared()
+        if dist < d:
+          ptProche = point
+          d = dist
     return ptProche, math.sqrt(d)
+    
+  def pointsProcheLigne(self, A, B, seuil):
+    points = []
+    for point in self.points:
+      if self.distPointLigne(point, A, B)[0] <= seuil:
+        points.append(point)
+    return points
+    
+  def connecterLesBouts(self):
+    distanceConnecte = self.longueurSegment*0.9
+    for route1 in self.lignes:
+      print "Attachage des routes %i/%i \r" %(self.lignes.index(route1), len(self.lignes)),
+      A, B = route1[0]
+      AestBout = True
+      BestBout = True
+      for route2 in self.lignes:
+        if route1 != route2:
+          if A in route2[0]:
+            AestBout = False
+          if B in route2[0]:
+            BestBout = False
+      if AestBout:
+        pt, dist = self.pointPlusProche(A, egalOK=False)
+        cont = True
+        for route in self.lignes:
+          if route[0] in [(A, pt),(pt,A)]:
+            cont = False
+        if cont:
+          if dist<distanceConnecte and dist>0:
+            self.ajouteRoute(A, pt, cptBatiments=False, testeDistance=False)
+      if BestBout:
+        pt, dist = self.pointPlusProche(B, egalOK=False)
+        cont = True
+        for route in self.lignes:
+          if route[0] in [(A, pt),(pt,A)]:
+            cont = False
+        if cont:
+          if dist<distanceConnecte and dist>0:
+            self.ajouteRoute(B, pt, cptBatiments=False, testeDistance=False)
+    print
+    print "moukiz"
+    
+  def ajouteAvenue(self):
+    seuilProche = self.longueurSegment*0.5
+    seuilAvenue = 125
+    
+    routesATester = []
+    for route in self.lignes:
+      if not route[2]:
+        if random.random()>0.2:
+          routesATester.append(route)
+    
+    for route in routesATester:
+      if routesATester.index(route)%20==0:
+        print "Test : %i/%i\r" %(routesATester.index(route)+1, len(routesATester)),
+      if not route[2]:
+        pts = self.pointsProcheLigne(route[0][0], route[0][1], seuilProche)
+        segments = []
+        umin, umax = 0.0,1.0
+        pmin, pmax = route[0][0], route[0][1]
+        if len(pts)>=seuilAvenue:
+          for routeTest in self.lignes:
+            if routeTest[0][0] in pts or reversed(routeTest[0][0]) in pts:
+              if routeTest[0][1] in pts or reversed(routeTest[0][1]) in pts:
+                segments.append(routeTest)
+        if len(segments)>=seuilAvenue:
+          print "Creation d'une avenue"
+          
+          for routeTest in segments:
+            self.supprimeRoute(routeTest)
+              
+            for pt in pts:
+              dst, u = self.distPointLigne(pt, route[0][0], route[0][1])
+              if u < umin:
+                umin=u
+                pmin=pt
+              if u > umax:
+                umax=u
+                pmax=pt
+                
+          rd=self.ajouteRoute(pmin, pmax, couleur=(1.0,1.0,1.0), force=True, estAvenue=True)
+          if rd!=None:
+            rd.setLightOff()
+            
+          orphelins = self.chercheOrphelins()
+          for orphelin in orphelins:
+            print "Gestion de l'orphelin %i/%i\r" %(orphelins.index(orphelin)+1, len(orphelins)),
+            pt, dist = self.pointPlusProche(orphelin, egalOK=False)
+            self.ajouteRoute(orphelin, pt, cptBatiments=False, testeDistance=False)
+          print
+
+  def chercheOrphelins(self):
+    orphelins = []
+    for point in self.points:
+      orph = True
+      for route in self.lignes:
+        if point in route[0]:
+          orph = False
+      if orph:
+        self.points.remove(point)
+    return []
+
+          
+  def supprimeRoute(self, route):
+    if route[1]!=None:
+      route[1].detachNode()
+      route[1].removeNode()
+      route[1]=None
+      route[2]=True
+    while route in self.lignes:
+      self.lignes.remove(route)
+    ptABout = True
+    ptBBout = True
+    for rt in self.lignes:
+      if route[0][0] in rt[0]:
+        ptABout=False
+      if route[0][1] in rt[0]:
+        ptBBout=False
+    if ptABout:
+      self.points.remove(route[0][0])
+    if ptBBout:
+      self.points.remove(route[0][1])
+        
+        
+    
+  def distPointLigne(self, point, A, B):
+    x1, y1, z1= A
+    x2, y2, z2 = B
+    x3, y3, z3 = point
+    lAB = (Vec3(*B)-Vec3(*A)).length()
+    u = ((x3-x1)*(x2-x1)+(y3-y1)*(y2-y1))/(lAB*lAB)
+    x = x1 + u*(x2-x1)
+    y = y1 + u*(y2-y1)
+    return (Vec3(x, y, 0.0)-Vec3(*point)).length(), u
       
   def ping(self, task):
     self.ajouteRouteAlea()
