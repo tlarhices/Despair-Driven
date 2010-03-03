@@ -342,30 +342,33 @@ class Ville:
         umin, umax = 0.0,1.0
         pmin, pmax = route[0][0], route[0][1]
         if len(pts)>=seuilAvenue:
+          for pt in pts:
+            dst, u = self.distPointLigne(pt, route[0][0], route[0][1])
+            if u < umin:
+              umin=u
+              pmin=pt
+            if u > umax:
+              umax=u
+              pmax=pt
+
           for routeTest in self.lignes:
             if routeTest[0][0] in pts or reversed(routeTest[0][0]) in pts:
               if routeTest[0][1] in pts or reversed(routeTest[0][1]) in pts:
                 segments.append(routeTest)
+                
         if len(segments)>=seuilAvenue:
-          print "Creation d'une avenue"
+          print "Creation d'une avenue", (Vec3(*pmax)-Vec3(*pmin)).length()/self.longueurSegment, float(len(segments))*0.8
           
           for routeTest in segments:
             self.supprimeRoute(routeTest)
               
-            for pt in pts:
-              dst, u = self.distPointLigne(pt, route[0][0], route[0][1])
-              if u < umin:
-                umin=u
-                pmin=pt
-              if u > umax:
-                umax=u
-                pmax=pt
+          orphelins = self.pointsProcheLigne(route[0][0], route[0][1], seuilProche)
                 
           rd=self.ajouteRoute(pmin, pmax, couleur=(1.0,1.0,1.0), force=True, estAvenue=True)
           if rd!=None:
             rd.setLightOff()
             
-          orphelins = self.chercheOrphelins()
+          #orphelins = self.chercheOrphelins()
           for orphelin in orphelins:
             print "Gestion de l'orphelin %i/%i\r" %(orphelins.index(orphelin)+1, len(orphelins)),
             pt, dist = self.pointPlusProche(orphelin, egalOK=False)
