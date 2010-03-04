@@ -9,17 +9,90 @@ import random
 import math
 import time
 
+class Route:
+  def __init__(self, pointA, pointB, taille):
+    self.pointA = pointA
+    self.pointB = pointB
+    self.taille = taille
+    self.racine = None
+    self.fabrique()
+    
+  def fabrique(self):
+    couleur = (0.1,0.1,0.1)
+    self.racine = NodePath("00")
+    ligne = LineSegs()
+    ligne.setColor(*couleur)
+    ligne.moveTo(*self.pointA)
+    ligne.drawTo(*self.pointB)
+    self.racine.attachNewNode(ligne.create())
+    self.racine.reparentTo(render)
+    
+  def supprime(self):
+    if self.racine!=None:
+      self.racine.detachNode()
+      self.racine.removeNode()
+      self.racine = None
+    
+  def estAvenue(self):
+    return self.taille >= 3.0
+  def getCoord(self):
+    return self.pointA, self.pointB
+    
+class Batiment:
+  def __init__(self, position, orientation, taille):
+    self.position = position
+    self.orientation = orientation
+    self.taille = taille
+    self.jardin = None
+    self.batiment = None
+    self.racine = None
+    
+    self.fabrique()
+    
+  def fabrique(self):
+    self.top = NodePath("")
+    self.mdl = loader.loadModel("box.egg")
+    Px, Py = self.position
+    self.top.setPos(Px, Py, 0.0)
+    self.mdl.setPos(-0.5,-0.5,0.0)
+    self.mdl.reparentTo(self.top)
+    #mdl.setColor(random.random()/2, random.random()/2, random.random()/2)
+    self.mdl.setColor(0.5, 0.5, 0.5)
+    self.mdl.setScale(self.taille*(random.random()/2+0.5), self.taille*(random.random()/2+0.5), 1.0)
+    self.sol = loader.loadModel("box.egg")
+    self.sol.setScale(self.taille, self.taille*1.5, 0.001)
+    self.sol.setColor(30.0/255, 159.0/255, 02.0/255)
+    self.sol.setPos(-0.5,-0.5,0.0)
+    self.sol.reparentTo(self.top)
+    Cx, Cy = self.orientation
+    self.top.lookAt(Cx, Cy, 0.0)
+    self.top.reparentTo(render)
+    
+  def supprime(self):
+    self.top.detachNode()
+    self.top.removeNode()
+    self.top = None
+    self.mdl = None
+    self.sol = None
+    
+  def getScale(self):
+    return self.mdl.getScale()
+    
+  def setScale(self, x,y,z):
+    return self.mdl.setScale(x,y,z)
+
+
 class Ville:
   points = None
   rayon = None
-  lignes = None
+  routes = None
   batiments = None
   longueurSegment = 4.0
   
   def __init__(self, rayon):
     self.rayon = rayon
     self.points = [self.pointAlea((0.0,0.0,0.0)), self.pointAlea((0.0,0.0,0.0))]
-    self.lignes = [[(self.points[0], self.points[1]), None, False]]
+    self.routes = [Route(self.points[0], self.points[1], 1.0)]
     self.batiments = []
     self.ajouteRouteAlea()
       
@@ -64,8 +137,10 @@ class Ville:
     fin = B
 
     coll = None
-    for obj in self.lignes:
-      ((C,D), mdl, estAvenue) = obj
+    for obj in self.routes:
+      C = obj.pointA
+      D = obj.pointB
+      #((C,D), mdl, estAvenue) = obj
       r = self.intersection(A, B, C, D)
       if r!=None:
           
@@ -73,7 +148,7 @@ class Ville:
         Py=A[1]+r*(B[1]-A[1])
         P = Px, Py, 0.0
         if force:
-          self.lignes.remove(obj)
+          self.routes.remove(obj)
           self.ajouteRoute(C, P, cptBatiments=False)
           self.ajouteRoute(P, D, cptBatiments=False)
         d2 = (Vec3(*A)-Vec3(*P)).lengthSquared()
@@ -90,24 +165,28 @@ class Ville:
     
   def collisionBatimentBatiment(self, position, rayon):
     position = Vec3(*position)
-    for pos, taille, noeud in self.batiments:
+    for batiment in self.batiments:
+      pos = batiment.position[0], batiment.position[1], 0.0
+      taille = batiment.taille
       if (rayon+taille)*(rayon+taille)>(position-Vec3(*pos)).lengthSquared():
-        return noeud
+        return batiment
     return False
     
   def collisionLigneBatiment(self, pointA, pointB, force=False):
-    for centre, rayon, noeud in self.batiments:
+    for batiment in self.batiments:
+      centre = batiment.position[0], batiment.position[1], 0.0
+      rayon = batiment.taille
       if self.collisionLigneCercle(pointA, pointB, centre, rayon):
         if not force:
           return True
         else:
-          self.batiments.remove((centre,rayon,noeud))
-          noeud.detachNode()
-          noeud.removeNode()
+          self.batiments.remove(batiment)
+          batiment.supprime()
     return False
     
   def collisionBatimentLigne(self, position, rayon):
-    for (pointA, pointB), mdl, estAvenue in self.lignes:
+    for route in self.routes:
+      pointA, pointB = route.getCoord()
       if self.collisionLigneCercle(pointA, pointB, position, rayon):
         return True
     return False
@@ -158,29 +237,14 @@ class Ville:
             if random.random()>0.3:
               cpt+=1
               prev=Vec3(Px, Py, 0.0)
-              top = NodePath("")
-              mdl = loader.loadModel("box.egg")
-              top.setPos(Px, Py, 0.0)
-              mdl.setPos(-0.5,-0.5,0.0)
-              mdl.reparentTo(top)
-              #mdl.setColor(random.random()/2, random.random()/2, random.random()/2)
-              mdl.setColor(0.5, 0.5, 0.5)
-              self.batiments.append(((Px,Py,0.0), taille, mdl))
-              mdl.setScale(taille*(random.random()/2+0.5), taille*(random.random()/2+0.5), 1.0)
-              sol = loader.loadModel("box.egg")
-              sol.setScale(taille, taille*1.5, 0.001)
-              sol.setColor(30.0/255, 159.0/255, 02.0/255)
-              sol.setPos(-0.5,-0.5,0.0)
-              sol.reparentTo(top)
-              top.lookAt(Cx, Cy, 0.0)
-              top.reparentTo(render)
+              self.batiments.append(Batiment((Px,Py), (Cx,Cy), taille))
         else:
           sc = noeudColl.getScale()
           noeudColl.setScale(sc[0], sc[1], sc[2]*1.05)
     return cpt
 
   def continueRoute(self, route, versFin):
-    route = route[0]
+    route = route.pointA, route.pointB
     vecteurRoute = Vec3(*route[1])-Vec3(*route[0])
     origine = route[1]
     if not versFin:
@@ -193,7 +257,7 @@ class Ville:
     
   def ajouteRoute(self, depart, arrivee, couleur=(0.1, 0.1, 0.1), force=False, estAvenue=False, cptBatiments=True, testeDistance=True):
     coll = self.intersectionne(depart, arrivee, force=force)
-    if coll:
+    if coll and depart!=coll:
       arrivee = coll
 
     if Vec3(*depart).length()>self.rayon:
@@ -216,7 +280,8 @@ class Ville:
       return
       
     if not force:
-      for lpos, mdl, estAvenue in self.lignes:
+      for route in self.routes:
+        lpos = route.pointA, route.pointB
         if (depart,arrivee)==lpos or (arrivee,depart)==lpos:
           return
       
@@ -224,9 +289,8 @@ class Ville:
       return    
       
     position = depart
-    racine = NodePath("00")
     points = []
-    lignes = []
+    routes = []
     cptBat = 0
     while (Vec3(*position)-Vec3(*arrivee)).length()>0:
       direction = (Vec3(*arrivee)-Vec3(*position))
@@ -238,27 +302,23 @@ class Ville:
       cptBat += self.ajouteBatiments(position, plus, 1) + self.ajouteBatiments(position, plus, -1)
 
       points.append(position)
-      ligne = LineSegs()
-      ligne.setColor(*couleur)
-      ligne.moveTo(*position)
-      ligne.drawTo(*plus)
-      rt = racine.attachNewNode(ligne.create())
-      lignes.append([(position,plus), rt, estAvenue])
+      taille = 1.0
+      if estAvenue:
+        taille = 3.0
+      routes.append(Route(position, plus, taille))
       position = plus
       
     if (not force) and cptBatiments and cptBat==0:
-      racine.detachNode()
-      racine.removeNode()
+      for route in routes:
+        route.supprime()
     else:
-      racine.reparentTo(render)
       self.points+=points
-      self.lignes+=lignes
+      self.routes+=routes
     self.points.append(arrivee)
-    return racine
     
   heurePing = None
   def ajouteRouteAlea(self):
-    routeOrigine = random.choice(self.lignes)
+    routeOrigine = random.choice(self.routes)
     choix = random.random()
     self.continueRoute(routeOrigine, choix>=0.5)
     if self.heurePing == None or time.time()-self.heurePing>5:
@@ -328,22 +388,22 @@ class Ville:
     seuilAvenue = 125
     
     routesATester = []
-    for route in self.lignes:
-      if not route[2]:
+    for route in self.routes:
+      if not route.estAvenue():
         if random.random()>0.2:
           routesATester.append(route)
     
     for route in routesATester:
       if routesATester.index(route)%20==0:
         print "Test : %i/%i\r" %(routesATester.index(route)+1, len(routesATester)),
-      if not route[2]:
-        pts = self.pointsProcheLigne(route[0][0], route[0][1], seuilProche)
+      if not route.estAvenue():
+        pts = self.pointsProcheLigne(route.pointA, route.pointB, seuilProche)
         segments = []
         umin, umax = 0.0,1.0
-        pmin, pmax = route[0][0], route[0][1]
+        pmin, pmax = route.pointA, route.pointB
         if len(pts)>=seuilAvenue:
           for pt in pts:
-            dst, u = self.distPointLigne(pt, route[0][0], route[0][1])
+            dst, u = self.distPointLigne(pt, route.pointA, route.pointB)
             if u < umin:
               umin=u
               pmin=pt
@@ -351,22 +411,26 @@ class Ville:
               umax=u
               pmax=pt
 
-          for routeTest in self.lignes:
-            if routeTest[0][0] in pts or reversed(routeTest[0][0]) in pts:
-              if routeTest[0][1] in pts or reversed(routeTest[0][1]) in pts:
+          for routeTest in self.routes:
+            if routeTest.pointA in pts or reversed(routeTest.pointA) in pts:
+              if routeTest.pointB in pts or reversed(routeTest.pointB) in pts:
                 segments.append(routeTest)
                 
         if len(segments)>=seuilAvenue:
           print "Creation d'une avenue", (Vec3(*pmax)-Vec3(*pmin)).length()/self.longueurSegment, float(len(segments))*0.8
           
+          for elem in segments:
+            while routesATester.count(elem)>0:
+              routesATester.remove(elem)
           for routeTest in segments:
             self.supprimeRoute(routeTest)
               
-          orphelins = self.pointsProcheLigne(route[0][0], route[0][1], seuilProche)
+          orphelins = self.pointsProcheLigne(route.pointA, route.pointB, seuilProche)
+          set = {} 
+          map(set.__setitem__, orphelins, [])
+          orphelins = set.keys()
                 
-          rd=self.ajouteRoute(pmin, pmax, couleur=(1.0,1.0,1.0), force=True, estAvenue=True)
-          if rd!=None:
-            rd.setLightOff()
+          self.ajouteRoute(pmin, pmax, couleur=(1.0,1.0,1.0), force=True, estAvenue=True)
             
           #orphelins = self.chercheOrphelins()
           for orphelin in orphelins:
@@ -388,24 +452,21 @@ class Ville:
 
           
   def supprimeRoute(self, route):
-    if route[1]!=None:
-      route[1].detachNode()
-      route[1].removeNode()
-      route[1]=None
-      route[2]=True
-    while route in self.lignes:
-      self.lignes.remove(route)
+    route.supprime()
+
+    while route in self.routes:
+      self.routes.remove(route)
     ptABout = True
     ptBBout = True
-    for rt in self.lignes:
-      if route[0][0] in rt[0]:
+    for rt in self.routes:
+      if route.pointA in rt.getCoord():
         ptABout=False
-      if route[0][1] in rt[0]:
+      if route.pointB in rt.getCoord():
         ptBBout=False
     if ptABout:
-      self.points.remove(route[0][0])
+      self.points.remove(route.pointA)
     if ptBBout:
-      self.points.remove(route[0][1])
+      self.points.remove(route.pointB)
         
         
     
