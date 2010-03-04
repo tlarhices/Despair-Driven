@@ -1,13 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import direct.directbase.DirectStart
 from pandac.PandaModules import *
+#On coupe l'audio pour le moment
+loadPrcFileData("",u"audio-library-name null")
+import direct.directbase.DirectStart
 
 from weakref import proxy
 
 import random
 import math
 import time
+import sys
 
 class Route:
   def __init__(self, pointA, pointB, taille):
@@ -129,7 +132,7 @@ class Ville:
     for i in range(-self.rayon, self.rayon):
       self.sol.append([])
       for j in range(-self.rayon, self.rayon):
-        self.sol[i+self.rayon].append(random.random()*20-5.0)
+        self.sol[i+self.rayon].append(random.random()*35-15.0)
         
     for a in range(0,5):
       for i in range(0, self.rayon*2):
@@ -142,7 +145,15 @@ class Ville:
                 somme+=self.sol[i+k][j+l]
                 cpt+=1
           self.sol[i][j] = somme / cpt
+    for i in range(0, self.rayon*2):
+      for j in range(0, self.rayon*2):
+        self.sol[i][j]=max(-1, self.sol[i][j])
         
+    """mdl = loader.loadModel("box.egg")
+    mdl.setPos(-self.rayon, -self.rayon, -0.5)
+    mdl.setScale(self.rayon*2,self.rayon*2,1.0)
+    mdl.reparentTo(render)
+    mdl.setColor(0.0,0.0,0.6)"""
     """for i in range(-self.rayon, self.rayon):
       for j in range(-self.rayon, self.rayon):
         mdl = loader.loadModel("box.egg")
@@ -152,6 +163,11 @@ class Ville:
       
   def sauvegarde(self, fichier):
     fichier = open(fichier, "w")
+    fichier.write("S||%i>" %self.rayon)
+    for i in range(0, self.rayon*2):
+      for j in range(0, self.rayon*2):
+        fichier.write("T||%f>" %self.sol[i][j])
+
     for route in self.routes:
       fichier.write(route.sauvegarde())
     for batiment in self.batiments:
@@ -430,6 +446,7 @@ class Ville:
       #self.connecterLesBouts()
       self.heurePing = time.time() + (time.time()-self.heurePing)
     print "Batiments : %i\r" %len(self.batiments),
+    sys.stdout.flush()
       
   def pointPlusProche(self, pt, egalOK=True):
     d=800000.0
