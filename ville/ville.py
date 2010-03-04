@@ -78,8 +78,8 @@ class Batiment:
     self.sol.setPos(-0.5,-0.5,0.0)
     self.sol.reparentTo(self.racine)
     Cx, Cy, Cz = self.orientation
-    self.racine.lookAt(Cx, Cy, Cz)
-    #self.racine.reparentTo(render)
+    self.racine.lookAt(Cx, Cy, Pz)
+    self.racine.reparentTo(render)
     
   def sauvegarde(self):
     out = "B||%s||%s||%f||%f>" %(str(self.position), str(self.orientation), self.taille, self.importance)
@@ -143,12 +143,12 @@ class Ville:
                 cpt+=1
           self.sol[i][j] = somme / cpt
         
-    for i in range(-self.rayon, self.rayon):
+    """for i in range(-self.rayon, self.rayon):
       for j in range(-self.rayon, self.rayon):
         mdl = loader.loadModel("box.egg")
         mdl.setPos(i-0.5, j-0.5, self.sol[i+self.rayon][j+self.rayon])
         mdl.setScale(1,1,0.01)
-        mdl.reparentTo(render)
+        mdl.reparentTo(render)"""
       
   def sauvegarde(self, fichier):
     fichier = open(fichier, "w")
@@ -166,11 +166,14 @@ class Ville:
     x,y,z = pt
     while out==None:
      test = [(random.random()*2-1)*delta+x, (random.random()*2-1)*delta+y, 0.0+z]
-     if self.sol[int(test[0])][int(test[1])]>=0.0:
-       if self.sol[int(test[0])][int(test[1])]>=autorise:
-         test[2]=self.sol[int(test[0])][int(test[1])]
+     if self.getAltitude(test[0], test[1])>=0.0:
+       if self.getAltitude(test[0], test[1])>=autorise:
+         test[2]=self.getAltitude(test[0], test[1])
          out = test
     return out
+    
+  def getAltitude(self, x, y):
+    return self.sol[int(x)][int(y)]
       
   def equationDroite(self, dep, arr):
     if arr[0] == dep[0]:
@@ -215,7 +218,7 @@ class Ville:
           
         Px=A[0]+r*(B[0]-A[0])
         Py=A[1]+r*(B[1]-A[1])
-        Pz=A[2]+r*(B[2]-A[2])
+        Pz=self.getAltitude(Px,Py)
         P = Px, Py, Pz
         if force:
           self.routes.remove(obj)
@@ -282,7 +285,7 @@ class Ville:
     pas = 1.0/(Vec3(*B)-Vec3(*A)).length()*rayon
     Px=A[0]-5*(B[0]-A[0])
     Py=A[1]-5*(B[1]-A[1])
-    Pz=A[2]-5*(B[2]-A[2])
+    Pz=Pz=self.getAltitude(Px,Py)
     prev=Vec3(Px, Py, Pz)
     
     dx=B[0]-A[0]
@@ -298,10 +301,10 @@ class Ville:
       taille=random.random()*1.0+0.5
       Cx = A[0]+i*(B[0]-A[0])
       Cy = A[1]+i*(B[1]-A[1])
-      Cz = A[2]+i*(B[2]-A[2])
+      Cz = 0.0
       Px=A[0]+i*(B[0]-A[0])+n[0]*taille
       Py=A[1]+i*(B[1]-A[1])+n[1]*taille
-      Pz=A[2]+i*(B[2]-A[2])+n[2]*taille
+      Pz=self.getAltitude(Px,Py)
       if (Vec3(Px, Py, Pz)-prev).length()>3*rayon+dec:
         #dec = random.random()*rayon*30
         noeudColl = self.collisionBatimentBatiment((Px, Py, Pz), taille)
@@ -332,7 +335,14 @@ class Ville:
     return self.ajouteRoute(origine, cible)
     
   def ajouteRoute(self, depart, arrivee, couleur=(0.1, 0.1, 0.1), force=False, estAvenue=False, cptBatiments=True, testeDistance=True):
+    depart = list(depart)
+    depart[2]=0.0
+    arrivee = list(arrivee)
+    arrivee[2]=0.0
     coll = self.intersectionne(depart, arrivee, force=force)
+    if coll:
+      coll = list(coll)
+      coll[2]=0.0
     if coll and depart!=coll:
       arrivee = coll
 
@@ -364,10 +374,13 @@ class Ville:
     if self.collisionLigneBatiment(depart, arrivee, force=force):
       return False
       
-    position = depart
+    position = list(depart)
     points = []
     routes = []
     cptBat = 0
+    position[2]=0.0
+    arrivee = list(arrivee)
+    arrivee[2]=0.0
     while (Vec3(*position)-Vec3(*arrivee)).length()>0:
       direction = (Vec3(*arrivee)-Vec3(*position))
       if direction.length()<self.longueurSegment:
@@ -375,6 +388,8 @@ class Ville:
       else:
         direction.normalize()*self.longueurSegment
         plus=Vec3(*position)+direction
+      position[2]=self.getAltitude(position[0],position[1])
+      plus[2]=self.getAltitude(plus[0],plus[1])
       cptBat += self.ajouteBatiments(position, plus, 1) + self.ajouteBatiments(position, plus, -1)
 
       points.append(position)
@@ -382,6 +397,8 @@ class Ville:
       if estAvenue:
         taille = 3.0
       routes.append(Route(position, plus, taille))
+      position[2]=0.0
+      plus[2]=0.0
       position = plus
       
     self.points.append(arrivee)
@@ -563,7 +580,7 @@ class Ville:
     u = ((x3-x1)*(x2-x1)+(y3-y1)*(y2-y1))/(lAB*lAB)
     x = x1 + u*(x2-x1)
     y = y1 + u*(y2-y1)
-    return (Vec3(x, y, 0.0)-Vec3(*point)).length(), u
+    return (Vec3(x, y, z3)-Vec3(*point)).length(), u
       
   def ping(self, task):
     self.ajouteRouteAlea()
