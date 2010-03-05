@@ -13,6 +13,11 @@ import time
 import sys
 
 class Route:
+  pointA = None
+  pointB = None
+  taille = None
+  racine = None
+  
   def __init__(self, pointA, pointB, taille):
     self.pointA = pointA
     self.pointB = pointB
@@ -30,6 +35,7 @@ class Route:
     self.racine = NodePath("00")
     ligne = LineSegs()
     ligne.setColor(*couleur)
+    ligne.setThickness(self.taille);
     ligne.moveTo(*self.pointA)
     ligne.drawTo(*self.pointB)
     self.racine.attachNewNode(ligne.create())
@@ -53,6 +59,14 @@ class Route:
     return out
     
 class Batiment:
+  position = None
+  orientation = None
+  taille = None
+  importance = None
+  jardin = None
+  batiment = None
+  racine = None
+  
   def __init__(self, position, orientation, taille, importance):
     self.position = position
     self.orientation = orientation
@@ -67,14 +81,14 @@ class Batiment:
     if self.racine!=None:
       self.supprime()
     self.racine = NodePath("")
-    self.mdl = loader.loadModel("box.egg")
+    self.batiment = loader.loadModel("box.egg")
     Px, Py, Pz = self.position
     self.racine.setPos(Px, Py, Pz)
-    self.mdl.setPos(-0.5,-0.5,-0.5)
-    self.mdl.reparentTo(self.racine)
+    self.batiment.setPos(-0.5,-0.5,-0.5)
+    self.batiment.reparentTo(self.racine)
     #mdl.setColor(random.random()/2, random.random()/2, random.random()/2)
-    self.mdl.setColor(0.5, 0.5, 0.5)
-    self.mdl.setScale(self.taille*(random.random()/2+0.5), self.taille*(random.random()/2+0.5), self.importance)
+    self.batiment.setColor(0.5, 0.5, 0.5)
+    self.batiment.setScale(self.taille*(random.random()/2+0.5), self.taille*(random.random()/2+0.5), self.importance)
     self.sol = loader.loadModel("box.egg")
     self.sol.setScale(self.taille, self.taille*1.5, 0.001)
     self.sol.setColor(30.0/255, 159.0/255, 02.0/255)
@@ -92,7 +106,7 @@ class Batiment:
     self.racine.detachNode()
     self.racine.removeNode()
     self.racine = None
-    self.mdl = None
+    self.batiment = None
     self.sol = None
     
   def getImportance(self):
@@ -110,9 +124,13 @@ class Ville:
   routes = None
   batiments = None
   longueurSegment = 4.0
+  sol = None
+  minAlt = None
+  maxAlt = None
+  afficheModele = True
   
   def __init__(self, rayon):
-    self.rayon = rayon
+    self.rayon = int(rayon)
     self.fabriqueSol()
     self.routes=[]
     self.batiments = []
@@ -127,14 +145,18 @@ class Ville:
       self.points = [p1, p2]
       self.ajouteRoute(p1, p2)
       
+      
   def fabriqueSol(self):
+    
+    print "Creation du sol..."
     self.sol = []
     for i in range(-self.rayon, self.rayon):
       self.sol.append([])
       for j in range(-self.rayon, self.rayon):
-        self.sol[i+self.rayon].append(random.random()*35-15.0)
+        self.sol[i+self.rayon].append(random.random()*40-20.0)
         
-    for a in range(0,5):
+    print "Flou du sol..."
+    for a in range(0,15):
       for i in range(0, self.rayon*2):
         for j in range(0, self.rayon*2):
           somme = 0.0
@@ -145,21 +167,79 @@ class Ville:
                 somme+=self.sol[i+k][j+l]
                 cpt+=1
           self.sol[i][j] = somme / cpt
+
+    print "Cherche Min/max..."
+    self.minAlt = self.sol[0][0]
+    self.maxAlt = self.sol[0][0]
     for i in range(0, self.rayon*2):
       for j in range(0, self.rayon*2):
-        self.sol[i][j]=max(-1, self.sol[i][j])
+        self.minAlt = min(self.minAlt, self.sol[i][j])
+        self.maxAlt = max(self.maxAlt, self.sol[i][j])
+    print "Etendue des altitudes : ", self.minAlt, self.maxAlt
+
+    haut = 10
+    bas = -8
+    print "Ramenage au bon ratio..."
+    for i in range(0, self.rayon*2):
+      for j in range(0, self.rayon*2):
+        self.sol[i][j] = (self.sol[i][j]-self.minAlt)/(self.maxAlt-self.minAlt)*(haut-bas)+bas
+    self.minAlt = self.sol[0][0]
+    self.maxAlt = self.sol[0][0]
+    for i in range(0, self.rayon*2):
+      for j in range(0, self.rayon*2):
+        self.minAlt = min(self.minAlt, self.sol[i][j])
+        self.maxAlt = max(self.maxAlt, self.sol[i][j])
+    print "Etendue des altitudes : ", self.minAlt, self.maxAlt
         
-    """mdl = loader.loadModel("box.egg")
-    mdl.setPos(-self.rayon, -self.rayon, -0.5)
-    mdl.setScale(self.rayon*2,self.rayon*2,1.0)
-    mdl.reparentTo(render)
-    mdl.setColor(0.0,0.0,0.6)"""
-    """for i in range(-self.rayon, self.rayon):
-      for j in range(-self.rayon, self.rayon):
-        mdl = loader.loadModel("box.egg")
-        mdl.setPos(i-0.5, j-0.5, self.sol[i+self.rayon][j+self.rayon])
-        mdl.setScale(1,1,0.01)
-        mdl.reparentTo(render)"""
+    print "Aplanissage de l'eau..."
+    for i in range(0, self.rayon*2):
+      for j in range(0, self.rayon*2):
+        if self.sol[i][j]<=0:
+          self.sol[i][j]=-1
+        self.minAlt = min(self.minAlt, self.sol[i][j])
+        self.maxAlt = max(self.maxAlt, self.sol[i][j])
+        
+    print "Creation des vectrices..."
+    format = GeomVertexFormat.getV3c4()
+    vdata = GeomVertexData('TriangleVertices',format,Geom.UHStatic)
+    vWriter = GeomVertexWriter(vdata, 'vertex')
+    cWriter = GeomVertexWriter(vdata, 'color')
+            
+    geom = Geom(vdata)
+    for i in range(0, self.rayon*2):
+      for j in range(0, self.rayon*2):
+        vWriter.addData3f(i-self.rayon, j-self.rayon, self.sol[i][j])
+        c1 = (0.0,0.5,0.0,1.0)
+        if self.sol[i][j]<=0:
+          c1 = (0.0,0.1,0.5,1.0)
+        cWriter.addData4f(*c1)
+    
+    if self.afficheModele:
+      for i in range(0, self.rayon*2):
+        print "Construction du modele... %i/%i\r" %(i+1, self.rayon*2),
+        sys.stdout.flush()
+        for j in range(0, self.rayon*2):
+          prim = GeomTriangles(Geom.UHStatic)
+          if j<self.rayon*2-1 and i<self.rayon*2-1:
+            prim.addVertex(j+i*(self.rayon*2))
+            prim.addVertex(j+(i+1)*(self.rayon*2))
+            prim.addVertex(j+i*(self.rayon*2)+1)
+          prim.closePrimitive()
+          geom.addPrimitive(prim)
+          prim = GeomTriangles(Geom.UHStatic)
+          if j<self.rayon*2-1 and i<self.rayon*2-1:
+            prim.addVertex(j+(i+1)*(self.rayon*2))
+            prim.addVertex(j+(i+1)*(self.rayon*2)+1)
+            prim.addVertex(j+i*(self.rayon*2)+1)
+          prim.closePrimitive()
+          geom.addPrimitive(prim)
+      print
+      node = GeomNode('gnode')
+      node.addGeom(geom)
+      mdl = NodePath(node)
+      mdl.reparentTo(render)
+    
+    print "Etendue des altitudes : ", self.minAlt, self.maxAlt
       
   def sauvegarde(self, fichier):
     fichier = open(fichier, "w")
@@ -177,19 +257,25 @@ class Ville:
   def pointAlea(self, pt, delta=None):
     if delta==None:
       delta = self.rayon
-    autorise = min(random.random(), 0.9)
     out = None
     x,y,z = pt
+    autorise = min(random.random(), 0.9)*self.maxAlt
+
     while out==None:
      test = [(random.random()*2-1)*delta+x, (random.random()*2-1)*delta+y, 0.0+z]
-     if self.getAltitude(test[0], test[1])>=0.0:
-       if self.getAltitude(test[0], test[1])>=autorise:
-         test[2]=self.getAltitude(test[0], test[1])
+     alt = self.getAltitude(test[0], test[1])
+     if alt>0.0:
+       if alt<=autorise:
+         test[2]=alt
          out = test
     return out
     
   def getAltitude(self, x, y):
-    return self.sol[int(x)][int(y)]
+    if x+self.rayon<0 or x+self.rayon>=self.rayon*2:
+      return -1000
+    if y+self.rayon<0 or y+self.rayon>=self.rayon*2:
+      return -1000
+    return self.sol[int(x)+self.rayon][int(y)+self.rayon]
       
   def equationDroite(self, dep, arr):
     if arr[0] == dep[0]:
@@ -292,8 +378,6 @@ class Ville:
       return 0<=u and u<=1
     else:
       return False
-    
-  
       
   def ajouteBatiments(self, A, B, direction):
     i=0.0
@@ -322,20 +406,20 @@ class Ville:
       Py=A[1]+i*(B[1]-A[1])+n[1]*taille
       Pz=self.getAltitude(Px,Py)
       if (Vec3(Px, Py, Pz)-prev).length()>3*rayon+dec:
-        #dec = random.random()*rayon*30
-        noeudColl = self.collisionBatimentBatiment((Px, Py, Pz), taille)
-        if not noeudColl:
-          if not self.collisionBatimentLigne((Px, Py, Pz), taille):
-            if random.random()>0.4:
-              cpt+=1
-              self.batiments.append(Batiment((Px,Py,Pz), (Cx,Cy,Cz), taille, 1.0))
-        else:
-          facteur = min(0.2 * 600.0 / float(len(self.batiments)), 0.8)
-          facteur = max(0.1, facteur)
-          importance = noeudColl.getImportance()
-          importance = importance + facteur
-          noeudColl.setImportance(importance)
-      prev=Vec3(Px, Py, Pz)
+        if Pz>0:#dec = random.random()*rayon*30
+          noeudColl = self.collisionBatimentBatiment((Px, Py, Pz), taille)
+          if not noeudColl:
+            if not self.collisionBatimentLigne((Px, Py, Pz), taille):
+              if random.random()>0.4:
+                cpt+=1
+                self.batiments.append(Batiment((Px,Py,Pz), (Cx,Cy,Cz), taille, 1.0))
+          else:
+            facteur = min(0.2 * 600.0 / float(len(self.batiments)), 0.8)
+            facteur = max(0.1, facteur)
+            importance = noeudColl.getImportance()
+            importance = importance + facteur
+            noeudColl.setImportance(importance)
+        prev=Vec3(Px, Py, Pz)
     return cpt
 
   def continueRoute(self, route, versFin):
@@ -350,6 +434,23 @@ class Ville:
     cible = self.pointAlea(Vec3(*origine)+vecteurRoute)
     return self.ajouteRoute(origine, cible)
     
+  def intersectionEau(self, A, B, force=False):
+    l=(Vec3(*B)-Vec3(*A)).length()
+    if l>0:
+      pas = 0.33/l
+      r=0
+      prevR=0
+      while r<1.0:
+        Px=A[0]+r*(B[0]-A[0])
+        Py=A[1]+r*(B[1]-A[1])
+        if self.getAltitude(Px,Py)<=0:
+          Px=A[0]+prevR*(B[0]-A[0])
+          Py=A[1]+prevR*(B[1]-A[1])
+          return Px, Py, self.getAltitude(Px,Py)
+        prevR=r
+        r+=pas
+    return None
+    
   def ajouteRoute(self, depart, arrivee, couleur=(0.1, 0.1, 0.1), force=False, estAvenue=False, cptBatiments=True, testeDistance=True):
     depart = list(depart)
     depart[2]=0.0
@@ -361,20 +462,35 @@ class Ville:
       coll[2]=0.0
     if coll and depart!=coll:
       arrivee = coll
+      
+    coll = self.intersectionEau(depart, arrivee, force=force)
+    if coll:
+      coll = list(coll)
+      coll[2]=0.0
+      if (Vec3(*arrivee)-Vec3(*depart)).length() < self.longueurSegment*math.sqrt(len(self.batiments)):
+        return False
+      else:
+        print "trav"
+        
+    if self.getAltitude(*depart[:-1])<=0:
+      return False
+    if self.getAltitude(*arrivee[:-1])<=0:
+      return False
 
     if Vec3(*depart).length()>self.rayon:
       return False
     if Vec3(*arrivee).length()>self.rayon:
       return False
       
+    if (Vec3(*arrivee)-Vec3(*depart)).length()==0:
+      return False
+      
     if testeDistance and not force:
-      d1, pt1 = self.pointPlusProche(depart)
-      d2, pt2 = self.pointPlusProche(arrivee)
+      pt1, d1 = self.pointPlusProche(depart)
+      pt2, d2 = self.pointPlusProche(arrivee)
       if d1<self.longueurSegment:
-        print depart,"=>",pt1
         depart=pt1
       if d2<self.longueurSegment:
-        print arrivee,"=>",pt2
         arrivee=pt2
       
     longueurMin = self.longueurSegment
@@ -406,12 +522,19 @@ class Ville:
         plus=Vec3(*position)+direction
       position[2]=self.getAltitude(position[0],position[1])
       plus[2]=self.getAltitude(plus[0],plus[1])
-      cptBat += self.ajouteBatiments(position, plus, 1) + self.ajouteBatiments(position, plus, -1)
 
+      if position[2]<=0:
+        estAvenue = True
+        position[2]=points[-1][2]
+        plus[2]=points[-1][2]
+      else:
+        cptBat += self.ajouteBatiments(position, plus, 1) + self.ajouteBatiments(position, plus, -1)
+        
       points.append(position)
       taille = 1.0
       if estAvenue:
         taille = 3.0
+      estAvenue = False
       routes.append(Route(position, plus, taille))
       position[2]=0.0
       plus[2]=0.0
@@ -605,11 +728,11 @@ class Ville:
       self.sauvegarde("ville.out")
     return task.cont      
 
-base.setBackgroundColor(40.0/255, 169.0/255, 12.0/255)
+#base.setBackgroundColor(40.0/255, 169.0/255, 12.0/255)
 
 dlight = PointLight('my dlight')
 dlnp = render.attachNewNode(dlight)
-dlnp.setPos(-75, -30, 20)
+dlnp.setPos(0, 0, 30)
 render.setLight(dlnp)
 
 ville=Ville(75)
