@@ -177,7 +177,7 @@ class Ville:
     print "Etendue des altitudes : ", self.minAlt, self.maxAlt
 
     haut = 10
-    bas = -6
+    bas = -7
     print "Ramenage au bon ratio..."
     for i in range(0, self.rayon*2):
       for j in range(0, self.rayon*2):
@@ -227,9 +227,9 @@ class Ville:
         self.affichej=0
         self.affichei+=1
       if self.affichei>=self.rayon*2:
-        print
-        print "Compactage du modele"
-        self.racineSol.flattenStrong()
+        #print
+        #print "Compactage du modele"
+        #self.racineSol.flattenStrong()
         self.affiche=self.finAffiche
         return
       prim = GeomTriangles(Geom.UHStatic)
