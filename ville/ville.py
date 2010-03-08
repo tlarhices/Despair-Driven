@@ -117,7 +117,6 @@ class Batiment:
     self.importance = importance
     self.fabrique()
 
-
 class Ville:
   points = None
   rayon = None
@@ -142,7 +141,7 @@ class Ville:
       v.normalize()
       v=v*self.longueurSegment*2
       p2=list(Vec3(*p1)+v)
-      self.points = [p1, p2]
+      self.points = []
       self.ajouteRoute(p1, p2)
       
       
@@ -156,7 +155,7 @@ class Ville:
         self.sol[i+self.rayon].append(random.random()*40-20.0)
         
     print "Flou du sol..."
-    for a in range(0,15):
+    for a in range(0,25):
       for i in range(0, self.rayon*2):
         for j in range(0, self.rayon*2):
           somme = 0.0
@@ -178,7 +177,7 @@ class Ville:
     print "Etendue des altitudes : ", self.minAlt, self.maxAlt
 
     haut = 10
-    bas = -8
+    bas = -6
     print "Ramenage au bon ratio..."
     for i in range(0, self.rayon*2):
       for j in range(0, self.rayon*2):
@@ -200,46 +199,61 @@ class Ville:
         self.maxAlt = max(self.maxAlt, self.sol[i][j])
         
     print "Creation des vectrices..."
-    format = GeomVertexFormat.getV3c4()
-    vdata = GeomVertexData('TriangleVertices',format,Geom.UHStatic)
-    vWriter = GeomVertexWriter(vdata, 'vertex')
-    cWriter = GeomVertexWriter(vdata, 'color')
+    self.format = GeomVertexFormat.getV3c4()
+    self.vdata = GeomVertexData('TriangleVertices',self.format,Geom.UHStatic)
+    self.vWriter = GeomVertexWriter(self.vdata, 'vertex')
+    self.cWriter = GeomVertexWriter(self.vdata, 'color')
             
-    geom = Geom(vdata)
     for i in range(0, self.rayon*2):
       for j in range(0, self.rayon*2):
-        vWriter.addData3f(i-self.rayon, j-self.rayon, self.sol[i][j])
+        self.vWriter.addData3f(i-self.rayon, j-self.rayon, self.sol[i][j])
         c1 = (0.0,0.5,0.0,1.0)
         if self.sol[i][j]<=0:
           c1 = (0.0,0.1,0.5,1.0)
-        cWriter.addData4f(*c1)
+        self.cWriter.addData4f(*c1)
     
-    if self.afficheModele:
-      for i in range(0, self.rayon*2):
-        print "Construction du modele... %i/%i\r" %(i+1, self.rayon*2),
-        sys.stdout.flush()
-        for j in range(0, self.rayon*2):
-          prim = GeomTriangles(Geom.UHStatic)
-          if j<self.rayon*2-1 and i<self.rayon*2-1:
-            prim.addVertex(j+i*(self.rayon*2))
-            prim.addVertex(j+(i+1)*(self.rayon*2))
-            prim.addVertex(j+i*(self.rayon*2)+1)
-          prim.closePrimitive()
-          geom.addPrimitive(prim)
-          prim = GeomTriangles(Geom.UHStatic)
-          if j<self.rayon*2-1 and i<self.rayon*2-1:
-            prim.addVertex(j+(i+1)*(self.rayon*2))
-            prim.addVertex(j+(i+1)*(self.rayon*2)+1)
-            prim.addVertex(j+i*(self.rayon*2)+1)
-          prim.closePrimitive()
-          geom.addPrimitive(prim)
-      print
+  affichei=0
+  affichej=0
+  racineSol = None
+  def affiche(self):
+    if self.racineSol == None:
+      self.racineSol = NodePath("sol")
+      self.racineSol.reparentTo(render)
+    for i in range(0,self.rayon/2):
+      #print "Construction du modele... %i/%i\r" %(i+1, self.rayon*2),
+      #sys.stdout.flush()
+      geom = Geom(self.vdata)
+      if self.affichej>=self.rayon*2:
+        self.affichej=0
+        self.affichei+=1
+      if self.affichei>=self.rayon*2:
+        print
+        print "Compactage du modele"
+        self.racineSol.flattenStrong()
+        self.affiche=self.finAffiche
+        return
+      prim = GeomTriangles(Geom.UHStatic)
+      if self.affichej<self.rayon*2-1 and self.affichei<self.rayon*2-1:
+        prim.addVertex(self.affichej+self.affichei*(self.rayon*2))
+        prim.addVertex(self.affichej+(self.affichei+1)*(self.rayon*2))
+        prim.addVertex(self.affichej+self.affichei*(self.rayon*2)+1)
+      prim.closePrimitive()
+      geom.addPrimitive(prim)
+      prim = GeomTriangles(Geom.UHStatic)
+      if self.affichej<self.rayon*2-1 and self.affichei<self.rayon*2-1:
+        prim.addVertex(self.affichej+(self.affichei+1)*(self.rayon*2))
+        prim.addVertex(self.affichej+(self.affichei+1)*(self.rayon*2)+1)
+        prim.addVertex(self.affichej+self.affichei*(self.rayon*2)+1)
+      prim.closePrimitive()
+      geom.addPrimitive(prim)
       node = GeomNode('gnode')
       node.addGeom(geom)
       mdl = NodePath(node)
-      mdl.reparentTo(render)
-    
-    print "Etendue des altitudes : ", self.minAlt, self.maxAlt
+      mdl.reparentTo(self.racineSol)
+      self.affichej+=1
+      
+  def finAffiche(self):
+    pass
       
   def sauvegarde(self, fichier):
     fichier = open(fichier, "w")
@@ -396,6 +410,7 @@ class Ville:
     
     cpt=0
     dec = random.random()*rayon*30
+    batiments = []
     while i<=1.0:
       i+=pas
       taille=random.random()*1.0+0.5
@@ -412,7 +427,9 @@ class Ville:
             if not self.collisionBatimentLigne((Px, Py, Pz), taille):
               if random.random()>0.4:
                 cpt+=1
-                self.batiments.append(Batiment((Px,Py,Pz), (Cx,Cy,Cz), taille, 1.0))
+                batiment = Batiment((Px,Py,Pz), (Cx,Cy,Cz), taille, 1.0)
+                batiments.append(batiment)
+                self.batiments.append(batiment)
           else:
             facteur = min(0.2 * 600.0 / float(len(self.batiments)), 0.8)
             facteur = max(0.1, facteur)
@@ -420,7 +437,7 @@ class Ville:
             importance = importance + facteur
             noeudColl.setImportance(importance)
         prev=Vec3(Px, Py, Pz)
-    return cpt
+    return batiments
 
   def continueRoute(self, route, versFin):
     route = route.pointA, route.pointB
@@ -469,8 +486,8 @@ class Ville:
       coll[2]=0.0
       if (Vec3(*arrivee)-Vec3(*depart)).length() < self.longueurSegment*math.sqrt(len(self.batiments)):
         return False
-      else:
-        print "trav"
+      #else:
+      #  print "trav"
         
     if self.getAltitude(*depart[:-1])<=0:
       return False
@@ -509,10 +526,17 @@ class Ville:
     position = list(depart)
     points = []
     routes = []
+    batiments = []
     cptBat = 0
     position[2]=0.0
     arrivee = list(arrivee)
     arrivee[2]=0.0
+    longueurMarine = 0
+    postMarine=False
+    drop=False
+    longueurMarineMin = 20
+    longueurMarineMax = 30
+    
     while (Vec3(*position)-Vec3(*arrivee)).length()>0:
       direction = (Vec3(*arrivee)-Vec3(*position))
       if direction.length()<self.longueurSegment:
@@ -524,11 +548,22 @@ class Ville:
       plus[2]=self.getAltitude(plus[0],plus[1])
 
       if position[2]<=0:
+        if postMarine:
+          if longueurMarine<longueurMarineMin:
+            drop = True
+          if longueurMarine>longueurMarineMax:
+            drop = True
+          longueurMarine = 0
+          postMarine=False
         estAvenue = True
         position[2]=points[-1][2]
         plus[2]=points[-1][2]
+        longueurMarine+=1
       else:
-        cptBat += self.ajouteBatiments(position, plus, 1) + self.ajouteBatiments(position, plus, -1)
+        batiments += self.ajouteBatiments(position, plus, 1) + self.ajouteBatiments(position, plus, -1)
+        cptBat += len(batiments)
+        if longueurMarine>0:
+          postMarine=True
         
       points.append(position)
       taille = 1.0
@@ -540,10 +575,13 @@ class Ville:
       plus[2]=0.0
       position = plus
       
-    self.points.append(arrivee)
-    if (not force) and cptBatiments and cptBat==0:
+    points.append(arrivee)
+    if (not force) and ((cptBatiments and cptBat<=0) or drop or (longueurMarine!=0 and (longueurMarine<longueurMarineMin or longueurMarine>longueurMarineMax))):
       for route in routes:
         route.supprime()
+      for batiment in batiments:
+        batiment.supprime()
+        self.batiments.remove(batiment)
       return False
     else:
       self.points+=points
@@ -723,6 +761,7 @@ class Ville:
     return (Vec3(x, y, z3)-Vec3(*point)).length(), u
       
   def ping(self, task):
+    self.affiche()
     self.ajouteRouteAlea()
     if len(self.batiments)>500:
       self.sauvegarde("ville.out")
