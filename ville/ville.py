@@ -55,7 +55,7 @@ class Route:
     return self.pointA, self.pointB
     
   def sauvegarde(self):
-    out = "R||%s||%s||%f>" %(str(self.pointA), str(self.pointB), self.taille)
+    out = "R||%s||%s||%f>" %(str(list(self.pointA)), str(list(self.pointB)), self.taille)
     return out
     
 class Batiment:
@@ -99,7 +99,7 @@ class Batiment:
     self.racine.reparentTo(render)
     
   def sauvegarde(self):
-    out = "B||%s||%s||%f||%f>" %(str(self.position), str(self.orientation), self.taille, self.importance)
+    out = "B||%s||%s||%f||%f>" %(str(list(self.position)), str(list(self.orientation)), self.taille, self.importance)
     return out
 
   def supprime(self):
@@ -128,21 +128,31 @@ class Ville:
   maxAlt = None
   afficheModele = True
   
-  def __init__(self, rayon):
-    self.rayon = int(rayon)
-    self.fabriqueSol()
+  def __init__(self, rayon=None, fichier=None):
+    if not rayon and not fichier:
+      print "besoin de taille ou fichier"
+      return
+    if rayon!=None:
+      self.rayon = int(rayon)
+      self.fabriqueSol()
+      self.ping = self.pingCreation
     self.routes=[]
     self.batiments = []
+    self.points=[]
     
-    while len(self.routes)==0:
-      p1 = self.pointAlea((0.0,0.0,0.0))
-      p2 = self.pointAlea((0.0,0.0,0.0))
-      v=Vec3(*p2)-Vec3(*p1)
-      v.normalize()
-      v=v*self.longueurSegment*2
-      p2=list(Vec3(*p1)+v)
-      self.points = []
-      self.ajouteRoute(p1, p2)
+    if rayon!=None:
+      while len(self.routes)==0:
+        p1 = self.pointAlea((0.0,0.0,0.0))
+        p2 = self.pointAlea((0.0,0.0,0.0))
+        v=Vec3(*p2)-Vec3(*p1)
+        v.normalize()
+        v=v*self.longueurSegment*2
+        p2=list(Vec3(*p1)+v)
+        self.points = []
+        self.ajouteRoute(p1, p2)
+    else:
+      self.charge(fichier)
+      self.ping = self.pingCreation#pingChargement
       
       
   def fabriqueSol(self):
@@ -254,6 +264,85 @@ class Ville:
       
   def finAffiche(self):
     pass
+    
+  def charge(self, fichier):
+    
+    def getCoord(point):
+      point = point.replace("[","(")
+      point = point.replace("]",")")
+      pts = point.split("(")[1].split(")")[0].split(",")
+      objs = []
+      for pt in pts:
+        objs.append(float(pt))
+      return objs
+    i=0
+    j=0
+    self.sol=[]
+    fichier = open(fichier)
+    for ligne in fichier:
+      elements = ligne.strip().split(">")
+      for element in elements:
+        type = element.split("||")[0]
+        parametres = element.split("||")[1:]
+        if type.lower()=="s":
+          self.rayon = int(parametres[0])
+        elif type.lower()=="t":
+          if j==0:
+            self.sol.append([])
+          self.sol[-1].append(float(parametres[0]))
+          
+          j+=1
+          if j>=self.rayon*2:
+            j=0
+            i+=1
+        elif type.lower()=="r":
+          pointA, pointB, taille = parametres
+          pointA=getCoord(pointA)
+          pointB=getCoord(pointB)
+          taille=float(taille)
+          if pointA not in self.points:
+            self.points.append(pointA)
+          if pointB not in self.points:
+            self.points.append(pointB)
+          pointA[2]=self.getAltitude(*pointA[0:2])
+          pointB[2]=self.getAltitude(*pointB[0:2])
+          self.routes.append(Route(pointA, pointB, taille))
+        elif type.lower()=="b":
+          position, orientation, taille, importance = parametres
+          position = getCoord(position)
+          orientation = getCoord(orientation)
+          taille = float(taille)
+          importance = float(importance)
+          self.batiments.append(Batiment(position, orientation, taille, importance))
+        elif type.lower()=="":
+          pass
+        else:
+          print "inconnu", type, parametres
+          raw_input()
+          
+          
+    self.minAlt = self.sol[0][0]
+    self.maxAlt = self.sol[0][0]
+    for i in range(0, self.rayon*2):
+      for j in range(0, self.rayon*2):
+        self.minAlt = min(self.minAlt, self.sol[i][j])
+        self.maxAlt = max(self.maxAlt, self.sol[i][j])
+        
+    print "Creation des vectrices..."
+    self.format = GeomVertexFormat.getV3c4()
+    self.vdata = GeomVertexData('TriangleVertices',self.format,Geom.UHStatic)
+    self.vWriter = GeomVertexWriter(self.vdata, 'vertex')
+    self.cWriter = GeomVertexWriter(self.vdata, 'color')
+            
+    for i in range(0, self.rayon*2):
+      for j in range(0, self.rayon*2):
+        self.vWriter.addData3f(i-self.rayon, j-self.rayon, self.sol[i][j])
+        c1 = (0.0,0.5,0.0,1.0)
+        if self.sol[i][j]<=0:
+          c1 = (0.0,0.1,0.5,1.0)
+        self.cWriter.addData4f(*c1)
+
+          
       
   def sauvegarde(self, fichier):
     fichier = open(fichier, "w")
@@ -494,9 +583,13 @@ class Ville:
     if self.getAltitude(*arrivee[:-1])<=0:
       return False
 
-    if Vec3(*depart).length()>self.rayon:
+    if abs(depart[0])>self.rayon:
       return False
-    if Vec3(*arrivee).length()>self.rayon:
+    if abs(depart[1])>self.rayon:
+      return False
+    if abs(arrivee[0])>self.rayon:
+      return False
+    if abs(arrivee[1])>self.rayon:
       return False
       
     if (Vec3(*arrivee)-Vec3(*depart)).length()==0:
@@ -606,7 +699,7 @@ class Ville:
       self.ajouteAvenue()
       #self.connecterLesBouts()
       self.heurePing = time.time() + (time.time()-self.heurePing)
-    print "Batiments : %i\r" %len(self.batiments),
+    print "Batiments : %i Routes : %i\r" %(len(self.batiments), len(self.routes)),
     sys.stdout.flush()
       
   def pointPlusProche(self, pt, egalOK=True):
@@ -761,10 +854,17 @@ class Ville:
     return (Vec3(x, y, z3)-Vec3(*point)).length(), u
       
   def ping(self, task):
+    return task.done
+      
+  def pingCreation(self, task):
     self.affiche()
     self.ajouteRouteAlea()
     if len(self.batiments)>500:
       self.sauvegarde("ville.out")
+    return task.cont      
+
+  def pingChargement(self, task):
+    self.affiche()
     return task.cont      
 
 #base.setBackgroundColor(40.0/255, 169.0/255, 12.0/255)
@@ -774,6 +874,6 @@ dlnp = render.attachNewNode(dlight)
 dlnp.setPos(0, 0, 30)
 render.setLight(dlnp)
 
-ville=Ville(75)
+ville=Ville(rayon=None, fichier="ville.out")
 taskMgr.add(ville.ping, 'PingVille')
 run()
