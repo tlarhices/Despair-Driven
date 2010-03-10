@@ -26,11 +26,12 @@ class Route:
     self.fabrique()
     
   def fabrique(self):
+    #return self.hauteQualite()
     if self.racine!=None:
       self.supprime()
     
     couleur = (0.1,0.1,0.1)
-    if self.taille>=3:
+    if self.taille==3:
       couleur = (1.0,0.0,0.0)
     self.racine = NodePath("00")
     ligne = LineSegs()
@@ -42,6 +43,119 @@ class Route:
     self.racine.reparentTo(render)
     if self.taille>=3:
       self.racine.setLightOff()
+      
+  largeurVoie=0.1
+  largeurTrottoir=0.05
+  hauteurTrottoire=0.0005
+  largeurCaniveau=0.005
+  profondeurCaniveau=0.0005
+  
+  def hauteQualite(self, ville):
+    couleur = (0.0,0.0,0.0,1.0)
+    if self.taille==3:
+      couleur = (1.0,0.0,0.0,1.0)
+
+    if self.racine!=None:
+      self.supprime()
+    self.racine = NodePath("00")
+    self.format = GeomVertexFormat.getV3c4()
+    self.vdata = GeomVertexData('TriangleVertices',self.format,Geom.UHStatic)
+    self.vWriter = GeomVertexWriter(self.vdata, 'vertex')
+    self.cWriter = GeomVertexWriter(self.vdata, 'color')
+            
+    dx=self.pointB[0]-self.pointA[0]
+    dy=self.pointB[1]-self.pointA[1]
+    n=Vec3(dy, -dx, 0.0)
+    n.normalize()
+    n=n*(self.taille*self.largeurVoie)
+    
+    def quad(a,b,c,d, geom):
+      prim = GeomTriangles(Geom.UHStatic)
+      prim.addVertex(a)
+      prim.addVertex(b)
+      prim.addVertex(c)
+      prim.closePrimitive()
+      geom.addPrimitive(prim)
+      prim = GeomTriangles(Geom.UHStatic)
+      prim.addVertex(b)
+      prim.addVertex(a)
+      prim.addVertex(d)
+      prim.closePrimitive()
+      geom.addPrimitive(prim)
+      return geom
+
+    geom = Geom(self.vdata)
+    #Bitume
+    self.vWriter.addData3f(self.pointA-n)
+    self.cWriter.addData4f(*couleur)
+    self.vWriter.addData3f(self.pointA+n)
+    self.cWriter.addData4f(*couleur)
+    self.vWriter.addData3f(self.pointB-n)
+    self.cWriter.addData4f(*couleur)
+    self.vWriter.addData3f(self.pointB+n)
+    self.cWriter.addData4f(*couleur)
+    
+    geom=quad(0,1,2,3,geom)
+
+    couleur = (0.2,0.2,0.2,1.0)
+    #Canniveau, connexion a la route
+    self.vWriter.addData3f(self.pointA-n)
+    self.cWriter.addData4f(*couleur)
+    self.vWriter.addData3f(self.pointA+n)
+    self.cWriter.addData4f(*couleur)
+    self.vWriter.addData3f(self.pointB-n)
+    self.cWriter.addData4f(*couleur)
+    self.vWriter.addData3f(self.pointB+n)
+    self.cWriter.addData4f(*couleur)
+  
+    #Canniveau, points les plus bas
+    n.normalize()
+    n=n*(self.taille*self.largeurVoie+self.largeurCaniveau)
+    n[2]=-self.profondeurCaniveau
+    self.vWriter.addData3f(self.pointA-n)
+    self.cWriter.addData4f(*couleur)
+    self.vWriter.addData3f(self.pointA+n)
+    self.cWriter.addData4f(*couleur)
+    self.vWriter.addData3f(self.pointB-n)
+    self.cWriter.addData4f(*couleur)
+    self.vWriter.addData3f(self.pointB+n)
+    self.cWriter.addData4f(*couleur)
+
+    geom=quad(8,4,10,6,geom)
+    geom=quad(5,9,7,11,geom)
+
+    #Canniveau vers trottoire
+    n[2]=self.hauteurTrottoire
+    self.vWriter.addData3f(self.pointA-n)
+    self.cWriter.addData4f(*couleur)
+    self.vWriter.addData3f(self.pointA+n)
+    self.cWriter.addData4f(*couleur)
+    self.vWriter.addData3f(self.pointB-n)
+    self.cWriter.addData4f(*couleur)
+    self.vWriter.addData3f(self.pointB+n)
+    self.cWriter.addData4f(*couleur)
+    
+    #Surface du trottoire
+    n[2]=0.0
+    n.normalize()
+    n=n*(self.taille*self.largeurVoie+self.largeurTrottoir)
+    n[2]=self.hauteurTrottoire
+    self.vWriter.addData3f(self.pointA-n)
+    self.cWriter.addData4f(*couleur)
+    self.vWriter.addData3f(self.pointA+n)
+    self.cWriter.addData4f(*couleur)
+    self.vWriter.addData3f(self.pointB-n)
+    self.cWriter.addData4f(*couleur)
+    self.vWriter.addData3f(self.pointB+n)
+    self.cWriter.addData4f(*couleur)
+
+    node = GeomNode('gnode')
+    node.addGeom(geom)
+    mdl = NodePath(node)
+    mdl.reparentTo(self.racine)
+    self.racine.reparentTo(render)
+
+
     
   def supprime(self):
     if self.racine!=None:
@@ -139,7 +253,7 @@ class Quartier:
     while not self.verifieOK() and mieux:
       mieux = self.light(ville)
       if not self.verifieOK():
-        mieux = mieux or self.heavy(ville)
+        mieux = self.heavy(ville) or mieux
       
     self.affiche()
     
@@ -170,7 +284,8 @@ class Quartier:
   def heavy(self, ville):
     bary = self.barycentre()
     contours = []
-    for point in ville.points:
+    points = ville.cherchePointAutour(bary, ville.longueurSegment*2)
+    for point in points:
       print "test %i/%i\r" %(ville.points.index(point), len(ville.points)),
       i = ville.intersectionne(bary, point)
       if i==None:
@@ -225,7 +340,7 @@ class Quartier:
     cx=cx/(len(self.bords)*2)
     cy=cy/(len(self.bords)*2)
     cz=cz/(len(self.bords)*2)
-    return cx,cy,cz
+    return Vec3(cx,cy,cz)
 
 
 class Ville:
@@ -237,36 +352,47 @@ class Ville:
   sol = None
   minAlt = None
   maxAlt = None
-  afficheModele = True
+  afficheModele = False
   affichei=0
   affichej=0
   racineSol = None
   
-  def __init__(self, rayon=None, fichier=None):
+  def __init__(self, rayon=None, fichier=None, etape=0):
     if not rayon and not fichier:
       print "besoin de taille ou fichier"
       return
-    if rayon!=None:
+    if rayon!=None or etape==0:
       self.rayon = int(rayon)
       self.fabriqueSol()
-      self.ping = self.pingCreation
     self.routes=[]
     self.batiments = []
     self.points=[]
     
-    if rayon!=None:
+    if fichier==None:
       while len(self.routes)==0:
-        p1 = self.pointAlea((0.0,0.0,0.0))
-        p2 = self.pointAlea((0.0,0.0,0.0))
-        v=Vec3(*p2)-Vec3(*p1)
+        p1 = self.pointAlea(Vec3(0.0,0.0,0.0))
+        p2 = self.pointAlea(Vec3(0.0,0.0,0.0))
+        v=p2-p1
         v.normalize()
         v=v*self.longueurSegment*2
-        p2=list(Vec3(*p1)+v)
+        p2=p1+v
         self.points = []
         self.ajouteRoute(p1, p2)
     else:
       self.charge(fichier)
-      self.ping = self.pingChargement #pingCreation
+    
+    if etape==0 or etape==1:
+      self.ping = self.pingCreation
+    elif etape==2:
+      self.ping = self.pingChargement
+    elif etape==3:
+      self.ping = self.pingModeleRoutes
+    elif etape==4:
+      self.ping = self.pingModeleBatiments
+    elif etape==5:
+      self.ping = self.pingModeleSol
+    else:
+      print "etape inconue", etape
       
       
   def fabriqueSol(self):
@@ -336,7 +462,9 @@ class Ville:
         self.cWriter.addData4f(*c1)
     
   def affiche(self):
-    return
+    if not self.afficheModele:
+      self.affiche=self.finAffiche
+      
     if self.racineSol == None:
       self.racineSol = NodePath("sol")
       self.racineSol.reparentTo(render)
@@ -385,11 +513,11 @@ class Ville:
     
     n=Vec3(dy, -dx, 0.0)
     n.normalize()
-    p1=(Vec3(*A)+Vec3(*B))/2+n
-    p2=(Vec3(*A)+Vec3(*B))/2-n
+    p1=(A+B)/2+n
+    p2=(A+B)/2-n
 
-    d_1 = (Vec3(*p1)-Vec3(*p2)).lengthSquared()
-    d_2 = (Vec3(*p1)-Vec3(*p2)).lengthSquared()
+    d_1 = (p1-p2).lengthSquared()
+    d_2 = (p1-p2).lengthSquared()
     deb = p1
     fin = p2
 
@@ -402,10 +530,10 @@ class Ville:
       if r!=None and obj!=route:
         Px=p1[0]+r*(p2[0]-p1[0])
         Py=p1[1]+r*(p2[1]-p1[1])
-        Pz=self.getAltitude(Px,Py)
+        Pz=self.getAltitude(Vec3(Px,Py,0.0))
         P = Px, Py, Pz
-        d1 = (Vec3(*p1)-Vec3(*P)).lengthSquared()
-        d2 = (Vec3(*p2)-Vec3(*P)).lengthSquared()
+        d1 = (p1-P).lengthSquared()
+        d2 = (p2-P).lengthSquared()
         if (coll1==None or d1<d_1) and d1<=d2:
           coll1=P
           d_1=d1
@@ -413,18 +541,19 @@ class Ville:
           coll2=P
           d_2=d2
           
-    C=(Vec3(*A)+Vec3(*B))/2
+    C=(A+B)/2
     if coll1!=None and coll2!=None and coll1!=p1 and coll1!=p2 and coll2!=p1 and coll2!=p2 and coll1!=coll2 and coll1!=C and coll2!=C:
-      p1=list((C+coll1)/2)
-      p2=list((C+coll2)/2)
+      p1=(C+coll1)/2
+      p2=(C+coll2)/2
       p1[2]=0.0
       p2[2]=0.0
       
       print "test"
       contours1 = []
       contours2 = []
-      for point in self.points:
-        print "test %i/%i\r" %(self.points.index(point), len(self.points)),
+      points = self.cherchePointAutour(p1, self.longueurSegment)+self.cherchePointAutour(p2, self.longueurSegment)
+      for point in points:
+        print "test %i/%i\r" %(points.index(point), len(points)),
         i1 = self.intersectionne(p1, point)
         i2 = self.intersectionne(p2, point)
         if i1==None:
@@ -448,6 +577,16 @@ class Ville:
         q2=Quartier(q2, 1.0)
         q2.rendOK(self)
         q2.affiche()
+        
+  def cherchePointAutour(self, point, dist):
+    print "creation de la liste"
+    points = []
+    dist=dist*dist
+    for pt in self.points:
+      if (pt-point).lengthSquared()<=dist:
+        points.append(pt)
+    print "fini"
+    return points
     
   def charge(self, fichier):
     def getCoord(point):
@@ -457,14 +596,18 @@ class Ville:
       objs = []
       for pt in pts:
         objs.append(float(pt))
-      return objs
+      return Vec3(*objs)
+      
     i=0
     j=0
     self.sol=[]
     fichier = open(fichier)
     for ligne in fichier:
       elements = ligne.strip().split(">")
+      cptElements=0
       for element in elements:
+        cptElements+=1
+        print "Chargement %i/%i\r" %(cptElements, len(elements)),
         type = element.split("||")[0]
         parametres = element.split("||")[1:]
         if type.lower()=="s":
@@ -483,8 +626,10 @@ class Ville:
           pointA=getCoord(pointA)
           pointB=getCoord(pointB)
           taille=float(taille)
-          pointA[2]=self.getAltitude(*pointA[0:2])
-          pointB[2]=self.getAltitude(*pointB[0:2])
+          if taille==1:
+            taille=2
+          pointA[2]=self.getAltitude(pointA)
+          pointB[2]=self.getAltitude(pointB)
           if pointA not in self.points:
             self.points.append(pointA)
           if pointB not in self.points:
@@ -545,15 +690,16 @@ class Ville:
     autorise = min(random.random(), 0.9)*self.maxAlt
 
     while out==None:
-     test = [(random.random()*2-1)*delta+x, (random.random()*2-1)*delta+y, 0.0+z]
-     alt = self.getAltitude(test[0], test[1])
+     test = Vec3((random.random()*2-1)*delta+x, (random.random()*2-1)*delta+y, 0.0+z)
+     alt = self.getAltitude(test)
      if alt>0.0:
        if alt<=autorise:
          test[2]=alt
          out = test
     return out
     
-  def getAltitude(self, x, y):
+  def getAltitude(self, pt):
+    x,y,z = pt
     if x+self.rayon<0 or x+self.rayon>=self.rayon*2:
       return -1000
     if y+self.rayon<0 or y+self.rayon>=self.rayon*2:
@@ -580,7 +726,7 @@ class Ville:
       return None
       
   def intersectionne(self, A, B):
-    d = (Vec3(*A)-Vec3(*B)).lengthSquared()
+    d = (A-B).lengthSquared()
     deb = A
     fin = B
 
@@ -593,9 +739,9 @@ class Ville:
           
         Px=A[0]+r*(B[0]-A[0])
         Py=A[1]+r*(B[1]-A[1])
-        Pz=self.getAltitude(Px,Py)
-        P = Px, Py, Pz
-        d2 = (Vec3(*A)-Vec3(*P)).lengthSquared()
+        Pz=self.getAltitude(Vec3(Px, Py, 0.0))
+        P = Vec3(Px, Py, Pz)
+        d2 = (A-P).lengthSquared()
         if coll==None or d2<d:
           coll=P
           d=d2
@@ -606,11 +752,10 @@ class Ville:
     return coll
     
   def collisionBatimentBatiment(self, position, rayon):
-    position = Vec3(*position)
     for batiment in self.batiments:
-      pos = batiment.position[0], batiment.position[1], batiment.position[2]
+      pos = Vec3(batiment.position[0], batiment.position[1], batiment.position[2])
       taille = batiment.taille
-      if (rayon+taille)*(rayon+taille)>(position-Vec3(*pos)).lengthSquared():
+      if (rayon+taille)*(rayon+taille)>(position-pos).lengthSquared():
         return batiment
     return False
     
@@ -645,10 +790,10 @@ class Ville:
   def ajouteBatiments(self, A, B, direction):
     i=0.0
     rayon = 0.5
-    pas = 1.0/(Vec3(*B)-Vec3(*A)).length()*rayon
+    pas = 1.0/(B-A).length()*rayon
     Px=A[0]-5*(B[0]-A[0])
     Py=A[1]-5*(B[1]-A[1])
-    Pz=Pz=self.getAltitude(Px,Py)
+    Pz=Pz=self.getAltitude(Vec3(Px,Py,0.0))
     prev=Vec3(Px, Py, Pz)
     
     dx=B[0]-A[0]
@@ -668,15 +813,15 @@ class Ville:
       Cz = 0.0
       Px=A[0]+i*(B[0]-A[0])+n[0]*taille
       Py=A[1]+i*(B[1]-A[1])+n[1]*taille
-      Pz=self.getAltitude(Px,Py)
+      Pz=self.getAltitude(Vec3(Px,Py,0.0))
       if (Vec3(Px, Py, Pz)-prev).length()>3*rayon+dec:
         if Pz>0:#dec = random.random()*rayon*30
-          noeudColl = self.collisionBatimentBatiment((Px, Py, Pz), taille)
+          noeudColl = self.collisionBatimentBatiment(Vec3(Px, Py, Pz), taille)
           if not noeudColl:
-            if not self.collisionBatimentLigne((Px, Py, Pz), taille):
+            if not self.collisionBatimentLigne(Vec3(Px, Py, Pz), taille):
               if random.random()>0.4:
                 cpt+=1
-                batiment = Batiment((Px,Py,Pz), (Cx,Cy,Cz), taille, 1.0)
+                batiment = Batiment(Vec3(Px,Py,Pz), Vec3(Cx,Cy,Cz), taille, 1.0)
                 batiments.append(batiment)
                 self.batiments.append(batiment)
           else:
@@ -690,18 +835,18 @@ class Ville:
 
   def continueRoute(self, route, versFin):
     route = route.pointA, route.pointB
-    vecteurRoute = Vec3(*route[1])-Vec3(*route[0])
+    vecteurRoute = route[1]-route[0]
     origine = route[1]
     if not versFin:
       vecteurRoute = -vecteurRoute
       origine = route[0]
     vecteurRoute[0] = vecteurRoute[0]+(random.random()-0.5)/2
     vecteurRoute[1] = vecteurRoute[1]+(random.random()-0.5)/2
-    cible = self.pointAlea(Vec3(*origine)+vecteurRoute)
+    cible = self.pointAlea(origine+vecteurRoute)
     return self.ajouteRoute(origine, cible)
     
   def intersectionEau(self, A, B):
-    l=(Vec3(*B)-Vec3(*A)).length()
+    l=(B-A).length()
     if l>0:
       pas = 0.33/l
       r=0
@@ -709,38 +854,34 @@ class Ville:
       while r<1.0:
         Px=A[0]+r*(B[0]-A[0])
         Py=A[1]+r*(B[1]-A[1])
-        if self.getAltitude(Px,Py)<=0:
+        if self.getAltitude(Vec3(Px,Py,0.0))<=0:
           Px=A[0]+prevR*(B[0]-A[0])
           Py=A[1]+prevR*(B[1]-A[1])
-          return Px, Py, self.getAltitude(Px,Py)
+          return Vec3(Px, Py, self.getAltitude(Vec3(Px,Py,0.0)))
         prevR=r
         r+=pas
     return None
     
   def ajouteRoute(self, depart, arrivee, couleur=(0.1, 0.1, 0.1), cptBatiments=True):
-    depart = list(depart)
     depart[2]=0.0
-    arrivee = list(arrivee)
     arrivee[2]=0.0
     coll = self.intersectionne(depart, arrivee)
     if coll:
-      coll = list(coll)
       coll[2]=0.0
     if coll and depart!=coll:
       arrivee = coll
       
     coll = self.intersectionEau(depart, arrivee)
     if coll:
-      coll = list(coll)
       coll[2]=0.0
-      if (Vec3(*arrivee)-Vec3(*depart)).length() < self.longueurSegment*math.sqrt(len(self.batiments)):
+      if (arrivee-depart).length() < self.longueurSegment*math.sqrt(len(self.batiments)):
         return False
       #else:
       #  print "trav"
         
-    if self.getAltitude(*depart[:-1])<=0:
+    if self.getAltitude(depart)<=0:
       return False
-    if self.getAltitude(*arrivee[:-1])<=0:
+    if self.getAltitude(arrivee)<=0:
       return False
 
     if abs(depart[0])>self.rayon:
@@ -752,7 +893,7 @@ class Ville:
     if abs(arrivee[1])>self.rayon:
       return False
       
-    if (Vec3(*arrivee)-Vec3(*depart)).length()==0:
+    if (arrivee-depart).length()==0:
       return False
       
     pt1, d1 = self.pointPlusProche(depart)
@@ -763,7 +904,7 @@ class Ville:
       arrivee=pt2
       
     longueurMin = self.longueurSegment
-    if (Vec3(*arrivee)-Vec3(*depart)).length()<longueurMin:
+    if (arrivee-depart).length()<longueurMin:
       return False
       
     for route in self.routes:
@@ -774,13 +915,12 @@ class Ville:
     if self.collisionLigneBatiment(depart, arrivee):
       return False
       
-    position = list(depart)
+    position = depart
     points = []
     routes = []
     batiments = []
     cptBat = 0
     position[2]=0.0
-    arrivee = list(arrivee)
     arrivee[2]=0.0
     longueurMarine = 0
     postMarine=False
@@ -788,15 +928,15 @@ class Ville:
     longueurMarineMin = 20
     longueurMarineMax = 30
     
-    while (Vec3(*position)-Vec3(*arrivee)).length()>0:
-      direction = (Vec3(*arrivee)-Vec3(*position))
+    while (position-arrivee).length()>0:
+      direction = (arrivee-position)
       if direction.length()<self.longueurSegment:
         plus=arrivee
       else:
         direction.normalize()*self.longueurSegment
-        plus=Vec3(*position)+direction
-      position[2]=self.getAltitude(position[0],position[1])
-      plus[2]=self.getAltitude(plus[0],plus[1])
+        plus=position+direction
+      position[2]=self.getAltitude(position)
+      plus[2]=self.getAltitude(plus)
 
       if position[2]<=0:
         if postMarine:
@@ -816,7 +956,7 @@ class Ville:
           postMarine=True
         
       points.append(position)
-      taille = 1.0
+      taille = 2.0
       routes.append(Route(position, plus, taille))
       position[2]=0.0
       plus[2]=0.0
@@ -859,7 +999,7 @@ class Ville:
     ptProche=None
     for point in self.points:
       if egalOK or (point!=pt):
-        dist = (Vec3(*point)-Vec3(*pt)).lengthSquared()
+        dist = (point-pt).lengthSquared()
         if dist < d:
           ptProche = point
           d = dist
@@ -869,26 +1009,101 @@ class Ville:
     x1, y1, z1= A
     x2, y2, z2 = B
     x3, y3, z3 = point
-    lAB = (Vec3(*B)-Vec3(*A)).length()
+    lAB = (B-A).length()
     u = ((x3-x1)*(x2-x1)+(y3-y1)*(y2-y1))/(lAB*lAB)
     x = x1 + u*(x2-x1)
     y = y1 + u*(y2-y1)
-    return (Vec3(x, y, z3)-Vec3(*point)).length(), u
+    return (Vec3(x, y, z3)-point).length(), u
+      
+  pings=0
       
   def ping(self, task):
     return task.done
       
   def pingCreation(self, task):
+    self.pings+=1
     self.affiche()
     self.ajouteRouteAlea()
     if len(self.batiments)>500:
       self.sauvegarde("ville.out")
     return task.cont      
 
+  lastPing = None
   def pingChargement(self, task):
+    self.pings+=1
     self.affiche()
+    if self.lastPing==None:
+      self.lastPing=time.time()
+    if time.time()>self.lastPing:
+      deb=time.time()
+      self.concentreBatiments()
+      self.lastPing=time.time()+(time.time()-deb)
+    if self.pings%60==0:
+      self.sauvegarde("ville-s2.out")
     #self.chercheQuartiers(random.choice(self.routes))
     return task.cont      
+    
+  def pingModeleRoutes(self, task):
+    self.pings+=1
+    if self.pings==1:
+      print "TODO : pingModeleRoutes"
+    self.affiche()
+    random.choice(self.routes).hauteQualite(self)
+    if self.pings%60==0:
+      self.sauvegarde("ville-s3.out")
+    return task.cont
+    
+  def pingModeleBatiments(self, task):
+    self.pings+=1
+    if self.pings==1:
+      print "TODO : pingModeleBatiments"
+    self.affiche()
+    if self.pings%60==0:
+      self.sauvegarde("ville-s4.out")
+    return task.cont
+    
+  def pingModeleSol(self, task):
+    self.pings+=1
+    if self.pings==1:
+      print "TODO : pingModeleSol"
+    self.affiche()
+    if self.pings%60==0:
+      self.sauvegarde("ville-s5.out")
+    return task.cont
+
+  posBat = 0
+  passeBat = 0
+  ajoutBatPasse = 0
+  def concentreBatiments(self):
+    if self.posBat>=len(self.batiments):
+      self.posBat = 0
+      self.passeBat += 1
+      self.ajoutBatPasse = 0
+    print "Batiments, passe %i %i nouveaux batiments ajoutes pour un total de %i" %(self.passeBat, self.ajoutBatPasse, len(self.batiments))
+    batiment = self.batiments[self.posBat]
+    position = batiment.position
+    orientation = batiment.orientation
+    importance = batiment.importance
+    taille = batiment.taille
+    tailleTeste = random.random()*1.0+0.5
+
+    nouvImportance = importance*0.95
+    if nouvImportance>=1.0:
+      for angle in range(0,360):
+        if random.random()>=0.5:
+          tailleTeste = random.random()*1.0+0.5
+        direction = Vec3((taille+tailleTeste+0.005)*math.cos(float(angle)/180*math.pi), (taille+tailleTeste+0.005)*math.sin(float(angle)/180*math.pi), 0.0)
+        newPos = position + direction
+        newPos[2]=self.getAltitude(newPos)
+        if newPos[2]>0:
+          if random.random()>0.05:
+            if not self.collisionBatimentBatiment(newPos, tailleTeste):
+              if not self.collisionBatimentLigne(newPos, tailleTeste):
+                if self.pointPlusProche(newPos)[1]<=self.longueurSegment:
+                  batiment = Batiment(newPos, orientation, tailleTeste, nouvImportance)
+                  self.batiments.append(batiment)
+                  self.ajoutBatPasse +=1
+    self.posBat+=1
 
 #base.setBackgroundColor(40.0/255, 169.0/255, 12.0/255)
 
@@ -897,7 +1112,7 @@ dlnp = render.attachNewNode(dlight)
 dlnp.setPos(0, 0, 30)
 render.setLight(dlnp)
 
-ville=Ville(rayon=None, fichier="ville.out")
+ville=Ville(rayon=None, fichier="ville-s2.out", etape=3) #ville.out
 taskMgr.add(ville.ping, 'PingVille')
 base.accept('a-repeat', ville.chercheQuartiers)
 run()
