@@ -18,21 +18,27 @@ class Route:
   taille = None
   racine = None
   
-  def __init__(self, pointA, pointB, taille):
+  def __init__(self, pointA, pointB, taille, ville=None):
     self.pointA = pointA
     self.pointB = pointB
     self.taille = taille
     self.racine = None
-    self.fabrique()
+    self.estUnPont=False
+    if self.pointA[2]<=0.0:
+      self.pointA[2]=1.0
+      self.estUnPont=True
+    if self.pointB[2]<=0.0:
+      self.pointB[2]=1.0
+      self.estUnPont=True
+    #self.fabrique()
     
   def fabrique(self):
-    #return self.hauteQualite()
     if self.racine!=None:
       self.supprime()
     
     couleur = (0.1,0.1,0.1)
-    if self.taille==3:
-      couleur = (1.0,0.0,0.0)
+    #if self.taille==3:
+    #  couleur = (1.0,0.0,0.0)
     self.racine = NodePath("00")
     ligne = LineSegs()
     ligne.setColor(*couleur)
@@ -46,28 +52,84 @@ class Route:
       
   largeurVoie=0.1
   largeurTrottoir=0.05
-  hauteurTrottoire=0.0005
-  largeurCaniveau=0.005
-  profondeurCaniveau=0.0005
+  hauteurTrottoire=0.01
+  largeurCaniveau=0.025
+  profondeurCaniveau=0.01
   
+  def getNormale(self, route):
+    dx=route.pointB[0]-route.pointA[0]
+    dy=route.pointB[1]-route.pointA[1]
+    n=Vec3(dy, -dx, 0.0)
+    n.normalize()
+    return n
+    
+  def getNormales(self, routes):
+    n = self.getNormale(self)
+    nA=None
+    nB=None
+    for route in routes:
+      if route.pointB == self.pointA:
+        nA = self.getNormale(route)
+      if route.pointA == self.pointA:
+        nA = -self.getNormale(route)
+      if route.pointA == self.pointB:
+        nB = self.getNormale(route)
+      if route.pointB == self.pointB:
+        nB = -self.getNormale(route)
+    if nA==None:
+      nA=n #Survient dans le cas des culs de sac
+    if nB==None:
+      nB=n #Survient dans le cas des culs de sac
+    nA=(n+nA)/2
+    nB=(n+nB)/2
+    return nA, nB
+    
   def hauteQualite(self, ville):
+    routes = []
+    cptA=0
+    cptB=0
+    for route in ville.routes:
+      if tuple(route.pointA)==tuple(self.pointA):
+        routes.append(route)
+        cptA+=1
+      if tuple(route.pointB)==tuple(self.pointA):
+        routes.append(route)
+        cptA+=1
+      if tuple(route.pointA)==tuple(self.pointB):
+        routes.append(route)
+        cptB+=1
+      if tuple(route.pointB)==tuple(self.pointB):
+        routes.append(route)
+        cptB+=1
+    while self in routes:
+      routes.remove(self)
+    if len(routes)==2 and cptA==2 and cptB==2: #==2 car on a le segment actuel et le segment attache qui partagent ce point
+      self.fabriqueSegmentDroit(routes)
+    elif cptA==1 or cptB==1:
+      self.fabriqueCulDeSac(routes, cptA==1)
+    else:
+      print "Configuration non geree :", len(routes), cptA, cptB
+      return self.fabrique()
+      
+  def fabriqueCulDeSac(self, routes, culEnA):
+    return self.fabriqueSegmentDroit(routes)
+
+  def fabriqueSegmentDroit(self, routes):
     couleur = (0.0,0.0,0.0,1.0)
     if self.taille==3:
       couleur = (1.0,0.0,0.0,1.0)
-
     if self.racine!=None:
       self.supprime()
+
     self.racine = NodePath("00")
     self.format = GeomVertexFormat.getV3c4()
     self.vdata = GeomVertexData('TriangleVertices',self.format,Geom.UHStatic)
     self.vWriter = GeomVertexWriter(self.vdata, 'vertex')
     self.cWriter = GeomVertexWriter(self.vdata, 'color')
-            
-    dx=self.pointB[0]-self.pointA[0]
-    dy=self.pointB[1]-self.pointA[1]
-    n=Vec3(dy, -dx, 0.0)
-    n.normalize()
-    n=n*(self.taille*self.largeurVoie)
+      
+    nA,nB = self.getNormales(routes)
+    nA=nA*(self.taille*self.largeurVoie)
+    nB=nB*(self.taille*self.largeurVoie)
     
     def quad(a,b,c,d, geom):
       prim = GeomTriangles(Geom.UHStatic)
@@ -78,84 +140,137 @@ class Route:
       geom.addPrimitive(prim)
       prim = GeomTriangles(Geom.UHStatic)
       prim.addVertex(b)
-      prim.addVertex(a)
       prim.addVertex(d)
+      prim.addVertex(c)
       prim.closePrimitive()
       geom.addPrimitive(prim)
       return geom
 
     geom = Geom(self.vdata)
     #Bitume
-    self.vWriter.addData3f(self.pointA-n)
+    self.vWriter.addData3f(self.pointA-nA)
     self.cWriter.addData4f(*couleur)
-    self.vWriter.addData3f(self.pointA+n)
+    self.vWriter.addData3f(self.pointA+nA)
     self.cWriter.addData4f(*couleur)
-    self.vWriter.addData3f(self.pointB-n)
+    self.vWriter.addData3f(self.pointB-nB)
     self.cWriter.addData4f(*couleur)
-    self.vWriter.addData3f(self.pointB+n)
+    self.vWriter.addData3f(self.pointB+nB)
     self.cWriter.addData4f(*couleur)
     
     geom=quad(0,1,2,3,geom)
 
     couleur = (0.2,0.2,0.2,1.0)
     #Canniveau, connexion a la route
-    self.vWriter.addData3f(self.pointA-n)
+    self.vWriter.addData3f(self.pointA-nA)
     self.cWriter.addData4f(*couleur)
-    self.vWriter.addData3f(self.pointA+n)
+    self.vWriter.addData3f(self.pointA+nA)
     self.cWriter.addData4f(*couleur)
-    self.vWriter.addData3f(self.pointB-n)
+    self.vWriter.addData3f(self.pointB-nB)
     self.cWriter.addData4f(*couleur)
-    self.vWriter.addData3f(self.pointB+n)
+    self.vWriter.addData3f(self.pointB+nB)
     self.cWriter.addData4f(*couleur)
   
     #Canniveau, points les plus bas
-    n.normalize()
-    n=n*(self.taille*self.largeurVoie+self.largeurCaniveau)
-    n[2]=-self.profondeurCaniveau
-    self.vWriter.addData3f(self.pointA-n)
+    nA.normalize()
+    nB.normalize()
+    nA=nA*(self.taille*self.largeurVoie+self.largeurCaniveau)
+    nB=nB*(self.taille*self.largeurVoie+self.largeurCaniveau)
+    nA[2]=self.profondeurCaniveau
+    nB[2]=self.profondeurCaniveau
+    self.vWriter.addData3f(self.pointA-nA)
     self.cWriter.addData4f(*couleur)
-    self.vWriter.addData3f(self.pointA+n)
+    nA[2]=-self.profondeurCaniveau
+    nB[2]=-self.profondeurCaniveau
+    self.vWriter.addData3f(self.pointA+nA)
     self.cWriter.addData4f(*couleur)
-    self.vWriter.addData3f(self.pointB-n)
+    nA[2]=self.profondeurCaniveau
+    nB[2]=self.profondeurCaniveau
+    self.vWriter.addData3f(self.pointB-nB)
     self.cWriter.addData4f(*couleur)
-    self.vWriter.addData3f(self.pointB+n)
+    nA[2]=-self.profondeurCaniveau
+    nB[2]=-self.profondeurCaniveau
+    self.vWriter.addData3f(self.pointB+nB)
     self.cWriter.addData4f(*couleur)
 
     geom=quad(8,4,10,6,geom)
     geom=quad(5,9,7,11,geom)
 
     #Canniveau vers trottoire
-    n[2]=self.hauteurTrottoire
-    self.vWriter.addData3f(self.pointA-n)
+    nA[2]=-self.hauteurTrottoire
+    nB[2]=-self.hauteurTrottoire
+    self.vWriter.addData3f(self.pointA-nA)
     self.cWriter.addData4f(*couleur)
-    self.vWriter.addData3f(self.pointA+n)
+    nA[2]=self.hauteurTrottoire
+    nB[2]=self.hauteurTrottoire
+    self.vWriter.addData3f(self.pointA+nA)
     self.cWriter.addData4f(*couleur)
-    self.vWriter.addData3f(self.pointB-n)
+    nA[2]=-self.hauteurTrottoire
+    nB[2]=-self.hauteurTrottoire
+    self.vWriter.addData3f(self.pointB-nB)
     self.cWriter.addData4f(*couleur)
-    self.vWriter.addData3f(self.pointB+n)
+    nA[2]=self.hauteurTrottoire
+    nB[2]=self.hauteurTrottoire
+    self.vWriter.addData3f(self.pointB+nB)
     self.cWriter.addData4f(*couleur)
     
+    geom=quad(12,8,14,10,geom)
+    geom=quad(9,13,11,15,geom)
+
+
     #Surface du trottoire
-    n[2]=0.0
-    n.normalize()
-    n=n*(self.taille*self.largeurVoie+self.largeurTrottoir)
-    n[2]=self.hauteurTrottoire
-    self.vWriter.addData3f(self.pointA-n)
+    nA[2]=0.0
+    nB[2]=0.0
+    nA.normalize()
+    nB.normalize()
+    nA=nB*(self.taille*self.largeurVoie+self.largeurCaniveau+self.largeurTrottoir)
+    nB=nB*(self.taille*self.largeurVoie+self.largeurCaniveau+self.largeurTrottoir)
+
+    nA[2]=-self.hauteurTrottoire
+    nB[2]=-self.hauteurTrottoire
+    self.vWriter.addData3f(self.pointA-nA)
     self.cWriter.addData4f(*couleur)
-    self.vWriter.addData3f(self.pointA+n)
+    nA[2]=self.hauteurTrottoire
+    nB[2]=self.hauteurTrottoire
+    self.vWriter.addData3f(self.pointA+nA)
     self.cWriter.addData4f(*couleur)
-    self.vWriter.addData3f(self.pointB-n)
+    nA[2]=-self.hauteurTrottoire
+    nB[2]=-self.hauteurTrottoire
+    self.vWriter.addData3f(self.pointB-nB)
     self.cWriter.addData4f(*couleur)
-    self.vWriter.addData3f(self.pointB+n)
+    nA[2]=self.hauteurTrottoire
+    nB[2]=self.hauteurTrottoire
+    self.vWriter.addData3f(self.pointB+nB)
     self.cWriter.addData4f(*couleur)
+
+    geom=quad(16,12,18,14,geom)
+    geom=quad(13,17,15,19,geom)
 
     node = GeomNode('gnode')
     node.addGeom(geom)
     mdl = NodePath(node)
     mdl.reparentTo(self.racine)
     self.racine.reparentTo(render)
-
-
+    
+    if self.estUnPont:
+      mdl=loader.loadModel("box.egg")
+      mdl.setPos(self.pointA)
+      mdl.lookAt(Point3(self.pointB))
+      mdl.setScale(0.1,0.1,mdl.getZ())
+      mdl.setPos(mdl, -0.5,-0.5,0.0)
+      mdl.setZ(0.0)
+      mdl.setP(0.0)
+      mdl.setR(0.0)
+      mdl.reparentTo(self.racine)
+      mdl=loader.loadModel("box.egg")
+      mdl.setPos(self.pointB)
+      mdl.lookAt(Point3(self.pointA))
+      mdl.setScale(0.1,0.1,mdl.getZ())
+      mdl.setPos(mdl, -0.5,-0.5,0.0)
+      mdl.setZ(0.0)
+      mdl.setP(0.0)
+      mdl.setR(0.0)
+      mdl.reparentTo(self.racine)
+      
     
   def supprime(self):
     if self.racine!=None:
@@ -352,7 +467,7 @@ class Ville:
   sol = None
   minAlt = None
   maxAlt = None
-  afficheModele = False
+  afficheModele = True
   affichei=0
   affichej=0
   racineSol = None
@@ -461,6 +576,15 @@ class Ville:
           c1 = (0.0,0.1,0.5,1.0)
         self.cWriter.addData4f(*c1)
     
+  idAfficheRoute = 0
+  def afficheRoutes(self):
+    if self.idAfficheRoute >= len(self.routes):
+      return
+    route = self.routes[self.idAfficheRoute]
+    print "Creation de la route %i/%i\r" %(self.idAfficheRoute,len(self.routes)),
+    route.hauteQualite(self)
+    self.idAfficheRoute+=1
+
   def affiche(self):
     if not self.afficheModele:
       self.affiche=self.finAffiche
@@ -480,6 +604,7 @@ class Ville:
         #print "Compactage du modele"
         #self.racineSol.flattenStrong()
         self.affiche=self.finAffiche
+        #self.flatten()
         return
       prim = GeomTriangles(Geom.UHStatic)
       if self.affichej<self.rayon*2-1 and self.affichei<self.rayon*2-1:
@@ -503,6 +628,34 @@ class Ville:
       
   def finAffiche(self):
     pass
+    
+  def flatten(self):
+    import time
+    deb = time.time()
+    gr = SceneGraphReducer() 
+    print "Apply attribs"
+    gr.applyAttribs(self.racineSol.node()) 
+    print time.time()-deb
+    deb = time.time()
+    print "Combine Radius"
+    #gr.setCombineRadius(10.0) 
+    print time.time()-deb
+    deb = time.time()
+    print "Flatenning"
+    gr.flatten(self.racineSol.node(), ~gr.CSOther) 
+    print time.time()-deb
+    deb = time.time()
+    print "Make compatible"
+    gr.makeCompatibleState(self.racineSol.node()) 
+    print time.time()-deb
+    deb = time.time()
+    print "Collect"
+    gr.collectVertexData(self.racineSol.node(), ~(gr.CVDFormat|gr.CVDName|gr.CVDAnimationType)) 
+    print time.time()-deb
+    deb = time.time()
+    #print "Unify"
+    #gr.unify(self.racineSol.node(), False)
+    print time.time()-deb
 
   def chercheQuartiers(self, route=None):
     if route == None:
@@ -607,7 +760,8 @@ class Ville:
       cptElements=0
       for element in elements:
         cptElements+=1
-        print "Chargement %i/%i\r" %(cptElements, len(elements)),
+        if cptElements%100==0:
+          print "Chargement %i/%i\r" %(cptElements, len(elements)),
         type = element.split("||")[0]
         parametres = element.split("||")[1:]
         if type.lower()=="s":
@@ -628,13 +782,13 @@ class Ville:
           taille=float(taille)
           if taille==1:
             taille=2
-          pointA[2]=self.getAltitude(pointA)
-          pointB[2]=self.getAltitude(pointB)
+          pointA[2]=self.getAltitude(pointA)+1.1
+          pointB[2]=self.getAltitude(pointB)+1.1
           if pointA not in self.points:
             self.points.append(pointA)
           if pointB not in self.points:
             self.points.append(pointB)
-          self.routes.append(Route(pointA, pointB, taille))
+          self.routes.append(Route(pointA, pointB, taille, self))
         elif type.lower()=="b":
           position, orientation, taille, importance = parametres
           position = getCoord(position)
@@ -668,7 +822,7 @@ class Ville:
         if self.sol[i][j]<=0:
           c1 = (0.0,0.1,0.5,1.0)
         self.cWriter.addData4f(*c1)
-      
+        
   def sauvegarde(self, fichier):
     fichier = open(fichier, "w")
     fichier.write("S||%i>" %self.rayon)
@@ -1048,6 +1202,7 @@ class Ville:
     if self.pings==1:
       print "TODO : pingModeleRoutes"
     self.affiche()
+    self.afficheRoutes()
     random.choice(self.routes).hauteQualite(self)
     if self.pings%60==0:
       self.sauvegarde("ville-s3.out")
@@ -1111,7 +1266,6 @@ dlight = PointLight('my dlight')
 dlnp = render.attachNewNode(dlight)
 dlnp.setPos(0, 0, 30)
 render.setLight(dlnp)
-
 ville=Ville(rayon=None, fichier="ville-s2.out", etape=3) #ville.out
 taskMgr.add(ville.ping, 'PingVille')
 base.accept('a-repeat', ville.chercheQuartiers)
