@@ -12,451 +12,9 @@ import math
 import time
 import sys
 
-class Route:
-  pointA = None
-  pointB = None
-  taille = None
-  racine = None
-  
-  def __init__(self, pointA, pointB, taille, ville=None):
-    self.pointA = pointA
-    self.pointB = pointB
-    self.taille = taille
-    self.racine = None
-    self.estUnPont=False
-    if self.pointA[2]<=0.0:
-      self.pointA[2]=1.0
-      self.estUnPont=True
-    if self.pointB[2]<=0.0:
-      self.pointB[2]=1.0
-      self.estUnPont=True
-    #self.fabrique()
-    
-  def fabrique(self):
-    if self.racine!=None:
-      self.supprime()
-    
-    couleur = (0.1,0.1,0.1)
-    #if self.taille==3:
-    #  couleur = (1.0,0.0,0.0)
-    self.racine = NodePath("00")
-    ligne = LineSegs()
-    ligne.setColor(*couleur)
-    ligne.setThickness(self.taille);
-    ligne.moveTo(*self.pointA)
-    ligne.drawTo(*self.pointB)
-    self.racine.attachNewNode(ligne.create())
-    self.racine.reparentTo(render)
-    if self.taille>=3:
-      self.racine.setLightOff()
-      
-  largeurVoie=0.1
-  largeurTrottoir=0.05
-  hauteurTrottoire=0.01
-  largeurCaniveau=0.025
-  profondeurCaniveau=0.01
-  
-  def getNormale(self, route):
-    dx=route.pointB[0]-route.pointA[0]
-    dy=route.pointB[1]-route.pointA[1]
-    n=Vec3(dy, -dx, 0.0)
-    n.normalize()
-    return n
-    
-  def getNormales(self, routes):
-    n = self.getNormale(self)
-    nA=None
-    nB=None
-    for route in routes:
-      if route.pointB == self.pointA:
-        nA = self.getNormale(route)
-      if route.pointA == self.pointA:
-        nA = -self.getNormale(route)
-      if route.pointA == self.pointB:
-        nB = self.getNormale(route)
-      if route.pointB == self.pointB:
-        nB = -self.getNormale(route)
-    if nA==None:
-      nA=n #Survient dans le cas des culs de sac
-    if nB==None:
-      nB=n #Survient dans le cas des culs de sac
-    nA=(n+nA)/2
-    nB=(n+nB)/2
-    return nA, nB
-    
-  def hauteQualite(self, ville):
-    routes = []
-    cptA=0
-    cptB=0
-    for route in ville.routes:
-      if tuple(route.pointA)==tuple(self.pointA):
-        routes.append(route)
-        cptA+=1
-      if tuple(route.pointB)==tuple(self.pointA):
-        routes.append(route)
-        cptA+=1
-      if tuple(route.pointA)==tuple(self.pointB):
-        routes.append(route)
-        cptB+=1
-      if tuple(route.pointB)==tuple(self.pointB):
-        routes.append(route)
-        cptB+=1
-    while self in routes:
-      routes.remove(self)
-    if len(routes)==2 and cptA==2 and cptB==2: #==2 car on a le segment actuel et le segment attache qui partagent ce point
-      self.fabriqueSegmentDroit(routes)
-    elif cptA==1 or cptB==1:
-      self.fabriqueCulDeSac(routes, cptA==1)
-    else:
-      print "Configuration non geree :", len(routes), cptA, cptB
-      return self.fabrique()
-      
-  def fabriqueCulDeSac(self, routes, culEnA):
-    return self.fabriqueSegmentDroit(routes)
-
-  def fabriqueSegmentDroit(self, routes):
-    couleur = (0.0,0.0,0.0,1.0)
-    if self.taille==3:
-      couleur = (1.0,0.0,0.0,1.0)
-    if self.racine!=None:
-      self.supprime()
-
-    self.racine = NodePath("00")
-    self.format = GeomVertexFormat.getV3c4()
-    self.vdata = GeomVertexData('TriangleVertices',self.format,Geom.UHStatic)
-    self.vWriter = GeomVertexWriter(self.vdata, 'vertex')
-    self.cWriter = GeomVertexWriter(self.vdata, 'color')
-      
-    nA,nB = self.getNormales(routes)
-    nA=nA*(self.taille*self.largeurVoie)
-    nB=nB*(self.taille*self.largeurVoie)
-    
-    def quad(a,b,c,d, geom):
-      prim = GeomTriangles(Geom.UHStatic)
-      prim.addVertex(a)
-      prim.addVertex(b)
-      prim.addVertex(c)
-      prim.closePrimitive()
-      geom.addPrimitive(prim)
-      prim = GeomTriangles(Geom.UHStatic)
-      prim.addVertex(b)
-      prim.addVertex(d)
-      prim.addVertex(c)
-      prim.closePrimitive()
-      geom.addPrimitive(prim)
-      return geom
-
-    geom = Geom(self.vdata)
-    #Bitume
-    self.vWriter.addData3f(self.pointA-nA)
-    self.cWriter.addData4f(*couleur)
-    self.vWriter.addData3f(self.pointA+nA)
-    self.cWriter.addData4f(*couleur)
-    self.vWriter.addData3f(self.pointB-nB)
-    self.cWriter.addData4f(*couleur)
-    self.vWriter.addData3f(self.pointB+nB)
-    self.cWriter.addData4f(*couleur)
-    
-    geom=quad(0,1,2,3,geom)
-
-    couleur = (0.2,0.2,0.2,1.0)
-    #Canniveau, connexion a la route
-    self.vWriter.addData3f(self.pointA-nA)
-    self.cWriter.addData4f(*couleur)
-    self.vWriter.addData3f(self.pointA+nA)
-    self.cWriter.addData4f(*couleur)
-    self.vWriter.addData3f(self.pointB-nB)
-    self.cWriter.addData4f(*couleur)
-    self.vWriter.addData3f(self.pointB+nB)
-    self.cWriter.addData4f(*couleur)
-  
-    #Canniveau, points les plus bas
-    nA.normalize()
-    nB.normalize()
-    nA=nA*(self.taille*self.largeurVoie+self.largeurCaniveau)
-    nB=nB*(self.taille*self.largeurVoie+self.largeurCaniveau)
-    nA[2]=self.profondeurCaniveau
-    nB[2]=self.profondeurCaniveau
-    self.vWriter.addData3f(self.pointA-nA)
-    self.cWriter.addData4f(*couleur)
-    nA[2]=-self.profondeurCaniveau
-    nB[2]=-self.profondeurCaniveau
-    self.vWriter.addData3f(self.pointA+nA)
-    self.cWriter.addData4f(*couleur)
-    nA[2]=self.profondeurCaniveau
-    nB[2]=self.profondeurCaniveau
-    self.vWriter.addData3f(self.pointB-nB)
-    self.cWriter.addData4f(*couleur)
-    nA[2]=-self.profondeurCaniveau
-    nB[2]=-self.profondeurCaniveau
-    self.vWriter.addData3f(self.pointB+nB)
-    self.cWriter.addData4f(*couleur)
-
-    geom=quad(8,4,10,6,geom)
-    geom=quad(5,9,7,11,geom)
-
-    #Canniveau vers trottoire
-    nA[2]=-self.hauteurTrottoire
-    nB[2]=-self.hauteurTrottoire
-    self.vWriter.addData3f(self.pointA-nA)
-    self.cWriter.addData4f(*couleur)
-    nA[2]=self.hauteurTrottoire
-    nB[2]=self.hauteurTrottoire
-    self.vWriter.addData3f(self.pointA+nA)
-    self.cWriter.addData4f(*couleur)
-    nA[2]=-self.hauteurTrottoire
-    nB[2]=-self.hauteurTrottoire
-    self.vWriter.addData3f(self.pointB-nB)
-    self.cWriter.addData4f(*couleur)
-    nA[2]=self.hauteurTrottoire
-    nB[2]=self.hauteurTrottoire
-    self.vWriter.addData3f(self.pointB+nB)
-    self.cWriter.addData4f(*couleur)
-    
-    geom=quad(12,8,14,10,geom)
-    geom=quad(9,13,11,15,geom)
-
-
-    #Surface du trottoire
-    nA[2]=0.0
-    nB[2]=0.0
-    nA.normalize()
-    nB.normalize()
-    nA=nB*(self.taille*self.largeurVoie+self.largeurCaniveau+self.largeurTrottoir)
-    nB=nB*(self.taille*self.largeurVoie+self.largeurCaniveau+self.largeurTrottoir)
-
-    nA[2]=-self.hauteurTrottoire
-    nB[2]=-self.hauteurTrottoire
-    self.vWriter.addData3f(self.pointA-nA)
-    self.cWriter.addData4f(*couleur)
-    nA[2]=self.hauteurTrottoire
-    nB[2]=self.hauteurTrottoire
-    self.vWriter.addData3f(self.pointA+nA)
-    self.cWriter.addData4f(*couleur)
-    nA[2]=-self.hauteurTrottoire
-    nB[2]=-self.hauteurTrottoire
-    self.vWriter.addData3f(self.pointB-nB)
-    self.cWriter.addData4f(*couleur)
-    nA[2]=self.hauteurTrottoire
-    nB[2]=self.hauteurTrottoire
-    self.vWriter.addData3f(self.pointB+nB)
-    self.cWriter.addData4f(*couleur)
-
-    geom=quad(16,12,18,14,geom)
-    geom=quad(13,17,15,19,geom)
-
-    node = GeomNode('gnode')
-    node.addGeom(geom)
-    mdl = NodePath(node)
-    mdl.reparentTo(self.racine)
-    self.racine.reparentTo(render)
-    
-    if self.estUnPont:
-      mdl=loader.loadModel("box.egg")
-      mdl.setPos(self.pointA)
-      mdl.lookAt(Point3(self.pointB))
-      mdl.setScale(0.1,0.1,mdl.getZ())
-      mdl.setPos(mdl, -0.5,-0.5,0.0)
-      mdl.setZ(0.0)
-      mdl.setP(0.0)
-      mdl.setR(0.0)
-      mdl.reparentTo(self.racine)
-      mdl=loader.loadModel("box.egg")
-      mdl.setPos(self.pointB)
-      mdl.lookAt(Point3(self.pointA))
-      mdl.setScale(0.1,0.1,mdl.getZ())
-      mdl.setPos(mdl, -0.5,-0.5,0.0)
-      mdl.setZ(0.0)
-      mdl.setP(0.0)
-      mdl.setR(0.0)
-      mdl.reparentTo(self.racine)
-      
-    
-  def supprime(self):
-    if self.racine!=None:
-      self.racine.detachNode()
-      self.racine.removeNode()
-      self.racine = None
-    
-  def getCoord(self):
-    return self.pointA, self.pointB
-    
-  def sauvegarde(self):
-    out = "R||%s||%s||%f>" %(str(list(self.pointA)), str(list(self.pointB)), self.taille)
-    return out
-    
-class Batiment:
-  position = None
-  orientation = None
-  taille = None
-  importance = None
-  jardin = None
-  batiment = None
-  racine = None
-  
-  def __init__(self, position, orientation, taille, importance):
-    self.position = position
-    self.orientation = orientation
-    self.taille = taille
-    self.importance = importance
-    self.jardin = None
-    self.batiment = None
-    self.racine = None
-    self.fabrique()
-    
-  def fabrique(self):
-    if self.racine!=None:
-      self.supprime()
-    self.racine = NodePath("")
-    self.batiment = loader.loadModel("box.egg")
-    Px, Py, Pz = self.position
-    self.racine.setPos(Px, Py, Pz)
-    self.batiment.setPos(-0.5,-0.5,-0.5)
-    self.batiment.reparentTo(self.racine)
-    #mdl.setColor(random.random()/2, random.random()/2, random.random()/2)
-    self.batiment.setColor(0.5, 0.5, 0.5)
-    self.batiment.setScale(self.taille*(random.random()/2+0.5), self.taille*(random.random()/2+0.5), self.importance)
-    self.sol = loader.loadModel("box.egg")
-    self.sol.setScale(self.taille, self.taille*1.5, 0.001)
-    self.sol.setColor(30.0/255, 159.0/255, 02.0/255)
-    self.sol.setPos(-0.5,-0.5,0.0)
-    self.sol.reparentTo(self.racine)
-    Cx, Cy, Cz = self.orientation
-    self.racine.lookAt(Cx, Cy, Pz)
-    self.racine.reparentTo(render)
-    
-  def sauvegarde(self):
-    out = "B||%s||%s||%f||%f>" %(str(list(self.position)), str(list(self.orientation)), self.taille, self.importance)
-    return out
-
-  def supprime(self):
-    self.racine.detachNode()
-    self.racine.removeNode()
-    self.racine = None
-    self.batiment = None
-    self.sol = None
-    
-  def setImportance(self, importance):
-    self.importance = importance
-    self.fabrique()
-    
-class Quartier:
-  bords=False
-  densite=False
-  def __init__(self, bords, densite):
-    self.bords = bords
-    self.densite = densite
-    
-  def verifieOK(self):
-    points={}
-    for route in self.bords:
-      points[tuple(route.pointA)]=points.get(tuple(route.pointA), 0)+1
-      points[tuple(route.pointB)]=points.get(tuple(route.pointB), 0)+1
-    OK=True
-    for point in points:
-      if points[point]!=2:
-        OK=False
-    return OK
-    
-  def rendOK(self, ville):
-    if self.verifieOK():
-      print "Quartier OK"
-      return
-      
-    print "Quartier pas OK"
-    mieux = True
-    while not self.verifieOK() and mieux:
-      mieux = self.light(ville)
-      if not self.verifieOK():
-        mieux = self.heavy(ville) or mieux
-      
-    self.affiche()
-    
-  def light(self, ville):
-    mieux=False
-    points={}
-    for route in self.bords:
-      points[tuple(route.pointA)]=points.get(tuple(route.pointA), 0)+1
-      points[tuple(route.pointB)]=points.get(tuple(route.pointB), 0)+1
-      
-    pointsPasOK = []
-    for point in points:
-      if points[point]!=2:
-        pointsPasOK.append(point)
-        
-    for route in ville.routes:
-      if tuple(route.pointA) in pointsPasOK and tuple(route.pointB) in pointsPasOK:
-        if self.bords.count(route)>0:
-          pass
-        else:
-          self.bords.append(route)
-          mieux=True
-    if mieux:
-      print "light a servit a un truc !"
-    return mieux
-    
-    
-  def heavy(self, ville):
-    bary = self.barycentre()
-    contours = []
-    points = ville.cherchePointAutour(bary, ville.longueurSegment*2)
-    for point in points:
-      print "test %i/%i\r" %(ville.points.index(point), len(ville.points)),
-      i = ville.intersectionne(bary, point)
-      if i==None:
-        contours.append(point)
-        
-    mieux=False
-    for route in ville.routes:
-      if (route.pointA in contours and route.pointB in contours):
-        if route not in self.bords:
-          self.bords.append(route)
-          mieux=True
-    print "Etait pas bien, nouveau status :",self.verifieOK(),"a fait un truc :", mieux
-    return mieux
-
-  racine=None
-  def affiche(self):
-    if self.racine!=None:
-      self.supprime()
-    self.racine = NodePath("quartier")
-    self.racine.reparentTo(render)
-    col = random.random(), random.random(), random.random()
-    for route in self.bords:
-      ligne = LineSegs()
-      ligne.setColor(*col)
-      ligne.setThickness(2.0);
-      a = route.pointA
-      a[2]=0.0
-      b = route.pointB
-      b[2]=0.0
-      ligne.moveTo(*a)
-      ligne.drawTo(*b)
-      mdl=self.racine.attachNewNode(ligne.create())
-      mdl.setLightOff()
-      
-  def supprime(self):
-    if self.racine!=None:
-      self.racine.detachNode()
-      self.racine.removeNode()
-      self.racine=None
-      
-  def barycentre(self):
-    cx,cy,cz = 0.0,0.0,0.0
-    for route in self.bords:
-      px,py,pz = route.pointA
-      cx+=px
-      cy+=py
-      cz+=pz
-      px,py,pz = route.pointB
-      cx+=px
-      cy+=py
-      cz+=pz
-    cx=cx/(len(self.bords)*2)
-    cy=cy/(len(self.bords)*2)
-    cz=cz/(len(self.bords)*2)
-    return Vec3(cx,cy,cz)
-
+from batiment import Batiment
+from route import Route
+from quartier import Quartier
 
 class Ville:
   points = None
@@ -471,11 +29,17 @@ class Ville:
   affichei=0
   affichej=0
   racineSol = None
+  fichierIn = None
+  fichierOut = None
   
-  def __init__(self, rayon=None, fichier=None, etape=0):
-    if not rayon and not fichier:
+  def __init__(self, rayon=None, fichierIn=None, fichierOut=None, etape=0):
+    if not rayon and not fichierIn:
       print "besoin de taille ou fichier"
       return
+      
+    self.fichierIn=fichierIn
+    self.fichierOut=fichierOut
+      
     if rayon!=None or etape==0:
       self.rayon = int(rayon)
       self.fabriqueSol()
@@ -483,7 +47,7 @@ class Ville:
     self.batiments = []
     self.points=[]
     
-    if fichier==None:
+    if fichierIn==None:
       while len(self.routes)==0:
         p1 = self.pointAlea(Vec3(0.0,0.0,0.0))
         p2 = self.pointAlea(Vec3(0.0,0.0,0.0))
@@ -494,7 +58,7 @@ class Ville:
         self.points = []
         self.ajouteRoute(p1, p2)
     else:
-      self.charge(fichier)
+      self.charge(fichierIn)
     
     if etape==0 or etape==1:
       self.ping = self.pingCreation
@@ -789,6 +353,7 @@ class Ville:
           if pointB not in self.points:
             self.points.append(pointB)
           self.routes.append(Route(pointA, pointB, taille, self))
+          self.routes[-1].fabrique()
         elif type.lower()=="b":
           position, orientation, taille, importance = parametres
           position = getCoord(position)
@@ -823,8 +388,8 @@ class Ville:
           c1 = (0.0,0.1,0.5,1.0)
         self.cWriter.addData4f(*c1)
         
-  def sauvegarde(self, fichier):
-    fichier = open(fichier, "w")
+  def sauvegarde(self):
+    fichier = open(self.fichierOut, "w")
     fichier.write("S||%i>" %self.rayon)
     for i in range(0, self.rayon*2):
       for j in range(0, self.rayon*2):
@@ -1109,7 +674,7 @@ class Ville:
         if longueurMarine>0:
           postMarine=True
         
-      points.append(position)
+      points.append(Vec3(*position))
       taille = 2.0
       routes.append(Route(position, plus, taille))
       position[2]=0.0
@@ -1127,6 +692,8 @@ class Ville:
     else:
       self.points+=points
       self.routes+=routes
+      for route in routes:
+        route.fabrique()
     return True
     
   heurePing = None
@@ -1179,7 +746,7 @@ class Ville:
     self.affiche()
     self.ajouteRouteAlea()
     if len(self.batiments)>500:
-      self.sauvegarde("ville.out")
+      self.sauvegarde()
     return task.cont      
 
   lastPing = None
@@ -1193,7 +760,7 @@ class Ville:
       self.concentreBatiments()
       self.lastPing=time.time()+(time.time()-deb)
     if self.pings%60==0:
-      self.sauvegarde("ville-s2.out")
+      self.sauvegarde()
     #self.chercheQuartiers(random.choice(self.routes))
     return task.cont      
     
@@ -1205,7 +772,7 @@ class Ville:
     self.afficheRoutes()
     random.choice(self.routes).hauteQualite(self)
     if self.pings%60==0:
-      self.sauvegarde("ville-s3.out")
+      self.sauvegarde()
     return task.cont
     
   def pingModeleBatiments(self, task):
@@ -1214,7 +781,7 @@ class Ville:
       print "TODO : pingModeleBatiments"
     self.affiche()
     if self.pings%60==0:
-      self.sauvegarde("ville-s4.out")
+      self.sauvegarde()
     return task.cont
     
   def pingModeleSol(self, task):
@@ -1223,7 +790,7 @@ class Ville:
       print "TODO : pingModeleSol"
     self.affiche()
     if self.pings%60==0:
-      self.sauvegarde("ville-s5.out")
+      self.sauvegarde()
     return task.cont
 
   posBat = 0
@@ -1234,7 +801,7 @@ class Ville:
       self.posBat = 0
       self.passeBat += 1
       self.ajoutBatPasse = 0
-    print "Batiments, passe %i %i nouveaux batiments ajoutes pour un total de %i" %(self.passeBat, self.ajoutBatPasse, len(self.batiments))
+    print "[%i-%i] Batiments, %i nouveaux batiments ajoutes pour un total de %i\r" %(self.passeBat, self.posBat+1, self.ajoutBatPasse, len(self.batiments)),
     batiment = self.batiments[self.posBat]
     position = batiment.position
     orientation = batiment.orientation
@@ -1262,11 +829,34 @@ class Ville:
 
 #base.setBackgroundColor(40.0/255, 169.0/255, 12.0/255)
 
+if len(sys.argv) != 4:
+  print "Parametres invalides, essayez :"
+  print "ville.py 0 rayon fichierOut"
+  print "ou"
+  print "ville.py num_etape fichierIn fichierOut"
+  print "Etapes possibles :"
+  print "0 - creation du sol (le second parametre represent le rayon de la ville)"
+  print "1 - creation de la structure de la ville"
+  print "2 - augmentation de la densite des batiments"
+  print "3 - modelisation des routes"
+  print "4 (todo) - modelisation des batiments"
+  print "5 (todo) - modelisation du sol"
+  sys.exit()
 dlight = PointLight('my dlight')
 dlnp = render.attachNewNode(dlight)
 dlnp.setPos(0, 0, 30)
 render.setLight(dlnp)
-ville=Ville(rayon=None, fichier="ville-s2.out", etape=3) #ville.out
+etape = int(sys.argv[1])
+if etape==0:
+  rayon=int(sys.argv[2])
+  fichierIn=None
+else:
+  rayon=None
+  fichierIn=sys.argv[2]
+
+fichierOut=sys.argv[3]
+  
+ville=Ville(rayon=rayon, fichierIn=fichierIn, fichierOut=fichierOut, etape=etape)
 taskMgr.add(ville.ping, 'PingVille')
 base.accept('a-repeat', ville.chercheQuartiers)
 run()
