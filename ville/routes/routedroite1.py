@@ -21,7 +21,8 @@ class DessinRoute:
       couleur = (1.0,0.0,0.0,1.0)
     if route.racine!=None:
       route.supprime()
-
+    route.lampadaires=[]
+    route.feuxtricolores=[]
     route.racine = NodePath("00")
     route.format = GeomVertexFormat.getV3c4()
     route.vdata = GeomVertexData('TriangleVertices',route.format,Geom.UHStatic)
@@ -142,6 +143,25 @@ class DessinRoute:
     nB[2]=self.hauteurTrottoire
     route.vWriter.addData3f(route.pointB+nB)
     route.cWriter.addData4f(*couleur)
+    
+    nA.normalize()
+    nA=nB*(route.taille*self.largeurVoie+self.largeurCaniveau+self.largeurTrottoir/3)
+    pt=Point3(*route.pointA)
+    pt[2]+=self.hauteurTrottoire
+
+    lampe = NodePath("lampadaire")
+    lampe.reparentTo(route.racine)
+    nA[2]=-self.hauteurTrottoire
+    lampe.setPos(route.pointA-nA)
+    lampe.lookAt(pt)
+    route.lampadaires.append(lampe)
+
+    lampe = NodePath("lampadaire")
+    lampe.reparentTo(route.racine)
+    nA[2]=self.hauteurTrottoire
+    lampe.setPos(route.pointA+nA)
+    lampe.lookAt(pt)
+    route.lampadaires.append(lampe)
 
     geom=quad(16,12,18,14,geom)
     geom=quad(13,17,15,19,geom)

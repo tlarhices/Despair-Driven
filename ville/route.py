@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from pandac.PandaModules import *
+import random
 
 class Route:
   pointA = None
@@ -8,6 +9,8 @@ class Route:
   taille = None
   racine = None
   filtres = None
+  lampadaires=None
+  feuxtricolores=None
   
   def __init__(self, pointA, pointB, taille, ville=None):
     self.pointA = Vec3(*pointA)
@@ -15,11 +18,14 @@ class Route:
     self.taille = taille
     self.racine = None
     self.estUnPont=False
-    if self.pointA[2]<=0.0:
-      self.pointA[2]=1.0
+    self.lampadaires=[]
+    self.feuxtricolores=[]
+
+    if self.pointA[2]<=1.1:#0.0:
+      self.pointA[2]=2.1
       self.estUnPont=True
-    if self.pointB[2]<=0.0:
-      self.pointB[2]=1.0
+    if self.pointB[2]<=1.1:#0.0:
+      self.pointB[2]=2.1
       self.estUnPont=True
     self.getFiltres()
     
@@ -40,6 +46,8 @@ class Route:
     if self.racine!=None:
       self.supprime()
     
+    self.lampadaires=[]
+    self.feuxtricolores=[]
     couleur = (0.1,0.1,0.1)
     #if self.taille==3:
     #  couleur = (1.0,0.0,0.0)
@@ -102,19 +110,37 @@ class Route:
     while self in routes:
       routes.remove(self)
       
+    filtresValides = []
     for filtre in self.filtres:
-      filtre = filtre()
+      filtre=filtre()
       if filtre.filtre(routes, cptA, cptB):
-        filtre.fabrique(self, routes, cptA, cptB)
-        return
-    print "Configuration non geree :", len(routes), cptA, cptB
-    return self.fabrique()
+        filtresValides.append(filtre)
+    if len(filtresValides)==0:
+      print "Configuration non geree :", len(routes), cptA, cptB
+      return self.fabrique()
+    else:
+      filtre=random.choice(filtresValides)
+      filtre.fabrique(self, routes, cptA, cptB)
+    self.ajouteLampadaires()
+    
+  def ajouteLampadaires(self):
+    for lampadaire in self.lampadaires:
+      mdl = loader.loadModel("sphere.egg")
+      #mdl.setPos(-0.5,-0.5,0.0)
+      mdl.setScale(0.005,0.005,0.2)
+      mdl.reparentTo(lampadaire)
       
   def supprime(self):
     if self.racine!=None:
       self.racine.detachNode()
       self.racine.removeNode()
       self.racine = None
+      for lampadaire in self.lampadaires:
+        lampadaire.detachNode()
+        lampadaire.removeNode()
+      for feuxtricolore in self.feuxtricolores:
+        feuxtricolore.detachNode()
+        feuxtricolore.removeNode()
     
   def getCoord(self):
     return self.pointA, self.pointB
