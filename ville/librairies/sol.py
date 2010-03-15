@@ -106,7 +106,7 @@ class Sol:
     print "Aplanissage de l'eau..."
     for i in range(0, self.rayon*2):
       for j in range(0, self.rayon*3):
-        if self.sol[i][j]<=random.random()/4:
+        if self.sol[i][j]<=0.0:#random.random()/4:
           self.sol[i][j]=0
         
     self.getMinMax()

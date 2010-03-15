@@ -223,7 +223,7 @@ class Ville:
           self.sol.sol[-1].append(float(parametres[0]))
           
           j+=1
-          if j>=self.sol.rayon*2:
+          if j>=self.sol.rayon*3:
             j=0
             i+=1
             print self.sol.sol[-1]
@@ -260,7 +260,7 @@ class Ville:
     fichier = open(self.fichierOut, "w")
     fichier.write("S||%i>" %self.sol.rayon)
     for i in range(0, self.sol.rayon*2):
-      for j in range(0, self.sol.rayon*2):
+      for j in range(0, self.sol.rayon*3):
         fichier.write("T||%f>" %self.sol.sol[i][j])
 
     for route in self.routes:
