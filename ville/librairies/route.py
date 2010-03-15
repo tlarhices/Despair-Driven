@@ -21,10 +21,10 @@ class Route:
     self.lampadaires=[]
     self.feuxtricolores=[]
 
-    if self.pointA[2]<=1.1:#0.0:
+    if self.pointA[2]<=0.0:
       self.pointA[2]=2.1
       self.estUnPont=True
-    if self.pointB[2]<=1.1:#0.0:
+    if self.pointB[2]<=0.0:
       self.pointB[2]=2.1
       self.estUnPont=True
     self.getFiltres()

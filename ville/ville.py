@@ -3,6 +3,7 @@
 from pandac.PandaModules import *
 #On coupe l'audio pour le moment
 loadPrcFileData("",u"audio-library-name null")
+loadPrcFileData("",u"sync-video #f")
 import direct.directbase.DirectStart
 
 from weakref import proxy
@@ -10,11 +11,14 @@ from weakref import proxy
 import random
 import math
 import time
-import sys
+import sys, os
+
+sys.path.append(os.path.join(".","librairies"))
 
 from batiment import Batiment
 from route import Route
 from quartier import Quartier
+from sol import Sol
 
 class Ville:
   points = None
@@ -22,13 +26,7 @@ class Ville:
   routes = None
   batiments = None
   longueurSegment = 4.0
-  sol = None
-  minAlt = None
-  maxAlt = None
   afficheModele = True
-  affichei=0
-  affichej=0
-  racineSol = None
   fichierIn = None
   fichierOut = None
   
@@ -40,17 +38,16 @@ class Ville:
     self.fichierIn=fichierIn
     self.fichierOut=fichierOut
       
-    if rayon!=None or etape==0:
-      self.rayon = int(rayon)
-      self.fabriqueSol()
     self.routes=[]
     self.batiments = []
     self.points=[]
     
+    self.sol=Sol()
     if fichierIn==None:
+      self.sol.genereSol(rayon)
       while len(self.routes)==0:
-        p1 = self.pointAlea(Vec3(0.0,0.0,0.0))
-        p2 = self.pointAlea(Vec3(0.0,0.0,0.0))
+        p1 = self.pointAlea(Vec3(0.0,25.0,0.0))
+        p2 = self.pointAlea(Vec3(0.0,25.0,0.0))
         v=p2-p1
         v.normalize()
         v=v*self.longueurSegment*2
@@ -59,7 +56,7 @@ class Ville:
         self.ajouteRoute(p1, p2)
     else:
       self.charge(fichierIn)
-    
+
     if etape==0 or etape==1:
       self.ping = self.pingCreation
     elif etape==2:
@@ -74,72 +71,6 @@ class Ville:
       print "etape inconue", etape
       
       
-  def fabriqueSol(self):
-    print "Creation du sol..."
-    self.sol = []
-    for i in range(-self.rayon, self.rayon):
-      self.sol.append([])
-      for j in range(-self.rayon, self.rayon):
-        self.sol[i+self.rayon].append(random.random()*40-20.0)
-        
-    print "Flou du sol..."
-    for a in range(0,25):
-      for i in range(0, self.rayon*2):
-        for j in range(0, self.rayon*2):
-          somme = 0.0
-          cpt=0
-          for k in [-1, 0, 1]:
-            for l in [-1, 0, 1]:
-              if i+k>=0 and i+k<self.rayon*2 and j+l>=0 and j+l<self.rayon*2:
-                somme+=self.sol[i+k][j+l]
-                cpt+=1
-          self.sol[i][j] = somme / cpt
-
-    print "Cherche Min/max..."
-    self.minAlt = self.sol[0][0]
-    self.maxAlt = self.sol[0][0]
-    for i in range(0, self.rayon*2):
-      for j in range(0, self.rayon*2):
-        self.minAlt = min(self.minAlt, self.sol[i][j])
-        self.maxAlt = max(self.maxAlt, self.sol[i][j])
-    print "Etendue des altitudes : ", self.minAlt, self.maxAlt
-
-    haut = 10
-    bas = -7
-    print "Ramenage au bon ratio..."
-    for i in range(0, self.rayon*2):
-      for j in range(0, self.rayon*2):
-        self.sol[i][j] = (self.sol[i][j]-self.minAlt)/(self.maxAlt-self.minAlt)*(haut-bas)+bas
-    self.minAlt = self.sol[0][0]
-    self.maxAlt = self.sol[0][0]
-    for i in range(0, self.rayon*2):
-      for j in range(0, self.rayon*2):
-        self.minAlt = min(self.minAlt, self.sol[i][j])
-        self.maxAlt = max(self.maxAlt, self.sol[i][j])
-    print "Etendue des altitudes : ", self.minAlt, self.maxAlt
-        
-    print "Aplanissage de l'eau..."
-    for i in range(0, self.rayon*2):
-      for j in range(0, self.rayon*2):
-        if self.sol[i][j]<=0:
-          self.sol[i][j]=-1
-        self.minAlt = min(self.minAlt, self.sol[i][j])
-        self.maxAlt = max(self.maxAlt, self.sol[i][j])
-        
-    print "Creation des vectrices..."
-    self.format = GeomVertexFormat.getV3c4()
-    self.vdata = GeomVertexData('TriangleVertices',self.format,Geom.UHStatic)
-    self.vWriter = GeomVertexWriter(self.vdata, 'vertex')
-    self.cWriter = GeomVertexWriter(self.vdata, 'color')
-            
-    for i in range(0, self.rayon*2):
-      for j in range(0, self.rayon*2):
-        self.vWriter.addData3f(i-self.rayon, j-self.rayon, self.sol[i][j])
-        c1 = (0.0,0.5,0.0,1.0)
-        if self.sol[i][j]<=0:
-          c1 = (0.0,0.1,0.5,1.0)
-        self.cWriter.addData4f(*c1)
-    
   idAfficheRoute = 0
   def afficheRoutes(self):
     if self.idAfficheRoute >= len(self.routes):
@@ -149,50 +80,6 @@ class Ville:
     route.hauteQualite(self)
     self.idAfficheRoute+=1
 
-  def affiche(self):
-    if not self.afficheModele:
-      self.affiche=self.finAffiche
-      
-    if self.racineSol == None:
-      self.racineSol = NodePath("sol")
-      self.racineSol.reparentTo(render)
-    for i in range(0,self.rayon/2):
-      #print "Construction du modele... %i/%i\r" %(i+1, self.rayon*2),
-      #sys.stdout.flush()
-      geom = Geom(self.vdata)
-      if self.affichej>=self.rayon*2:
-        self.affichej=0
-        self.affichei+=1
-      if self.affichei>=self.rayon*2:
-        #print
-        #print "Compactage du modele"
-        #self.racineSol.flattenStrong()
-        self.affiche=self.finAffiche
-        #self.flatten()
-        return
-      prim = GeomTriangles(Geom.UHStatic)
-      if self.affichej<self.rayon*2-1 and self.affichei<self.rayon*2-1:
-        prim.addVertex(self.affichej+self.affichei*(self.rayon*2))
-        prim.addVertex(self.affichej+(self.affichei+1)*(self.rayon*2))
-        prim.addVertex(self.affichej+self.affichei*(self.rayon*2)+1)
-      prim.closePrimitive()
-      geom.addPrimitive(prim)
-      prim = GeomTriangles(Geom.UHStatic)
-      if self.affichej<self.rayon*2-1 and self.affichei<self.rayon*2-1:
-        prim.addVertex(self.affichej+(self.affichei+1)*(self.rayon*2))
-        prim.addVertex(self.affichej+(self.affichei+1)*(self.rayon*2)+1)
-        prim.addVertex(self.affichej+self.affichei*(self.rayon*2)+1)
-      prim.closePrimitive()
-      geom.addPrimitive(prim)
-      node = GeomNode('gnode')
-      node.addGeom(geom)
-      mdl = NodePath(node)
-      mdl.reparentTo(self.racineSol)
-      self.affichej+=1
-      
-  def finAffiche(self):
-    pass
-    
   def flatten(self):
     import time
     deb = time.time()
@@ -247,7 +134,7 @@ class Ville:
       if r!=None and obj!=route:
         Px=p1[0]+r*(p2[0]-p1[0])
         Py=p1[1]+r*(p2[1]-p1[1])
-        Pz=self.getAltitude(Vec3(Px,Py,0.0))
+        Pz=self.sol.getAltitude(Vec3(Px,Py,0.0))
         P = Px, Py, Pz
         d1 = (p1-P).lengthSquared()
         d2 = (p2-P).lengthSquared()
@@ -317,7 +204,7 @@ class Ville:
       
     i=0
     j=0
-    self.sol=[]
+    self.sol=Sol()
     fichier = open(fichier)
     for ligne in fichier:
       elements = ligne.strip().split(">")
@@ -329,16 +216,17 @@ class Ville:
         type = element.split("||")[0]
         parametres = element.split("||")[1:]
         if type.lower()=="s":
-          self.rayon = int(parametres[0])
+          self.sol.rayon = int(parametres[0])
         elif type.lower()=="t":
           if j==0:
-            self.sol.append([])
-          self.sol[-1].append(float(parametres[0]))
+            self.sol.sol.append([])
+          self.sol.sol[-1].append(float(parametres[0]))
           
           j+=1
-          if j>=self.rayon*2:
+          if j>=self.sol.rayon*2:
             j=0
             i+=1
+            print self.sol.sol[-1]
         elif type.lower()=="r":
           pointA, pointB, taille = parametres
           pointA=getCoord(pointA)
@@ -346,8 +234,8 @@ class Ville:
           taille=float(taille)
           if taille==1:
             taille=2
-          pointA[2]=self.getAltitude(pointA)+1.1
-          pointB[2]=self.getAltitude(pointB)+1.1
+          pointA[2]=self.sol.getAltitude(pointA)+1.1
+          pointB[2]=self.sol.getAltitude(pointB)+1.1
           if pointA not in self.points:
             self.points.append(pointA)
           if pointB not in self.points:
@@ -366,34 +254,14 @@ class Ville:
         else:
           print "inconnu", type, parametres
           raw_input()
+    self.sol.fabriqueVectrices()
           
-    self.minAlt = self.sol[0][0]
-    self.maxAlt = self.sol[0][0]
-    for i in range(0, self.rayon*2):
-      for j in range(0, self.rayon*2):
-        self.minAlt = min(self.minAlt, self.sol[i][j])
-        self.maxAlt = max(self.maxAlt, self.sol[i][j])
-        
-    print "Creation des vectrices..."
-    self.format = GeomVertexFormat.getV3c4()
-    self.vdata = GeomVertexData('TriangleVertices',self.format,Geom.UHStatic)
-    self.vWriter = GeomVertexWriter(self.vdata, 'vertex')
-    self.cWriter = GeomVertexWriter(self.vdata, 'color')
-            
-    for i in range(0, self.rayon*2):
-      for j in range(0, self.rayon*2):
-        self.vWriter.addData3f(i-self.rayon, j-self.rayon, self.sol[i][j])
-        c1 = (0.0,0.5,0.0,1.0)
-        if self.sol[i][j]<=0:
-          c1 = (0.0,0.1,0.5,1.0)
-        self.cWriter.addData4f(*c1)
-        
   def sauvegarde(self):
     fichier = open(self.fichierOut, "w")
-    fichier.write("S||%i>" %self.rayon)
-    for i in range(0, self.rayon*2):
-      for j in range(0, self.rayon*2):
-        fichier.write("T||%f>" %self.sol[i][j])
+    fichier.write("S||%i>" %self.sol.rayon)
+    for i in range(0, self.sol.rayon*2):
+      for j in range(0, self.sol.rayon*2):
+        fichier.write("T||%f>" %self.sol.sol[i][j])
 
     for route in self.routes:
       fichier.write(route.sauvegarde())
@@ -403,28 +271,20 @@ class Ville:
       
   def pointAlea(self, pt, delta=None):
     if delta==None:
-      delta = self.rayon
+      delta = self.sol.rayon*2
     out = None
     x,y,z = pt
-    autorise = min(random.random(), 0.9)*self.maxAlt
+    autorise = self.sol.altitudeMax
 
     while out==None:
      test = Vec3((random.random()*2-1)*delta+x, (random.random()*2-1)*delta+y, 0.0+z)
-     alt = self.getAltitude(test)
+     alt = self.sol.getAltitude(test)
      if alt>0.0:
-       if alt<=autorise:
+       if alt<autorise:
          test[2]=alt
          out = test
     return out
     
-  def getAltitude(self, pt):
-    x,y,z = pt
-    if x+self.rayon<0 or x+self.rayon>=self.rayon*2:
-      return -1000
-    if y+self.rayon<0 or y+self.rayon>=self.rayon*2:
-      return -1000
-    return self.sol[int(x)+self.rayon][int(y)+self.rayon]
-      
   def intersection(self, A, B, C, D):
     Ax, Ay, Az = A
     Bx, By, Bz = B
@@ -458,7 +318,7 @@ class Ville:
           
         Px=A[0]+r*(B[0]-A[0])
         Py=A[1]+r*(B[1]-A[1])
-        Pz=self.getAltitude(Vec3(Px, Py, 0.0))
+        Pz=self.sol.getAltitude(Vec3(Px, Py, 0.0))
         P = Vec3(Px, Py, Pz)
         d2 = (A-P).lengthSquared()
         if coll==None or d2<d:
@@ -512,7 +372,7 @@ class Ville:
     pas = 1.0/(B-A).length()*rayon
     Px=A[0]-5*(B[0]-A[0])
     Py=A[1]-5*(B[1]-A[1])
-    Pz=Pz=self.getAltitude(Vec3(Px,Py,0.0))
+    Pz=self.sol.getAltitude(Vec3(Px,Py,0.0))
     prev=Vec3(Px, Py, Pz)
     
     dx=B[0]-A[0]
@@ -532,23 +392,24 @@ class Ville:
       Cz = 0.0
       Px=A[0]+i*(B[0]-A[0])+n[0]*taille
       Py=A[1]+i*(B[1]-A[1])+n[1]*taille
-      Pz=self.getAltitude(Vec3(Px,Py,0.0))
+      Pz=self.sol.getAltitude(Vec3(Px,Py,0.0))
       if (Vec3(Px, Py, Pz)-prev).length()>3*rayon+dec:
         if Pz>0:#dec = random.random()*rayon*30
-          noeudColl = self.collisionBatimentBatiment(Vec3(Px, Py, Pz), taille)
-          if not noeudColl:
-            if not self.collisionBatimentLigne(Vec3(Px, Py, Pz), taille):
-              if random.random()>0.4:
-                cpt+=1
-                batiment = Batiment(Vec3(Px,Py,Pz), Vec3(Cx,Cy,Cz), taille, 1.0)
-                batiments.append(batiment)
-                self.batiments.append(batiment)
-          else:
-            facteur = min(0.2 * 600.0 / float(len(self.batiments)), 0.8)
-            facteur = max(0.1, facteur)
-            importance = noeudColl.importance
-            importance = importance + facteur
-            noeudColl.setImportance(importance)
+          if Pz<self.sol.altitudeMax:
+            noeudColl = self.collisionBatimentBatiment(Vec3(Px, Py, Pz), taille)
+            if not noeudColl:
+              if not self.collisionBatimentLigne(Vec3(Px, Py, Pz), taille):
+                if random.random()>0.4:
+                  cpt+=1
+                  batiment = Batiment(Vec3(Px,Py,Pz), Vec3(Cx,Cy,Cz), taille, 1.0)
+                  batiments.append(batiment)
+                  self.batiments.append(batiment)
+            else:
+              facteur = min(0.2 * 600.0 / float(len(self.batiments)), 0.8)
+              facteur = max(0.1, facteur)
+              importance = noeudColl.importance
+              importance = importance + facteur
+              noeudColl.setImportance(importance)
         prev=Vec3(Px, Py, Pz)
     return batiments
 
@@ -573,10 +434,10 @@ class Ville:
       while r<1.0:
         Px=A[0]+r*(B[0]-A[0])
         Py=A[1]+r*(B[1]-A[1])
-        if self.getAltitude(Vec3(Px,Py,0.0))<=0:
+        if self.sol.getAltitude(Vec3(Px,Py,0.0))<=0:
           Px=A[0]+prevR*(B[0]-A[0])
           Py=A[1]+prevR*(B[1]-A[1])
-          return Vec3(Px, Py, self.getAltitude(Vec3(Px,Py,0.0)))
+          return Vec3(Px, Py, self.sol.getAltitude(Vec3(Px,Py,0.0)))
         prevR=r
         r+=pas
     return None
@@ -598,18 +459,18 @@ class Ville:
       #else:
       #  print "trav"
         
-    if self.getAltitude(depart)<=0:
+    if self.sol.getAltitude(depart)<=0:
       return False
-    if self.getAltitude(arrivee)<=0:
+    if self.sol.getAltitude(arrivee)<=0:
       return False
 
-    if abs(depart[0])>self.rayon:
+    if abs(depart[0])>self.sol.rayon:
       return False
-    if abs(depart[1])>self.rayon:
+    if depart[1]>self.sol.rayon*2 or depart[1]<-self.sol.rayon:
       return False
-    if abs(arrivee[0])>self.rayon:
+    if abs(arrivee[0])>self.sol.rayon:
       return False
-    if abs(arrivee[1])>self.rayon:
+    if arrivee[1]>self.sol.rayon*2 or arrivee[1]<-self.sol.rayon:
       return False
       
     if (arrivee-depart).length()==0:
@@ -654,29 +515,30 @@ class Ville:
       else:
         direction.normalize()*self.longueurSegment
         plus=position+direction
-      position[2]=self.getAltitude(position)
-      plus[2]=self.getAltitude(plus)
+      position[2]=self.sol.getAltitude(position)
+      plus[2]=self.sol.getAltitude(plus)
 
-      if position[2]<=0:
-        if postMarine:
-          if longueurMarine<longueurMarineMin:
-            drop = True
-          if longueurMarine>longueurMarineMax:
-            drop = True
-          longueurMarine = 0
-          postMarine=False
-        position[2]=points[-1][2]
-        plus[2]=points[-1][2]
-        longueurMarine+=1
-      else:
-        batiments += self.ajouteBatiments(position, plus, 1) + self.ajouteBatiments(position, plus, -1)
-        cptBat += len(batiments)
-        if longueurMarine>0:
-          postMarine=True
-        
-      points.append(Vec3(*position))
-      taille = 2.0
-      routes.append(Route(position, plus, taille))
+      if position[2]<self.sol.altitudeMax:
+        if position[2]<=0:
+          if postMarine:
+            if longueurMarine<longueurMarineMin:
+              drop = True
+            if longueurMarine>longueurMarineMax:
+              drop = True
+            longueurMarine = 0
+            postMarine=False
+          position[2]=points[-1][2]
+          plus[2]=points[-1][2]
+          longueurMarine+=1
+        else:
+          batiments += self.ajouteBatiments(position, plus, 1) + self.ajouteBatiments(position, plus, -1)
+          cptBat += len(batiments)
+          if longueurMarine>0:
+            postMarine=True
+          
+        points.append(Vec3(*position))
+        taille = 2.0
+        routes.append(Route(Vec3(*position), Vec3(*plus), taille))
       position[2]=0.0
       plus[2]=0.0
       position = plus
@@ -743,7 +605,7 @@ class Ville:
       
   def pingCreation(self, task):
     self.pings+=1
-    self.affiche()
+    self.sol.affiche()
     self.ajouteRouteAlea()
     if len(self.batiments)>500:
       self.sauvegarde()
@@ -812,13 +674,16 @@ class Ville:
     nouvImportance = importance*0.95
     if nouvImportance>=1.0:
       for angle in range(0,360):
-        if random.random()>=0.5:
+        if random.random()>=0.33:
           tailleTeste = random.random()*1.0+0.5
-        direction = Vec3((taille+tailleTeste+0.005)*math.cos(float(angle)/180*math.pi), (taille+tailleTeste+0.005)*math.sin(float(angle)/180*math.pi), 0.0)
+        direction = 1.0
+        if random.random()>=0.5:
+          direction = -1.0
+        direction = direction * Vec3((taille+tailleTeste+0.005)*math.cos(float(angle)/180*math.pi), (taille+tailleTeste+0.005)*math.sin(float(angle)/180*math.pi), 0.0)
         newPos = position + direction
-        newPos[2]=self.getAltitude(newPos)
+        newPos[2]=self.sol.getAltitude(newPos)
         if newPos[2]>0:
-          if random.random()>0.05:
+          if random.random()>0.90:
             if not self.collisionBatimentBatiment(newPos, tailleTeste):
               if not self.collisionBatimentLigne(newPos, tailleTeste):
                 if self.pointPlusProche(newPos)[1]<=self.longueurSegment:
