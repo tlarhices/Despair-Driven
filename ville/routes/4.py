@@ -8,8 +8,8 @@ class DessinRoute(Type1):
     Type1.__init__(self)
 
   def filtre(self, routes):
-    return len(routes)==1
-    
+    return len(routes)==4
+
   def fabrique(self, routes):
     for route in routes:
       route.fabrique()

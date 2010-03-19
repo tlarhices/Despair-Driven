@@ -19,10 +19,10 @@ from batiment import Batiment
 from route import Route
 from quartier import Quartier
 from sol import Sol
+import general
 
 class Ville:
   points = None
-  rayon = None
   routes = None
   batiments = None
   longueurSegment = 4.0
@@ -30,10 +30,12 @@ class Ville:
   fichierIn = None
   fichierOut = None
   
-  def __init__(self, rayon=None, fichierIn=None, fichierOut=None, etape=0):
-    if not rayon and not fichierIn:
+  def __init__(self, taille=None, fichierIn=None, fichierOut=None, etape=0):
+    if not taille and not fichierIn:
       print "besoin de taille ou fichier"
       return
+      
+    general.filtresRoute = None
       
     self.fichierIn=fichierIn
     self.fichierOut=fichierOut
@@ -44,16 +46,12 @@ class Ville:
     
     self.sol=Sol()
     if fichierIn==None:
-      self.sol.genereSol(rayon)
-      while len(self.routes)==0:
-        p1 = self.pointAlea(Vec3(0.0,25.0,0.0))
-        p2 = self.pointAlea(Vec3(0.0,25.0,0.0))
-        v=p2-p1
-        v.normalize()
-        v=v*self.longueurSegment*2
-        p2=p1+v
-        self.points = []
-        self.ajouteRoute(p1, p2)
+      self.sol.genereSol(*taille)
+      A=self.ajouteCentre()
+      B=self.ajouteCentre()
+      C=self.ajouteCentre()
+      self.ajouteRoute(A,B,cptBatiments=False)
+      self.ajouteRoute(B,C,cptBatiments=False)
     else:
       self.charge(fichierIn)
 
@@ -70,6 +68,19 @@ class Ville:
     else:
       print "etape inconue", etape
       
+  def ajouteCentre(self):
+    tr = len(self.routes)
+    while len(self.routes)==tr:
+      print "Ajout d'un nouveau centre"
+      p1 = self.pointAlea(Vec3(random.randint(0, taille[0]-1),random.randint(0, taille[1]-1),0.0))
+      p2 = self.pointAlea(Vec3(random.randint(0, taille[0]-1),random.randint(0, taille[1]-1),0.0))
+      v=p2-p1
+      v.normalize()
+      v=v*self.longueurSegment*2
+      p2=p1+v
+      self.points = []
+      self.ajouteRoute(p1, p2)
+    return self.routes[tr].pointB
       
   idAfficheRoute = 0
   def afficheRoutes(self):
@@ -216,17 +227,26 @@ class Ville:
         type = element.split("||")[0]
         parametres = element.split("||")[1:]
         if type.lower()=="s":
-          self.sol.rayon = int(parametres[0])
+          self.sol.tailleX = int(parametres[0].split("$$")[0])
+          self.sol.tailleY = int(parametres[0].split("$$")[1])
         elif type.lower()=="t":
           if j==0:
             self.sol.sol.append([])
           self.sol.sol[-1].append(float(parametres[0]))
           
           j+=1
-          if j>=self.sol.rayon*3:
+          if j>=self.sol.tailleY:
             j=0
             i+=1
-            print self.sol.sol[-1]
+        elif type.lower()=="e":
+          if j==0:
+            self.sol.eau.append([])
+          self.sol.eau[-1].append(float(parametres[0]))
+          
+          j+=1
+          if j>=self.sol.tailleY:
+            j=0
+            i+=1
         elif type.lower()=="r":
           pointA, pointB, taille = parametres
           pointA=getCoord(pointA)
@@ -254,35 +274,68 @@ class Ville:
         else:
           print "inconnu", type, parametres
           raw_input()
+    print
+          
+    
+    if self.sol.eau==None or len(self.sol.eau)==0:
+      print "Recalcul de l'eau... "
+      self.sol.eau=[]
+      for i in range(0, self.sol.tailleX):
+        self.sol.eau.append([])
+        for j in range(0, self.sol.tailleY):
+          self.sol.eau[i].append(0.0)
+      self.sol.calculEau()
+
+    t = len(self.routes)
+    cpt=0
+    for route in self.routes:
+      cpt+=1
+      if cpt%5==1:
+        print "Creation des routes... %i/%i \r" %(cpt, t),
+      #route.hauteQualite(self)
+      route.fabrique()
+    print
     self.sol.fabriqueVectrices()
           
   def sauvegarde(self):
     fichier = open(self.fichierOut, "w")
-    fichier.write("S||%i>" %self.sol.rayon)
-    for i in range(0, self.sol.rayon*2):
-      for j in range(0, self.sol.rayon*3):
+    fichier.write("S||%i$$%i>" %(self.sol.tailleX, self.sol.tailleY))
+    for i in range(0, self.sol.tailleX):
+      for j in range(0, self.sol.tailleY):
         fichier.write("T||%f>" %self.sol.sol[i][j])
+    for i in range(0, self.sol.tailleX):
+      for j in range(0, self.sol.tailleY):
+        fichier.write("E||%f>" %self.sol.eau[i][j])
 
     for route in self.routes:
       fichier.write(route.sauvegarde())
     for batiment in self.batiments:
       fichier.write(batiment.sauvegarde())
     fichier.close()
-      
+    
   def pointAlea(self, pt, delta=None):
+    import time
+    deb=time.time()
     if delta==None:
-      delta = self.sol.rayon*2
+      deltaX = self.sol.tailleX
+      deltaY = self.sol.tailleY
+    else:
+      deltaX = delta
+      deltaY = delta
     out = None
     x,y,z = pt
     autorise = self.sol.altitudeMax
 
+    test=0
+
     while out==None:
-     test = Vec3((random.random()*2-1)*delta+x, (random.random()*2-1)*delta+y, 0.0+z)
-     alt = self.sol.getAltitude(test)
-     if alt>0.0:
-       if alt<autorise:
-         test[2]=alt
-         out = test
+      test+=1
+      test = Vec3((random.random()*2-1)*deltaX+x, (random.random()*2-1)*deltaY+y, 0.0+z)
+      test[2] = self.sol.getAltitude(test)
+      if self.sol.pointValide(test):
+        out = test
+        if time.time()-deb>3:
+          return Vec3(-10000,-10000,-10000)
     return out
     
   def intersection(self, A, B, C, D):
@@ -392,25 +445,26 @@ class Ville:
       Cz = 0.0
       Px=A[0]+i*(B[0]-A[0])+n[0]*taille
       Py=A[1]+i*(B[1]-A[1])+n[1]*taille
-      Pz=self.sol.getAltitude(Vec3(Px,Py,0.0))
-      if (Vec3(Px, Py, Pz)-prev).length()>3*rayon+dec:
-        if Pz>0:#dec = random.random()*rayon*30
-          if Pz<self.sol.altitudeMax:
-            noeudColl = self.collisionBatimentBatiment(Vec3(Px, Py, Pz), taille)
+      point = Vec3(Px,Py,0.0)
+      point[2]=self.sol.getAltitude(point)
+      
+      if (point-prev).length()>3*rayon+dec:
+        if self.sol.pointValide(point):
+            noeudColl = self.collisionBatimentBatiment(point, taille)
             if not noeudColl:
-              if not self.collisionBatimentLigne(Vec3(Px, Py, Pz), taille):
+              if not self.collisionBatimentLigne(point, taille):
                 if random.random()>0.4:
                   cpt+=1
-                  batiment = Batiment(Vec3(Px,Py,Pz), Vec3(Cx,Cy,Cz), taille, 1.0)
+                  batiment = Batiment(point, Vec3(Cx,Cy,Cz), taille, 1.0)
                   batiments.append(batiment)
                   self.batiments.append(batiment)
             else:
-              facteur = min(0.2 * 600.0 / float(len(self.batiments)), 0.8)
-              facteur = max(0.1, facteur)
+              facteur = min(0.2 * 6.0 / float(len(self.batiments)), 0.8)
+              facteur = max(0.0, facteur)
               importance = noeudColl.importance
               importance = importance + facteur
               noeudColl.setImportance(importance)
-        prev=Vec3(Px, Py, Pz)
+        prev=point
     return batiments
 
   def continueRoute(self, route, versFin):
@@ -422,7 +476,7 @@ class Ville:
       origine = route[0]
     vecteurRoute[0] = vecteurRoute[0]+(random.random()-0.5)/2
     vecteurRoute[1] = vecteurRoute[1]+(random.random()-0.5)/2
-    cible = self.pointAlea(origine+vecteurRoute)
+    cible = self.pointAlea(origine+vecteurRoute, delta=None)
     return self.ajouteRoute(origine, cible)
     
   def intersectionEau(self, A, B):
@@ -459,18 +513,14 @@ class Ville:
       #else:
       #  print "trav"
         
-    if self.sol.getAltitude(depart)<=0:
+    if self.sol.estEau(depart):
       return False
-    if self.sol.getAltitude(arrivee)<=0:
+    if self.sol.estEau(arrivee):
       return False
 
-    if abs(depart[0])>self.sol.rayon:
+    if not self.sol.pointValide(depart, testeEau=False):
       return False
-    if depart[1]>self.sol.rayon*2 or depart[1]<-self.sol.rayon:
-      return False
-    if abs(arrivee[0])>self.sol.rayon:
-      return False
-    if arrivee[1]>self.sol.rayon*2 or arrivee[1]<-self.sol.rayon:
+    if not self.sol.pointValide(arrivee, testeEau=False):
       return False
       
     if (arrivee-depart).length()==0:
@@ -519,7 +569,7 @@ class Ville:
       plus[2]=self.sol.getAltitude(plus)
 
       if position[2]<self.sol.altitudeMax:
-        if position[2]<=0:
+        if self.sol.estEau(position):
           if postMarine:
             if longueurMarine<longueurMarineMin:
               drop = True
@@ -527,8 +577,8 @@ class Ville:
               drop = True
             longueurMarine = 0
             postMarine=False
-          position[2]=points[-1][2]
-          plus[2]=points[-1][2]
+          position[2]+=1.0#points[-1][2]
+          plus[2]+=1.0#points[-1][2]
           longueurMarine+=1
         else:
           batiments += self.ajouteBatiments(position, plus, 1) + self.ajouteBatiments(position, plus, -1)
@@ -555,7 +605,8 @@ class Ville:
       self.points+=points
       self.routes+=routes
       for route in routes:
-        route.fabrique()
+        #route.fabrique()
+        route.hauteQualite(self)
     return True
     
   heurePing = None
@@ -614,7 +665,7 @@ class Ville:
   lastPing = None
   def pingChargement(self, task):
     self.pings+=1
-    self.affiche()
+    self.sol.affiche()
     if self.lastPing==None:
       self.lastPing=time.time()
     if time.time()>self.lastPing:
@@ -630,7 +681,7 @@ class Ville:
     self.pings+=1
     if self.pings==1:
       print "TODO : pingModeleRoutes"
-    self.affiche()
+    self.sol.affiche()
     self.afficheRoutes()
     random.choice(self.routes).hauteQualite(self)
     if self.pings%60==0:
@@ -641,7 +692,7 @@ class Ville:
     self.pings+=1
     if self.pings==1:
       print "TODO : pingModeleBatiments"
-    self.affiche()
+    self.sol.affiche()
     if self.pings%60==0:
       self.sauvegarde()
     return task.cont
@@ -650,7 +701,7 @@ class Ville:
     self.pings+=1
     if self.pings==1:
       print "TODO : pingModeleSol"
-    self.affiche()
+    self.sol.affiche()
     if self.pings%60==0:
       self.sauvegarde()
     return task.cont
@@ -658,11 +709,17 @@ class Ville:
   posBat = 0
   passeBat = 0
   ajoutBatPasse = 0
+  listeBatiments = None
   def concentreBatiments(self):
-    if self.posBat>=len(self.batiments):
+    if self.listeBatiments==None:
+      self.listeBatiments = self.batiments[:]
+      random.shuffle(self.listeBatiments)
+    if self.posBat>=len(self.listeBatiments):
       self.posBat = 0
       self.passeBat += 1
       self.ajoutBatPasse = 0
+      self.listeBatiments = self.batiments[:]
+      random.shuffle(self.listeBatiments)
     print "[%i-%i] Batiments, %i nouveaux batiments ajoutes pour un total de %i\r" %(self.passeBat, self.posBat+1, self.ajoutBatPasse, len(self.batiments)),
     batiment = self.batiments[self.posBat]
     position = batiment.position
@@ -679,7 +736,7 @@ class Ville:
         direction = 1.0
         if random.random()>=0.5:
           direction = -1.0
-        direction = direction * Vec3((taille+tailleTeste+0.005)*math.cos(float(angle)/180*math.pi), (taille+tailleTeste+0.005)*math.sin(float(angle)/180*math.pi), 0.0)
+        direction = Vec3((taille+tailleTeste+0.005)*math.cos(float(angle)/180*math.pi), (taille+tailleTeste+0.005)*math.sin(float(angle)/180*math.pi), 0.0) * direction
         newPos = position + direction
         newPos[2]=self.sol.getAltitude(newPos)
         if newPos[2]>0:
@@ -694,7 +751,7 @@ class Ville:
 
 #base.setBackgroundColor(40.0/255, 169.0/255, 12.0/255)
 
-if len(sys.argv) != 4:
+def printUsage():
   print "Parametres invalides, essayez :"
   print "ville.py 0 rayon fichierOut"
   print "ou"
@@ -707,21 +764,28 @@ if len(sys.argv) != 4:
   print "4 (todo) - modelisation des batiments"
   print "5 (todo) - modelisation du sol"
   sys.exit()
-dlight = PointLight('my dlight')
-dlnp = render.attachNewNode(dlight)
-dlnp.setPos(0, 0, 30)
-render.setLight(dlnp)
+if len(sys.argv) == 1:
+  printUsage()
+if len(sys.argv) != 4 and not (len(sys.argv)==5 and sys.argv[1]=="0"):
+  printUsage()
+
 etape = int(sys.argv[1])
 if etape==0:
-  rayon=int(sys.argv[2])
+  taille=int(sys.argv[2]), int(sys.argv[3])
   fichierIn=None
+  fichierOut=sys.argv[4]
 else:
-  rayon=None
+  taille=None
   fichierIn=sys.argv[2]
-
-fichierOut=sys.argv[3]
+  fichierOut=sys.argv[3]
   
-ville=Ville(rayon=rayon, fichierIn=fichierIn, fichierOut=fichierOut, etape=etape)
+ville=Ville(taille=taille, fichierIn=fichierIn, fichierOut=fichierOut, etape=etape)
+dlight = PointLight('my dlight')
+dlnp = render.attachNewNode(dlight)
+ville.sol.getMinMax()
+dlnp.setPos(ville.sol.tailleX/2, ville.sol.tailleY/2, ville.sol.altitudeMax*1.5)
+render.setLight(dlnp)
+
 taskMgr.add(ville.ping, 'PingVille')
 base.accept('a-repeat', ville.chercheQuartiers)
 run()

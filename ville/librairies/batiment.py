@@ -13,8 +13,8 @@ class Batiment:
   racine = None
   
   def __init__(self, position, orientation, taille, importance):
-    self.position = position
-    self.orientation = orientation
+    self.position = Vec3(*position)
+    self.orientation = Vec3(*orientation)
     self.taille = taille
     self.importance = importance
     self.jardin = None
@@ -26,15 +26,15 @@ class Batiment:
     if self.racine!=None:
       self.supprime()
     self.racine = NodePath("")
-    self.batiment = loader.loadModel("box.egg")
+    self.batiment = loader.loadModel("modeles/box.egg")
     Px, Py, Pz = self.position
     self.racine.setPos(Px, Py, Pz)
-    self.batiment.setPos(-0.5,-0.5,-0.5)
+    self.batiment.setPos(-0.5,-0.5,0.0)
     self.batiment.reparentTo(self.racine)
     #mdl.setColor(random.random()/2, random.random()/2, random.random()/2)
     self.batiment.setColor(0.5, 0.5, 0.5)
     self.batiment.setScale(self.taille*(random.random()/2+0.5), self.taille*(random.random()/2+0.5), self.importance)
-    self.sol = loader.loadModel("box.egg")
+    self.sol = loader.loadModel("modeles/box.egg")
     self.sol.setScale(self.taille, self.taille*1.5, 0.001)
     self.sol.setColor(30.0/255, 159.0/255, 02.0/255)
     self.sol.setPos(-0.5,-0.5,0.0)

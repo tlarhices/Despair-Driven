@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from pandac.PandaModules import *
 import random
+import general
 
 class Route:
   pointA = None
@@ -30,6 +31,9 @@ class Route:
     self.getFiltres()
     
   def getFiltres(self):
+    if general.filtresRoute!=None:
+      self.filtres = general.filtresRoute[:]
+      return
     self.filtres=[]
     import sys, os
     sys.path.append(os.path.join(".","routes"))
@@ -41,6 +45,7 @@ class Route:
           self.filtres.append(_temp.DessinRoute)
         except AttributeError:
           print "Avertissement :: ",os.path.join(".","routes",fichier),"n'est pas un plugin de dessin de route valide"
+    general.filtresRoute = self.filtres[:]
     
   def fabrique(self):
     if self.racine!=None:
@@ -91,41 +96,52 @@ class Route:
     return nA, nB
     
   def hauteQualite(self, ville):
-    routes = []
-    cptA=0
-    cptB=0
+    
+    routesA = []
+    routesB = []
     for route in ville.routes:
-      if tuple(route.pointA)==tuple(self.pointA):
-        routes.append(route)
-        cptA+=1
-      if tuple(route.pointB)==tuple(self.pointA):
-        routes.append(route)
-        cptA+=1
-      if tuple(route.pointA)==tuple(self.pointB):
-        routes.append(route)
-        cptB+=1
-      if tuple(route.pointB)==tuple(self.pointB):
-        routes.append(route)
-        cptB+=1
-    while self in routes:
-      routes.remove(self)
-      
-    filtresValides = []
+      if tuple(self.pointA) in route.getCoordTuple():
+        routesA.append(route)
+      if tuple(self.pointB) in route.getCoordTuple():
+        routesB.append(route)
+
+    self.getFiltres()
+    filtresValidesA = []
+    filtresValidesB = []
     for filtre in self.filtres:
       filtre=filtre()
-      if filtre.filtre(routes, cptA, cptB):
-        filtresValides.append(filtre)
-    if len(filtresValides)==0:
-      print "Configuration non geree :", len(routes), cptA, cptB
-      return self.fabrique()
+      if filtre.filtre(routesA):
+        filtresValidesA.append(filtre)
+      if filtre.filtre(routesB):
+        filtresValidesB.append(filtre)
+    if len(filtresValidesA)==0:
+      print "Configuration non geree :", len(routesA)
+
+      import os
+      fichPlug = open(os.path.join(".","routes","%i.py" %(len(routesA))), "w")
+      fichPlug.write(self.textePluginVide(routesA))
+      fichPlug.close()
+      self.fabrique()
     else:
-      filtre=random.choice(filtresValides)
-      filtre.fabrique(self, routes, cptA, cptB)
+      filtre=random.choice(filtresValidesA)
+      filtre.fabrique(routesA)
+    if len(filtresValidesB)==0:
+      print "Configuration non geree :", len(routesB)
+
+      import os
+      fichPlug = open(os.path.join(".","routes","%i.py" %(len(routesB))), "w")
+      fichPlug.write(self.textePluginVide(routesB))
+      fichPlug.close()
+      self.fabrique()
+    else:
+      filtre=random.choice(filtresValidesB)
+      filtre.fabrique(routesB)
     self.ajouteLampadaires()
+    self.racine.setPos(self.racine, 0.0,0.0,1.1)
     
   def ajouteLampadaires(self):
     for lampadaire in self.lampadaires:
-      mdl = loader.loadModel("sphere.egg")
+      mdl = loader.loadModel("modeles/sphere.egg")
       #mdl.setPos(-0.5,-0.5,0.0)
       mdl.setScale(0.005,0.005,0.2)
       mdl.reparentTo(lampadaire)
@@ -145,6 +161,33 @@ class Route:
   def getCoord(self):
     return self.pointA, self.pointB
     
+  def getCoordTuple(self):
+    return tuple(self.pointA), tuple(self.pointB)
+    
+  def pointCentre(self):
+    return (self.pointA+self.pointB)/2
+
   def sauvegarde(self):
     out = "R||%s||%s||%f>" %(str(list(self.pointA)), str(list(self.pointB)), self.taille)
     return out
+
+  def textePluginVide(self, routes):
+    #Force le reparcours des dossier de plugins
+    general.filtresRoute = None
+    #Cree un plugin vide
+    texte  = "#!/usr/bin/env python\n"
+    texte += "# -*- coding: utf-8 -*-\n"
+    texte += "from pandac.PandaModules import *\n"
+    texte += "from type1 import DessinRoute as Type1\n"
+    texte += "\n"
+    texte += "class DessinRoute(Type1):\n"
+    texte += "  def __init__(self):\n"
+    texte += "    Type1.__init__(self)\n"
+    texte += "\n"
+    texte += "  def filtre(self, routes):\n"
+    texte += "    return len(routes)==%i\n" %(len(routes))
+    texte += "\n"
+    texte += "  def fabrique(self, routes):\n"
+    texte += "    for route in routes:\n"
+    texte += "      route.fabrique()\n"
+    return texte

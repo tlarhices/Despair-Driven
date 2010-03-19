@@ -3452,7 +3452,7 @@ Politicien
 \begin_layout Standard
 Note : 
 \color green
-Cette couleur sera utilisée pour l'histoire si le joueur a décide de laisser
+Cette couleur sera utilisée pour l'histoire si le joueur a décidé de laisser
  Takashi chez les militaires
 \color inherit
 .
@@ -3523,10 +3523,10 @@ Ils partent tous les deux au milieu des ruines de l'aile de l'hôpital et
  Takashi doit aider le politicien à escalader les grilles, se glisser dans
  les appartements délabrés et forcer quelques ouvertures qui ont étés bouchées
  par des planches.
- De l'autre cote du quartier commence un escalier metalique rouille qui
+ De l'autre cote du quartier commence un escalier métallique rouille qui
  serpente le long du mur.
- Takashi regarde sa carte aa la recherche d'un autre itineraire.
- L'acces suivant le plus proche demande a faire un grand detour.
+ Takashi regarde sa carte à la recherche d'un autre itinéraire.
+ L'accès suivant le plus proche demande a faire un grand détour.
 \end_layout
 
 \begin_layout Standard
@@ -3803,7 +3803,7 @@ Takashi
 \begin_layout Standard
 
 \color blue
-Ils se dirigent vers les moines vendant des porte bonheurs vers l'entree
+Ils se dirigent vers les moines vendant des porte bonheurs vers l'entrée
  du temple.
  Alors qu'ils traversent la foule pour tenter d'atteindre le stand, un des
  moine fait signe.
@@ -3836,7 +3836,7 @@ Homme
 \begin_layout Standard
 
 \color blue
-Il leur ouvre la porte et les fait entrer dans l'arriere boutique.
+Il leur ouvre la porte et les fait entrer dans l'arrière boutique.
 \end_layout
 
 \begin_layout Standard
@@ -3846,7 +3846,7 @@ Il leur ouvre la porte et les fait entrer dans l'arriere boutique.
 Homme
 \emph default
  : Il est plus facile de parler ici.
- Vous avez ete envoye par Tetsuo, non ?
+ Vous avez été envoyé par Tetsuo, non ?
 \end_layout
 
 \begin_layout Standard
@@ -3864,8 +3864,8 @@ Takashi
 \color blue
 Homme
 \emph default
- : J'ai reconnut votre uniforme, vous etes de la meme unite que lui.
- De plus vous ressemblez parfaitement aa votre description.
+ : J'ai reconnut votre uniforme, vous êtes de la même unité que lui.
+ De plus vous ressemblez parfaitement à votre description.
 \end_layout
 
 \begin_layout Standard
@@ -3919,7 +3919,7 @@ major
 \begin_layout Standard
 
 \color blue
-Son visage ridee prend une expression amusee.
+Son visage ridé prend une expression amusée.
 \end_layout
 
 \begin_layout Standard
@@ -3934,7 +3934,7 @@ Takashi
 \begin_layout Standard
 
 \color blue
-L'homme revient aa lui et la coupe.
+L'homme revient à lui et la coupe.
 \end_layout
 
 \begin_layout Standard
@@ -3943,7 +3943,7 @@ L'homme revient aa lui et la coupe.
 \color blue
 Homme
 \emph default
- : Je l'ai connut quand il etait tout petit...
+ : Je l'ai connut quand il était tout petit...
  Vous vouliez dire ?
 \end_layout
 
@@ -3962,15 +3962,14 @@ Takashi
 \color blue
 Homme
 \emph default
- : Les Dieux nous protegent.
- Lors de la seconde guerre mondiale deja, la ville fut rasee lors des bombardeme
-nts, mais ce sanctuaire a resiste.
- C'est pour ca que tous ces gens viennent ici.
- Ils savent qu'ils sont en securite.
- Pardonnez-moi, je suis XY.
- Et je suis le responsable de ce sanctuaire, continuant la lignee de ma
- famille.
- Et vous etes ?
+ : Les Dieux nous protègent.
+ Lors de la seconde guerre mondiale déjà, la ville fut rasée lors des bombardeme
+nts, mais ce sanctuaire a résisté.
+ C'est pour çà que tous ces gens viennent ici.
+ Ils savent qu'ils sont en sécurité.
+ Pardonnez-moi, je suis Kugyo Minamoto, le responsable de ce sanctuaire,
+ continuant la lignée de ma famille.
+ Et vous êtes ?
 \end_layout
 
 \begin_layout Standard
@@ -3985,7 +3984,7 @@ Politicien
 \begin_layout Standard
 
 \color blue
-Il est coupee par Takashi.
+Il est coupé par Takashi.
 \end_layout
 
 \begin_layout Standard
@@ -3994,13 +3993,13 @@ Il est coupee par Takashi.
 \color blue
 Takashi
 \emph default
- : Pourquoi est-ce que le major m'a envoyee ici ?
+ : Pourquoi est-ce que le major m'a envoyé ici ?
 \end_layout
 
 \begin_layout Standard
 
 \color blue
-Le politicien est vexee de s'etre fait couper, mais la conversation continue.
+Le politicien est vexé de s'être fait couper, mais la conversation continue.
 \end_layout
 
 \begin_layout Standard
@@ -4009,8 +4008,8 @@ Le politicien est vexee de s'etre fait couper, mais la conversation continue.
 \color blue
 Homme
 \emph default
- : Peut-etre voulait-il vous voir prier dans ce sanctuaire.
- Mais principalement car il vous a laissee...
+ : Peut-être voulait-il vous voir prier dans ce sanctuaire.
+ Mais principalement car il vous a laissé...
  un message dirons nous.
 \end_layout
 
@@ -4026,17 +4025,17 @@ L'homme prend un vieux porte document et une lettre.
 \color blue
 Homme
 \emph default
- : J'ai gardee ce dossier pendant je ne sais combien de temps, Tetsuo...
- le Major m'a demandee de vous le donner ainsi que ce message.
+ : J'ai gardé ce dossier pendant je ne sais combien de temps, Tetsuo...
+ le Major m'a demandé de vous le donner ainsi que ce message.
 \end_layout
 
 \begin_layout Standard
 
 \color blue
 Takashi prend les documents, tourne l'enveloppe sans marque distinctive.
- Elle regarde le dossier pourrsiereux.
- Elle revient aa l'enveloppe, l'ouvre et retire la page.
- Cette derniere contient des lettres sans aucun sens ecrit sur un papier
+ Elle regarde le dossier poussiéreux.
+ Elle revient à l'enveloppe, l'ouvre et retire la page.
+ Cette dernière contient des lettres sans aucun sens écrit sur un papier
  a petits carreaux.
  Le politicien se penche pour regarder.
 \end_layout
@@ -4047,7 +4046,7 @@ Takashi prend les documents, tourne l'enveloppe sans marque distinctive.
 \color blue
 Politicien
 \emph default
- : On va pas aller loin avec ca !
+ : On va pas aller loin avec ça !
 \end_layout
 
 \begin_layout Standard
@@ -4056,15 +4055,15 @@ Politicien
 \color blue
 Takashi
 \emph default
- : Il y a une universite proche d'ici, quel est le meilleur moyen d'y aller
+ : Il y a une université proche d'ici, quel est le meilleur moyen d'y aller
  ?
 \end_layout
 
 \begin_layout Standard
 
 \color blue
-Le politicien la regarde surpris alros qu'elle prend sa carte et la tend
- aa l'homme.
+Le politicien la regarde surpris alors qu'elle prend sa carte et la tend
+ à l'homme.
 \end_layout
 
 \begin_layout Standard
@@ -4080,7 +4079,7 @@ Homme
 \begin_layout Standard
 
 \color blue
-Une voix dans la boutique lui repond et des bruits de pas se rapprochent.
+Une voix dans la boutique lui répond et des bruits de pas se rapprochent.
  Un jeune homme entre.
 \end_layout
 
@@ -4090,7 +4089,7 @@ Une voix dans la boutique lui repond et des bruits de pas se rapprochent.
 \color blue
 Suzuki
 \emph default
- : Oui maitre ?
+ : Oui maître ?
 \end_layout
 
 \begin_layout Standard
@@ -4099,7 +4098,7 @@ Suzuki
 \color blue
 Homme
 \emph default
- : Si tu devais aller aa l'universite maintenant, quel chemin prendrais-tu
+ : Si tu devais aller à l'université maintenant, quel chemin prendrais-tu
  ?
 \end_layout
 
@@ -4125,7 +4124,7 @@ Homme
 \begin_layout Standard
 
 \color blue
-Suzuki reflechit, Takashi casse le scellee du porte document et en retire
+Suzuki réfléchit, Takashi casse le scellé du porte document et en retire
  un paquet de papier jaunit par le temps.
  Elle regarde la couverture.
 \end_layout
@@ -4143,7 +4142,7 @@ Suzuki reflechit, Takashi casse le scellee du porte document et en retire
 
 \emph on
 \color blue
-Resultats de comission d'enquete
+Résultats de commission d'enquête
 \end_layout
 
 \begin_layout Standard
@@ -4157,30 +4156,30 @@ Sujet : Contacts avec d'autres puissances.
 
 \emph on
 \color blue
-Membres de la comission : [cette partie a ete effacee par du marqueur noir]
+Membres de la commission : [cette partie a été effacée par du marqueur noir]
 \end_layout
 
 \begin_layout Standard
 
 \emph on
 \color blue
-But : Definir les protocoles a suivre dans l'eventualite d'une confrontation
- avec une ou plusieures surpuissances inconnues.
+But : Définir les protocoles a suivre dans l'éventualité d'une confrontation
+ avec une ou plusieurs sur-puissances inconnues.
 \end_layout
 
 \begin_layout Standard
 
 \emph on
 \color blue
-[Ajout via un tampon] Addendum : [Ecrit a la main] Problemes de congruence
- (TODO verifier le mot exact)
+[Ajout via un tampon] Addendum : [Écrit a la main] Problèmes de congruente
+ (TODO vérifier le mot exact)
 \end_layout
 
 \begin_layout Standard
 
 \emph on
 \color blue
-Date : [cette partie a ete effacee par du marqueur noir]
+Date : [cette partie a été effacée par du marqueur noir]
 \end_layout
 
 \begin_layout Standard
@@ -4198,7 +4197,7 @@ Date : [cette partie a ete effacee par du marqueur noir]
 \color blue
 Suzuki
 \emph default
- : Le plus rapide serait de prendre la ruelle derriere le hall, d'escalader
+ : Le plus rapide serait de prendre la ruelle derrière le hall, d'escalader
  le chemin qui part de la torii sur la droite, de continuer a travers le
  bosquet et ensuite sauter dans le jardin pub...
 \end_layout
@@ -4218,7 +4217,7 @@ Takashi
 \color blue
 Suzuki
 \emph default
- : Bien suur.
+ : Bien sûr.
 \end_layout
 
 \begin_layout Standard
@@ -4233,15 +4232,15 @@ Il s'approche de la table et prend un crayon.
 \color blue
 Suzuki
 \emph default
- : Le sanctuaire est ici, le hall c'est le batiment suivant, ici.
- Vous suivee cette allee jusqu'aa la torii qui se situe ici.
+ : Le sanctuaire est ici, le hall c'est le bâtiment suivant, ici.
+ Vous suivez cette allée jusqu'à la torii qui se situe ici.
  Il va y avoir un chemin qui part par ici (il trace le chemin sur la carte)
  et qui arrive a ce jardin publique.
- Ensuite vous prenez cette allee et vous aller arriver contre la cloture
- arriere de l'universite.
+ Ensuite vous prenez cette allée et vous aller arriver contre la clôture
+ arrière de l'université.
  Le portail le plus proche est ici.
- Il n'y a pas de batiments dans cette partie, faites attention ici, c'est
- marecageux.
+ Il n'y a pas de bâtiments dans cette partie, faites attention ici, c'est
+ marécageux.
  Vous allez ou ?
 \end_layout
 
@@ -4252,7 +4251,7 @@ Suzuki
 Takashi
 \emph default
  : Laboratoire...
- (elle regarde la lettre) laboratoire Oono departement de physique.
+ (elle regarde la lettre) laboratoire Oono département de physique.
 \end_layout
 
 \begin_layout Standard
@@ -4261,7 +4260,7 @@ Takashi
 \color blue
 Suzuki
 \emph default
- : Vous avez de la chance, c'est juste ce batiment laa.
+ : Vous avez de la chance, c'est juste ce bâtiment là.
  Je ne connais pas ce laboratoire par contre.
 \end_layout
 
@@ -4271,7 +4270,7 @@ Suzuki
 \color blue
 Takashi
 \emph default
- : Ils travaillent sur un dephaseur quantique.
+ : Ils travaillent sur un déphaseur quantique.
 \end_layout
 
 \begin_layout Standard
@@ -4281,7 +4280,7 @@ Takashi
 Suzuki
 \emph default
  : Physique quantique...
- aucune idee.
+ aucune idée.
 \end_layout
 
 \begin_layout Standard
@@ -4309,16 +4308,16 @@ Politicien
 \color blue
 Takashi
 \emph default
- : Vous pouvez rester ici, il n'y a pas plus suur qu'un lieu qui a la protectin
+ : Vous pouvez rester ici, il n'y a pas plus sûr qu'un lieu qui a la protection
  des Dieux.
 \end_layout
 
 \begin_layout Standard
 
 \color blue
-Elle se leve, salue et sort de la boutique.
- Elle contourne le hall et prend l'allee, des pas presses se font entendre
- derriere elle.
+Elle se lève, salue et sort de la boutique.
+ Elle contourne le hall et prend l'allée, des pas pressés se font entendre
+ derrière elle.
 \end_layout
 
 \begin_layout Standard
@@ -4345,7 +4344,7 @@ Takashi
 \color blue
 Politicien
 \emph default
- : Non ! Je peux vous etre utile !
+ : Non ! Je peux vous être utile !
 \end_layout
 
 \begin_layout Standard
@@ -4406,7 +4405,7 @@ Takashi
 \color blue
 Politicien
 \emph default
- : Vous arrivez aa lire ca comment ?
+ : Vous arrivez à lire ça comment ?
 \end_layout
 
 \begin_layout Standard
@@ -4415,9 +4414,9 @@ Politicien
 \color blue
 Takashi
 \emph default
- : Ce code est extremement facile, on ne s'en sert que lorsque que l'on
- veut cacher des informations aux yeux des civiles mais ca ne tiendra pas
- 5 secondes face aa un cryptologue.
+ : Ce code est extrêmement facile, on ne s'en sert que lorsque que l'on
+ veut cacher des informations aux yeux des civiles mais ça ne tiendra pas
+ 5 secondes face à un cryptologue.
 \end_layout
 
 \begin_layout Standard
@@ -4444,7 +4443,7 @@ Takashi
 \color blue
 Politicien
 \emph default
- : Je ne peut pas aider si jai pas toutes les infos.
+ : Je ne peut pas aider si j'ai pas toutes les info.
 \end_layout
 
 \begin_layout Standard
@@ -4455,8 +4454,8 @@ Takashi
 \emph default
  : ...
  OK.
- Nous devons aller au laboratoire Oono, aile de physique de l'universitee
- pour y prendre un dephaseur quantique.
+ Nous devons aller au laboratoire Oono, aile de physique de l'université
+ pour y prendre un déphaseur quantique.
 \end_layout
 
 \begin_layout Standard
@@ -4465,7 +4464,7 @@ Takashi
 \color blue
 Politicien
 \emph default
- : Un demarreur antique ?
+ : Un démarreur antique ?
 \end_layout
 
 \begin_layout Standard
@@ -4474,7 +4473,7 @@ Politicien
 \color blue
 Takashi
 \emph default
- : Non, un dephaseur quantique.
+ : Non, un déphaseur quantique.
 \end_layout
 
 \begin_layout Standard
@@ -4492,7 +4491,7 @@ Politicien
 \color blue
 Takashi
 \emph default
- : Aucune idee.
+ : Aucune idée.
 \end_layout
 
 \begin_layout Standard
@@ -4510,7 +4509,7 @@ Politicien
 \color blue
 Takashi
 \emph default
- : J'espere que ce sera ecrit dessus.
+ : J'espère que ce sera écrit dessus.
 \end_layout
 
 \begin_layout Standard
@@ -4521,6 +4520,24 @@ Politicien
 \emph default
  : Superbe plan...
  Et ensuite ?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\color blue
+Takashi 
+\emph default
+: Ensuite on efface nos traces et on va au point de rendez-vous.
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+Ils suivent le chemin que Suzuki leur a indiqué, le chemin suit le versant
+ d'une colline, en temps normal cette promenade doit être plaisante, mais
+ l'attaque a endommagé grandement le terrain et le bâtiments alentours,
+ des arbres sont tombés sur le chemin.
 \end_layout
 
 \begin_layout Standard
