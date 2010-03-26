@@ -124,7 +124,7 @@ class Route:
     self.racine = NodePath("00")
     ligne = LineSegs()
     dic=min(self.ville.tailleX, self.ville.tailleY)
-    ligne.setColor(self.distanceDepuisDernierCroisement()/dic,0.0,0.0)
+    ligne.setColor(0.0,0.0,0.0) #self.distanceDepuisDernierCroisement()/dic
     ligne.setThickness(self.taille);
     ligne.moveTo(self.pointA)
     ligne.drawTo(self.pointB)
@@ -162,13 +162,13 @@ class Route:
       
     pA, pB = random.choice(valides)
 
-    distance = self.distanceDepuisDernierCroisement()
+    """distance = self.distanceDepuisDernierCroisement()
     do = distance
     if distance<100000:
       dic=min(self.ville.tailleX, self.ville.tailleY)*2
       distance = (distance/dic)/2
     else:
-      distance = 0.05
+      distance = 0.05"""
       
     choixType = random.random()*100
     if choixType>self.ville.chanceSplit:#10:#1.0/(distance/dic):
@@ -257,6 +257,50 @@ class Route:
 
   def affiche(self):
     print self.pointA, self.pointB, self.getAngle()
+    
+class Quartier:
+  def __init__(self, zones):
+    poly = self.zonesVersPoly(zones)
+    
+  def zonesVersPoly(self, zones):
+    points = []
+    for zone in zones:
+      minx = min(zone[0][0], zone[1][0])
+      maxx = max(zone[0][0], zone[1][0])
+      miny = min(zone[0][1], zone[1][1])
+      maxy = max(zone[0][1], zone[1][1])
+      points.append(Point3(minx,miny,0.0))
+      points.append(Point3(maxx,miny,0.0))
+      points.append(Point3(maxx,maxy,0.0))
+      points.append(Point3(minx,maxy,0.0))
+    pointsContours = []
+    for point in points:
+      pointOK=True
+      for pt1 in points:
+        if pointOK and pt1=point:
+          for pt2 in points:
+            if pointOK and pt2!=point and pt2!=pt1:
+              for pt3 in points:
+                if pointOK and pt3!=point and pt3!=pt1 ad pt3!=pt2:
+                  if pointOK and self.pointDansTriangle(point, pt1, pt2, pt3):
+                    pointOK=False
+      if pointOK:
+        pointsContours.append(point)
+    print len(points), len(pointsCountours)
+    
+  def pointDansTriangle(self, point, pt1, pt2, pt3):
+    minx = min(pt1[0], pt2[0], pt3[0])
+    maxx = max(pt1[0], pt2[0], pt3[0])
+    miny = min(pt1[1], pt2[1], pt3[1])
+    maxy = max(pt1[1], pt2[1], pt3[1])
+    if point[0]>=minx and point[0]<=maxx:
+      if point[1]>=miny and point[1]<=maxy:
+        #Dans ce cas le point est dans la boite d'encadrement des points
+        return True
+    return False
+        
+    
+    
       
 class Ville:
   routes = None
@@ -365,7 +409,7 @@ class Ville:
     taille=len(zones)
     for zone in zones:
       cpt+=1
-      print "compactage de la zone %i/%i\r" %(cpt, taille),
+      print "Compactage de la zone %i/%i - %i\r" %(cpt, taille, len(zones)),
       zones.remove(zone)
       out.append([])
       voisins = self.getVoisins(zone, zones)
@@ -385,9 +429,9 @@ class Ville:
     miny = min(zone[0][1], zone[1][1])
     maxy = max(zone[0][1], zone[1][1])
 
-    if maxx-minx<=self.tailleGrille*4:
+    if maxx-minx<=self.tailleGrille*2:
       return voisins
-    if maxy-miny<=self.tailleGrille*4:
+    if maxy-miny<=self.tailleGrille*2:
       return voisins
 
       
@@ -496,8 +540,6 @@ class Ville:
     while self.routes.count(route)>0:
       self.routes.remove(route)
     
-    
-    
   def invalideRoute(self, route):
     while self.valides.count(route)>0:
       self.valides.remove(route)
@@ -541,45 +583,71 @@ class Ville:
     for route in self.routes:
       route.affiche()
       
+  def dessineZones(self, zones, couleur, tailleMin, tailleMax):
+    for zone in zones:
+      minx = min(zone[0][0], zone[1][0])
+      maxx = max(zone[0][0], zone[1][0])
+      miny = min(zone[0][1], zone[1][1])
+      maxy = max(zone[0][1], zone[1][1])
+      if maxx-minx>tailleMin and maxx-minx<tailleMax:
+        if maxy-miny>tailleMin and maxy-miny<tailleMax:
+          self.dessineRectangle(couleur, zone[0], zone[1], cross=True)
+      
   def ping(self, task):
-    if self.etape in (0,1,2):
-      if len(self.valides)==0:
-        print "calcul des zones"
-        zones = self.calculZones((Point3(0.0,0.0,0.0), Point3(self.tailleX, self.tailleY, 0.0)))
-        print "compactage"
-        polys = self.compacteZones(zones)
-        print 
-        print "total zones : ",len(polys)
-        #for poly in polys:
-        #  couleur = (random.random(), random.random(), random.random())
-        #  for zone in poly:
-        #    self.dessineRectangle(couleur, zone[0], zone[1], cross=True)
-        self.etape+=1
-        print "Passage a l'etape", self.etape
-        self.tailleRoute-=1
-        self.transpercement+=0.15
-        self.chanceSplit += 0.25
-        if self.etape==1:
-          self.rayonBraquage*=1.5
-        if self.tailleRoute>0:
-          taille = len(zones)
-          for zones in polys:
-            zone = random.choice(zones)
-            minx = min(zone[0][0], zone[1][0])
-            maxx = max(zone[0][0], zone[1][0])
-            miny = min(zone[0][1], zone[1][1])
-            maxy = max(zone[0][1], zone[1][1])
-            self.fabriquePremiereRoute(zone=zone)
-      else:
-        #route=random.choice(self.valides)
-        #route.continueRoute()
-        saveValide = self.valides[:10]
-        self.valides = self.valides[10:]+self.valides[:10]
-        print "Current elements %i   \r" %len(self.valides),
-        for route in saveValide:
-          route.continueRoute()
+    return self.pingVrai(task)
+    
+  def pingVrai(self, task):
+    print "Creation des autoroutes..."
+    self.pingVrai = self.pingAutoroutes
+    return task.cont
+    
+  def getZones(self):
+    print "Calcul des zones..."
+    zones = self.compacteZones(self.calculZones((Point3(0.0,0.0,0.0), Point3(self.tailleX, self.tailleY, 0.0))))
+    print "Total zones : ",len(zones)
+    return zones
+
+  def pingAutoroutes(self, task):
+    if len(self.valides)==0:
+      print "Changement d'etape"
+      self.pingVrai = self.pingRoutes
+      
+      zones = self.getZones()
+      self.tailleRoute-=1
+      #self.transpercement+=0.15
+      #self.chanceSplit += 0.25
+      self.rayonBraquage*=1.5
+      if self.tailleRoute>0:
+        for ensemble in zones:
+          zone = random.choice(ensemble)
+          self.fabriquePremiereRoute(zone=zone)
+      print "Creation des routes..."
+    else:
+      self.continueRoutes()
     return task.cont
 
+  def pingRoutes(self, task):
+    if len(self.valides)==0:
+      self.quartiers = self.getZones()
+      for zone in self.quartiers:
+        couleur = (1.0,1.0,1.0)#(random.random(), random.random(), random.random())
+        self.dessineZones(zone, couleur, self.tailleGrille*2, self.tailleGrille*40)
+      print "Creation des quartiers"
+      self.pingVrai = self.pingQuartiers
+    else:
+      self.continueRoutes()
+    return task.cont
+    
+  def pingQuartiers(self, task):
+    return task.done
+    
+
+  def continueRoutes(self):
+    saveValide = self.valides[:10]
+    self.valides = self.valides[10:]+self.valides[:10]
+    print "Nombre d'elements %i   \r" %len(self.valides),
+    for route in saveValide:
+      route.continueRoute()
 
 ville = Ville(500,500)
 taskMgr.add(ville.ping, 'PingVille', 5)
