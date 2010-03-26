@@ -142,6 +142,38 @@ class Route:
     angle = vec.signedAngleDeg(Vec3(1.0,0.0,0.0), Vec3(0.0,0.0,-1.0))
     return angle
     
+  def angleCibleAleatoire(self, pA, pB):
+    angleAutorise = self.ville.rayonBraquage
+    angle = (random.random()*2-1.0)*angleAutorise + self.getAngle(pA, pB)
+    return angle
+    
+    
+  def angleCibleGlobal(self, pA, pB):
+    return self.getAngle(pA, pB)
+    
+  def angleCibleLocal(self, pA, pB):
+    return self.getAngle(pA, pB)
+    
+  def split(self):
+    return False
+    
+  def testeConditionsLocales(self, pA, angle):
+    return True
+    
+  def doSplit(self, pA,pB):
+    return
+
+  def angle(self, pA, pB):
+    angle1 = self.angleCibleAleatoire(pA, pB)
+    angle2 = self.angleCibleGlobal(pA, pB)
+    angle3 = self.angleCibleLocal(pA, pB)
+    angle = (angle1+angle2+angle3)/3
+    if self.testeConditionsLocales(pA, angle):
+      return angle
+    if self.testeConditionsLocales(pA, angle2):
+      return angle2
+    return None
+
   def continueRoute(self):
     AOK, BOK = True, True
     for route in self.parents:
@@ -162,60 +194,13 @@ class Route:
       
     pA, pB = random.choice(valides)
 
-    """distance = self.distanceDepuisDernierCroisement()
-    do = distance
-    if distance<100000:
-      dic=min(self.ville.tailleX, self.ville.tailleY)*2
-      distance = (distance/dic)/2
+    if self.split():
+      self.doSplit(pA,pB)
     else:
-      distance = 0.05"""
-      
-    choixType = random.random()*100
-    if choixType>self.ville.chanceSplit:#10:#1.0/(distance/dic):
-      #print choixType, 1.0-distance, do
-      angleAutorise = self.ville.rayonBraquage
-      angle = (random.random()*2-1.0)*angleAutorise + self.getAngle(pA, pB)
-      if not self.fabriqueRoute(pB, angle):
-        self.ville.invalideRoute(self)
-
-    else:
-      #print choixType, 1.0-distance, do, "split"
-      angleAutorise = self.ville.rayonBraquage * 2
-      angle1 = (random.random()*2-1.0)*angleAutorise + self.getAngle(pA, pB)+90
-      angle2 = (random.random()*2-1.0)*angleAutorise + self.getAngle(pA, pB)-90
-      angle3 = (random.random()*2-1.0)*angleAutorise + self.getAngle(pA, pB)
-      
-      r1, r2, r3 = False, False, False
-      
-      if random.random()>0.66:
-        r1 = self.fabriqueRoute(pB, angle1)
-      if random.random()>0.66:
-        r2 = self.fabriqueRoute(pB, angle2)
-      if random.random()>0.10:
-        r3 = self.fabriqueRoute(pB, angle3)
-      
-      if r3!=None:
-        if r3!=False:
-          if r1!=False:
-            r3.ajouteParent(r1)
-          if r2!=False:
-            r3.ajouteParent(r2)
-      else:
-        self.ville.invalideRoute(self)
-      if r2!=None:
-        if r2!=False:
-          if r1!=False:
-            r2.ajouteParent(r1)
-          if r3!=False:
-            r2.ajouteParent(r3)
-      else:
-        self.ville.invalideRoute(self)
-      if r1!=None:
-        if r1!=False:
-          if r2!=False:
-            r1.ajouteParent(r2)
-          if r3!=False:
-            r1.ajouteParent(r3)
+      angle = self.angle(pA, pB)
+      if angle!=None:
+        if not self.fabriqueRoute(pB, angle):
+          self.ville.invalideRoute(self)
       else:
         self.ville.invalideRoute(self)
       
@@ -239,9 +224,9 @@ class Route:
       pB=point
       
       route.detruit()
-      routeA=Route(route.pointA, pB, None, self.ville)
+      routeA=self.ville.typeRoute(route.pointA, pB, None, self.ville)
       self.ville.ajouteRoute(routeA)
-      routeB=Route(pB, route.pointB, None, self.ville)
+      routeB=self.ville.typeRoute(pB, route.pointB, None, self.ville)
       self.ville.ajouteRoute(routeB)
       
       if random.random()<self.ville.transpercement:
@@ -250,7 +235,7 @@ class Route:
     if Vec3(pB-pA).length()<self.ville.tailleGrille:
       return None
     
-    nouvelleRoute=Route(pA, pB, [self], self.ville)
+    nouvelleRoute=self.ville.typeRoute(pA, pB, [self], self.ville)
     self.parents.append(nouvelleRoute)
     self.ville.ajouteRoute(nouvelleRoute)
     return nouvelleRoute
@@ -258,46 +243,147 @@ class Route:
   def affiche(self):
     print self.pointA, self.pointB, self.getAngle()
     
+    
+class Autoroute(Route):
+  def angleCibleAleatoire(self, pA, pB):
+    angleAutorise = self.ville.rayonBraquage
+    angle = (random.random()*2-1.0)*angleAutorise + self.getAngle(pA, pB)
+    return angle
+    
+  def angleCibleGlobal(self, pA, pB):
+    return self.getAngle(pA, pB)
+    
+  def angleCibleLocal(self, pA, pB):
+    return self.getAngle(pA, pB)
+    
+  def split(self):
+    if random.random()>0.96:
+      if self.distanceDepuisDernierCroisement()>100 and self.distanceDepuisDernierCroisement()<=10000:
+        return True
+    return False
+    
+  def testeConditionsLocales(self, pA, angle):
+    return True
+    
+  def doSplit(self, pA,pB):
+    self.fabriqueRoute(pB, self.getAngle(pA, pB))
+    if random.random()>0.952:
+      angle = self.angleCibleAleatoire(pA, pB)+20
+      if self.testeConditionsLocales(pB, angle):
+        self.fabriqueRoute(pB, angle)
+    if random.random()>0.952:
+      angle = self.angleCibleAleatoire(pA, pB)-20
+      if self.testeConditionsLocales(pB, angle):
+        self.fabriqueRoute(pB, angle)
+
+    if random.random()>0.952:
+      angle = self.angleCibleAleatoire(pB, pA)+20
+      if self.testeConditionsLocales(pA, angle):
+        self.fabriqueRoute(pB, angle)
+    if random.random()>0.952:
+      angle = self.angleCibleAleatoire(pB, pA)-20
+      if self.testeConditionsLocales(pA, angle):
+        self.fabriqueRoute(pB, angle)
+
+class Nationale(Route):
+  def angleCibleAleatoire(self, pA, pB):
+    angleAutorise = self.ville.rayonBraquage
+    angle = (random.random()*2-1.0)*angleAutorise + self.getAngle(pA, pB)
+    return angle
+    
+  def angleCibleGlobal(self, pA, pB):
+    return self.getAngle(pA, pB)
+    
+  def angleCibleLocal(self, pA, pB):
+    return self.getAngle(pA, pB)
+    
+  def split(self):
+    if random.random()>0.9958:
+      if self.distanceDepuisDernierCroisement()>25 and self.distanceDepuisDernierCroisement()<=10000:
+        return True
+    return False
+    
+  def testeConditionsLocales(self, pA, angle):
+    return True
+    
+  def doSplit(self, pA,pB):
+    self.fabriqueRoute(pB, self.getAngle(pA, pB))
+    if random.random()>0.952:
+      angle = self.angleCibleAleatoire(pA, pB)+90*random.random()
+      if self.testeConditionsLocales(pB, angle):
+        self.fabriqueRoute(pB, angle)
+    if random.random()>0.952:
+      angle = self.angleCibleAleatoire(pA, pB)-90*random.random()
+      if self.testeConditionsLocales(pB, angle):
+        self.fabriqueRoute(pB, angle)
+
+    if random.random()>0.952:
+      angle = self.angleCibleAleatoire(pB, pA)+90*random.random()
+      if self.testeConditionsLocales(pA, angle):
+        self.fabriqueRoute(pB, angle)
+    if random.random()>0.952:
+      angle = self.angleCibleAleatoire(pB, pA)-90*random.random()
+      if self.testeConditionsLocales(pA, angle):
+        self.fabriqueRoute(pB, angle)
+    
 class Quartier:
-  def __init__(self, zones):
+  def __init__(self, zones, ville):
+    self.ville=ville
     poly = self.zonesVersPoly(zones)
     
   def zonesVersPoly(self, zones):
+    tailleMin = self.ville.tailleGrille*2
+    tailleMax = self.ville.tailleGrille*40
     points = []
+    print "Creation du quartier..."
+    cpt=0
+    taille=len(zones)
     for zone in zones:
+      cpt+=1
+      print "Zone %i/%i \r" %(cpt, taille),
       minx = min(zone[0][0], zone[1][0])
       maxx = max(zone[0][0], zone[1][0])
       miny = min(zone[0][1], zone[1][1])
       maxy = max(zone[0][1], zone[1][1])
-      points.append(Point3(minx,miny,0.0))
-      points.append(Point3(maxx,miny,0.0))
-      points.append(Point3(maxx,maxy,0.0))
-      points.append(Point3(minx,maxy,0.0))
+      if maxx-minx>tailleMin and maxx-minx<tailleMax:
+        if maxy-miny>tailleMin and maxy-miny<tailleMax:
+          points.append(Point3(minx,miny,0.0))
+          points.append(Point3(maxx,miny,0.0))
+          points.append(Point3(maxx,maxy,0.0))
+          points.append(Point3(minx,maxy,0.0))
+          
+    print
+
+    cpt=0
+    taille=len(points)
     pointsContours = []
     for point in points:
+      cpt+=1
+      print "Point %i/%i \r" %(cpt, taille),
       pointOK=True
       for pt1 in points:
-        if pointOK and pt1=point:
+        if pointOK and pt1!=point:
           for pt2 in points:
             if pointOK and pt2!=point and pt2!=pt1:
               for pt3 in points:
-                if pointOK and pt3!=point and pt3!=pt1 ad pt3!=pt2:
+                if pointOK and pt3!=point and pt3!=pt1 and pt3!=pt2:
                   if pointOK and self.pointDansTriangle(point, pt1, pt2, pt3):
                     pointOK=False
+      points.remove(point)
       if pointOK:
         pointsContours.append(point)
-    print len(points), len(pointsCountours)
+    print
+    print len(points), len(pointsContours)
     
+  def produit(p1, p2, p3):
+    return p1[0] * (p2[1] - p3[1]) + p2[0] * (p3[1] - p1[1]) + p3[0] * (p1[1] - p2[1])
+  
   def pointDansTriangle(self, point, pt1, pt2, pt3):
-    minx = min(pt1[0], pt2[0], pt3[0])
-    maxx = max(pt1[0], pt2[0], pt3[0])
-    miny = min(pt1[1], pt2[1], pt3[1])
-    maxy = max(pt1[1], pt2[1], pt3[1])
-    if point[0]>=minx and point[0]<=maxx:
-      if point[1]>=miny and point[1]<=maxy:
-        #Dans ce cas le point est dans la boite d'encadrement des points
-        return True
-    return False
+    z1 = produit(pt1, pt2, point)
+    z2 = produit(pt2, pt3, point)
+    z3 = produit(pt3, pt1, point)
+    
+    return (z1 > 0 and z2 > 0 and z3 > 0) or (z1 < 0 and z2 < 0 and z3 < 0)
         
     
     
@@ -316,6 +402,8 @@ class Ville:
   rayonBraquage = 5.0
   transpercement = 0.6
   chanceSplit = 0.4
+  
+  typeRoute = Autoroute
   
   def __init__(self, tailleX, tailleY):
     self.tailleX = float(tailleX)
@@ -409,7 +497,7 @@ class Ville:
     taille=len(zones)
     for zone in zones:
       cpt+=1
-      print "Compactage de la zone %i/%i - %i\r" %(cpt, taille, len(zones)),
+      print "Compactage de la zone %i/%i - %i \r" %(cpt, taille, len(zones)),
       zones.remove(zone)
       out.append([])
       voisins = self.getVoisins(zone, zones)
@@ -420,6 +508,7 @@ class Ville:
           out[-1].append(voisin)
       if len(out[-1])<20:
         out=out[:-1]
+    print
     return out
         
   def getVoisins(self, zone, zones):
@@ -568,7 +657,8 @@ class Ville:
       pB = self.snap(pA-vecRoute)
       if not self.testePointValide(pB):
         print "snif"
-    self.ajouteRoute(Route(pA, pB, None, proxy(self))) 
+    self.ajouteRoute(self.typeRoute(pA, pB, None, proxy(self))) 
+    self.routes[-1].doSplit(self.routes[-1].pointA, self.routes[-1].pointB)
     
   def testePointValide(self, point):
     if point[0]>=0.0 and point[0]<self.tailleX:
@@ -611,6 +701,7 @@ class Ville:
     if len(self.valides)==0:
       print "Changement d'etape"
       self.pingVrai = self.pingRoutes
+      self.typeRoute = Nationale
       
       zones = self.getZones()
       self.tailleRoute-=1
@@ -632,6 +723,7 @@ class Ville:
       for zone in self.quartiers:
         couleur = (1.0,1.0,1.0)#(random.random(), random.random(), random.random())
         self.dessineZones(zone, couleur, self.tailleGrille*2, self.tailleGrille*40)
+        #quartier = Quartier(zone, self)
       print "Creation des quartiers"
       self.pingVrai = self.pingQuartiers
     else:
