@@ -1139,7 +1139,7 @@ class Ville:
     for route in self.routes:
       if isinstance(route, Nationale):
         choix = random.random()
-        if choix>0.8:
+        if choix>0.99998:
           angle = route.getAngle(route.pointA, route.pointB)
           angle = angle+90
           vecteurDirection = Vec3(math.cos(angle/180.0*math.pi), math.sin(angle/180.0*math.pi), 0.0)
