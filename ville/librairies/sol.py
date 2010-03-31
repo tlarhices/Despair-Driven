@@ -64,7 +64,7 @@ class Sol:
       return -1000
     if y<0 or y>=self.tailleY:
       return -1000
-    return self.sol[int(x)][int(y)]#max(self.sol[int(x)][int(y)], self.eau([int(x)][int(y)]))
+    return self.sol[int(x)][int(y)]*10#max(self.sol[int(x)][int(y)], self.eau([int(x)][int(y)]))
 
   def genereSol(self, tailleX, tailleY):
     self.tailleX, self.tailleY = tailleX, tailleY
